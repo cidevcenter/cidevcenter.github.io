@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Patient Referral Record</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="jquery-3.4.1.js"></script>
+</head>
+
+<body>
+    <div id="formID" style="display: none;">referralRecord</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+    <section>
+        <h1>Patient Referral Records</h1>
+    </section>
+
+    <div id="mainbox">
+        <div class="tab">
+            <div id="patientName" class="inputBox">
+                <label>Enter patient RN</label><br><br>
+                <input type="text" id="patientNameSearch">
+                <button onclick="searchSheet('Referral Form')"
+                    style="background-color: transparent; border: transparent;"><i
+                        class="material-icons">search</i></button>
+            </div>
+            <div id="scrollButtons" style="position: fixed; right: 10%; bottom: 10%;">
+                <a href="#topnav">Top</a>
+                <a href="#buttons">Bottom</a>
+            </div>
+            <div id="table">
+                <table id="searchTable">
+
+                </table>
+            </div>
+            <div id="rowCount" style="white-space: pre-wrap; display: none;">
+            </div>
+        </div>
+
+        <div class="tab">
+            <div id="patientName" , class="inputBox">
+                <label>Patient's Name</label><br><br>
+                <input type="text" name="patientName" required>
+            </div>
+
+            <div id="ic" class="inputBox">
+                <label>NRIC</label><br><br>
+                <input type="text" name="ic">
+            </div>
+
+            <div id="rn" class="inputBox">
+                <label>RN</label><br><br>
+                <input type="text" name="rn">
+            </div>
+
+            <div id="age" class="inputBox">
+                <label>Age</label><br><br>
+                <input type="text" name="age">
+            </div>
+
+            <div id="sex" class="inputBox">
+                <label>Sex</label><br><br>
+                <select name="sex">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div id="address" class="areaBox">
+                <label>Address</label><br><br>
+                <textarea name="addressBox" id="addressBox" rows="4" cols="50"></textarea>
+            </div>
+
+            <div id="homeTelephoneNo" class="inputBox">
+                <label>Patient's Home Telephone No.</label><br><br>
+                <input type="text" name="homeTelephoneNo">
+            </div>
+
+            <div id="handphoneNo" class="inputBox">
+                <label>H/P No.</label><br><br>
+                <input type="text" name="handphoneNo">
+            </div>
+
+            <div id="contactPerson" class="inputBox">
+                <label>Person To Contact</label><br><br>
+                <input type="text" name="contactPerson">
+            </div>
+
+            <div id="relationship" class="inputBox">
+                <label>Relationship</label><br><br>
+                <input type="text" name="relationship">
+            </div>
+
+            <div id="telephoneNo" class="inputBox">
+                <label>Telephone No.</label><br><br>
+                <input type="text" name="telephoneNo">
+                <div id="inputLine"></div>
+            </div>
+
+            <div id="languageSpoken" class="inputBox">
+                <label>Languages Spoken</label><br><br>
+                <input type="text" name="languageSpoken">
+            </div>
+        </div>
+
+        <div class="tab">
+            <div id="history" class="areaBox">
+                <label>History / Diagnosis & Present Problems</label><br><br>
+                <textarea id="history" rows="4" cols="50" name="history"></textarea>
+            </div>
+
+            <div id="diagnosisDate" class="inputBox">
+                <label>Date of Diagnosis</label><br><br>
+                <input type="text" name="diagnosisDate">
+            </div>
+
+            <!--Need to make special inputs for these-->
+            <!----------------------------------------->
+            <div id="prognosis" class="radioBox">
+                <label>Prognosis: </label><br><br>
+                <label class="containerCheckMark">Poor
+                    <input type="radio" name="prognosis" value="Poor">
+                    <span class="checkMark"></span>
+                </label>
+
+                <label class="containerCheckMark">Fair
+                    <input type="radio" name="prognosis" value="Fair">
+                    <span class="checkMark"></span>
+                </label>
+
+                <label class="containerCheckMark">Good
+                    <input type="radio" name="prognosis" value="Good">
+                    <span class="checkMark"></span>
+                </label>
+            </div>
+
+            <div id="diagnosisInform" , class="radioBox">
+                <label>Has the patient been informed of the diagnosis:</label><br><br>
+                <label class="containerCheckMark">Yes
+                    <input type="radio" name="diagnosisInform" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">No
+                    <input type="radio" name="diagnosisInform" value="No">
+                    <span class="checkMark"></span>
+                </label>
+            </div>
+
+            <div id="prognosisInform" , class="radioBox">
+                <label>Has the patient been informed of the prognosis:</label><br><br>
+                <label class="containerCheckMark">Yes
+                    <input type="radio" name="prognosisInform" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">No
+                    <input type="radio" name="prognosisInform" value="No">
+                    <span class="checkMark"></span>
+                </label>
+
+            </div>
+            <!----------------------------------------->
+
+            <div id="treatment" , class="areaBox">
+                <label>Treatment Given</label><br><br>
+                <textarea name="treatment" id="treatment" rows="4" cols="50"></textarea>
+            </div>
+
+            <div id="currentMedication" , class="inputBox">
+                <label>Current Medications</label><br><br>
+                <input type="text" name="currentMedication">
+            </div>
+
+            <div id="investigationResult" , class="areaBox">
+                <label>Recent Investigation Results</label><br><br>
+                <textarea name="investRes" id="investRes" rows="4" cols="50"></textarea>
+            </div>
+        </div>
+
+        <div class="tab">
+            <div id="referringDoctor" , class="inputBox">
+                <label>Referring Doctor</label><br><br>
+                <input type="text" name="referringDoctor">
+            </div>
+
+            <div id="speciality" , class="inputBox">
+                <label>Speciality</label><br><br>
+                <input type="text" name="speciality" required>
+            </div>
+
+            <div id="hospital" , class="inputBox">
+                <label>Hospital / Clinic</label><br><br>
+                <input type="text" name="hospital" required>
+            </div>
+
+            <div id="officePhoneNo" , class="inputBox">
+                <label>Office Phone No.</label><br><br>
+                <input type="text" name="officePhoneNo" required>
+            </div>
+
+            <div id="faxNo" , class="inputBox">
+                <label>Fax No.</label><br><br>
+                <input type="text" name="faxNo" required>
+            </div>
+
+            <div id="date" , class="inputBox">
+                <label>Date</label><br><br>
+                <input type="text" name="date" required>
+            </div>
+
+            <!--Checkbox-->
+            <div id="formConfirm" class="inputBox">
+                <label class="container">Has Patient Been Informed of the Referral?
+                    <input type="checkbox" name="patientInformed" value="Yes">
+                    <span class="checkBox"></span><br>
+                </label>
+
+                <label class="container">Has Patient's Relative Been Informed of the Referral?
+                    <input type="checkbox" name="relativeInformed" value="Yes">
+                    <span class="checkBox"></span><br>
+                </label>
+
+                <label class="container">Are all the information required filled up?
+                    <input type="checkbox" name="allFilled" value="Yes" required>
+                    <span class="checkBox"></span><br>
+                </label>
+
+            </div>
+        </div>
+
+        <div id="buttons" style="display: none;">
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <input type="button" value="Delete" onclick="deleteRecord(0, toArray())">
+                    <input type="button" id="prevBtn" class="navBtn" value="Prev" onclick="nextPrev(-1)">
+                    <input type="button" id="nextBtn" class="navBtn" value="Next" onclick="nextPrev(1)">
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+        </div>
+
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <div id="patientNameHidden" name="patientName" style="display: none;"></div>
+
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload() ">
+    </script>
+
+    <script>
+        var paused = false;
+        //Search for the variables on the URL
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const myParam = urlParams.get('khcno');
+            const myParam2 = urlParams.get('name');
+
+            document.getElementById("patientNameSearch").innerHTML = myParam;
+            document.getElementById("patientNameHidden").innerHTML = myParam2;
+        });
+
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        searchSheet('Referral Form');
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
+    </script>
+</body>
+
+</html>

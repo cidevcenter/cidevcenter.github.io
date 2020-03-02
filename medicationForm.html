@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Medication Form</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="jquery-3.4.1.js"></script>
+    <script src="source.js"></script>
+</head>
+
+<body>
+    <div id="formID" style="display: none;">medicationForm</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+
+    <div id="mainbox">
+        <form id="submitForm" action="" method="POST">
+            <div id="patientName" class="inputBox">
+                <label>Patient: </label><label id="patientNameSearch" name="patientNameSearch"></label>
+
+                <div id="table">
+                    <table id="searchTable">
+
+                    </table>
+                </div>
+
+                <div id="rowCount" style="white-space: pre-wrap; display: none;">
+                </div>
+
+                <div id="rowContent" style="white-space: pre-wrap;">
+                </div>
+
+                <div id="date" class="inputBox">
+                    <label>Date</label><br><br>
+                    <input type="text" name="date">
+                </div>
+
+                <div id="medication" class="inputBox">
+                    <label>Medication</label><br><br>
+                    <input type="text" name="medication">
+                </div>
+
+                <div id="dosage" class="inputBox">
+                    <label>Dosage</label><br><br>
+                    <input type="text" name="dosage">
+                </div>
+
+                <div id="frequency" class="inputBox">
+                    <label>Frequency</label><br><br>
+                    <input type="text" name="frequency">
+                </div>
+
+                <div id="dateStarted" class="inputBox">
+                    <label>Date Started</label><br><br>
+                    <input type="text" name="dateStarted">
+                </div>
+
+                <div id="dateCeased" class="inputBox">
+                    <label>Date Ceased</label><br><br>
+                    <input type="text" name="dateCeased">
+                </div>
+
+                <div id="hospital" class="inputBox">
+                    <label>Hospital / Hospice</label><br><br>
+                    <input type="text" name="hospital">
+                </div>
+
+            </div>
+
+            <div style="overflow: auto;">
+                <div style="float: right;">
+                    <input type="button" value="Edit" onclick="editRecord('Medication Given', toArray())">
+                    <input type="button" value="Delete" onclick="deleteRecord(1738213257, toArray())">
+                    <input type="button" value="Submit" onclick="appendForm('medicationForm')">
+                </div>
+            </div>
+            
+            <div id="content">
+                <pre id="content" style="white-space: pre-wrap;"></pre>
+            </div>
+        </form>
+    </div>
+
+    <div id="patientNameHidden" name="patientName" style="display: none;"></div>
+    
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload() ">
+    </script>
+
+    <script>
+        var paused = false;
+        //Search for the variables on the URL
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const myParam = urlParams.get('khcno');
+            const myParam2 = urlParams.get('name');
+
+            document.getElementById("patientNameSearch").innerHTML = myParam;
+            document.getElementById("patientNameHidden").innerHTML = myParam2;
+        });
+
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function(){
+                    if(checkSheetLoaded()){
+                    searchSheet('Medication Given');
+                    clearInterval(repeat);
+                }
+                }, 200)
+            }
+        });
+    </script>
+</body>
+
+</html>

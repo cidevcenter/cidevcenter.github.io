@@ -1,0 +1,657 @@
+html
+{
+    scroll-behavior: smooth;
+}
+
+body 
+{
+    background-color:white;
+    font-family: sans-serif;
+}
+
+#topnav
+{
+    background-color: rgb(0, 153, 0);
+    padding: 10px;
+    margin-bottom: 12px;
+    margin-top: -8px;
+    margin-left: -8px;
+    width: 100%;
+    height: 20px;
+}
+
+#authorize_button
+{
+    position: absolute;
+    right: 100px;
+    color: rgb(230, 255, 230);
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 9px;
+    top: 0;
+}
+
+#authorize_button:hover{
+    background-color: rgb(40, 136, 43);
+}
+
+#signout_button
+{
+    position: absolute;
+    right: 1vw;
+    color: rgb(230, 255, 230);
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 9px;
+    top: 0;
+}
+
+#signout_button:hover{
+    background-color: rgb(40, 136, 43);
+}
+
+#searchbar
+{
+    padding-left: 5px;
+    float: left;
+    margin-top: 10px;
+    border-color: darkgreen;
+    width: 20vw;
+    height: 30px;
+}
+
+#searchButton
+{
+    display: inline-block;
+    margin-left: 2px;
+    margin-top: 10px;
+    width: 50px;
+    height: 32px;
+}
+
+#table
+{
+    overflow-x: auto;
+}
+
+#searchTable
+{
+    border-collapse: collapse;
+    overflow-x: auto;
+    margin: auto;
+    white-space: pre-wrap;
+}
+
+section
+{
+    margin: auto;
+    background-color: white;
+    width: 50%;
+    font-size: 20px;
+    height: auto;
+}
+
+h1
+{
+    text-align: center;
+}
+
+h2
+{
+    text-align: center;
+    margin: 15px 10px;
+}
+
+h3
+{
+    clear: left;
+    margin-left: 10px;
+}
+
+th
+{
+    border: 1px solid green;
+    background-color: rgb(0, 179, 60);
+}
+
+td
+{
+    border: 1px solid green;
+    padding: 3px;
+    color: black;
+}
+
+tr:nth-child(even)
+{
+    background-color: rgb(235, 255, 230);
+}
+
+i
+{
+    background-color: green;
+    color: white;
+    padding: 10px;
+
+}
+
+#patientNameSearch
+{
+    width: calc(90% - 34px);
+}
+
+#mainbox
+{
+    margin:auto;
+    border: 2px solid green;
+    padding: 10px;
+    height: auto;
+    width: 60%;
+    /*vertical-align: bottom;*/
+}
+
+#numberBar table
+{
+    width: 97%;
+    padding: 0;
+    margin: auto;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+#numberBar td
+{
+    width: calc(100% / 11);
+    margin-left: 50px;
+    border: none !important;
+    text-align: center;
+}
+
+.tab
+{
+    /*background-color: #fff;*/
+    /*border: 1px solid #dadce0;*/
+    border-radius: 8px;
+    margin-bottom: 1em;
+    page-break-inside: avoid;
+    width: 100%;
+    height: auto;
+    font-size: 20px;
+    display:none;
+}
+
+.inputBox
+{
+    background-color: white;
+    padding: 1vw;
+    margin: auto;
+    border-radius: 8px;
+    border: 1px solid rgb(220,220,220);
+    width: 95%;
+    min-height: 4em;
+}
+
+.areaBox
+{
+    border: 1px solid rgb(220,220,220);
+    background-color: white;
+    margin: auto;
+    width: 95%;
+    min-height: 8em;
+    padding: 1vw;
+    border-radius: 8px;
+}
+
+textarea[name='extraNotes'] {
+    height: 300px;
+}
+
+textarea
+{
+    width: 100%;
+    min-height: 6em;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: white;
+    resize: none;
+}
+
+textarea:focus
+{
+    background-color: lightgrey;
+}
+
+textarea:required, textarea.touched:required:valid 
+{
+    border: 2px solid green;
+}
+
+textarea.touched:required:invalid {
+    border: 2px solid darkred;
+}
+
+.radioBox
+{
+    border: 1px solid rgb(220,220,220);
+    background-color: white;
+    margin: auto;
+    width: 95%;
+    min-height: 4em;
+    padding: 1vw;
+    border-radius: 8px;
+}
+
+.picBox
+{
+    width: 60%;
+    height: 60%;
+    padding-left: 20%;
+}
+
+.picFormat
+{
+    margin: 1em;
+    width: 40%;
+    padding: 1vw;
+    float:left;
+    clear:left;
+}
+
+#lungBtn
+{
+    margin-left: 20%;
+}
+
+label
+{
+    font-size: 20px;
+}
+
+input
+{
+    border:none;
+    border-bottom: 2px solid green;
+    outline: none;
+    display: inline-block;
+    font-size: 18px;
+}
+
+:required, .touched:required:valid 
+{
+    border-bottom: 2px solid green;
+}
+
+.touched:required:invalid {
+    border-bottom: 2px solid darkred;
+}
+
+input[type=text] 
+{
+    background-color: white;
+    /*border-bottom: 2px solid green;*/
+    width: 100%;
+}
+
+input[type=text]:focus
+{
+    background-color: lightgrey;
+}
+ 
+
+.revBtn{
+    position: absolute;
+    left: 100px;
+    color: rgb(230, 255, 230);
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 9px;
+    top: 0;
+    text-decoration: none;
+}
+
+.revBtn:hover{
+    background-color: rgb(40, 136, 43);
+}
+
+input[type=button] {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 17px;
+    margin:10px;
+}
+
+input:hover[type=button] {
+    background-color: rgb(40, 136, 43);
+}
+
+input[type=textarea] {
+   border: none;
+   border-bottom: 2px solid green;
+}
+
+input[type=checkbox], input[type=radio]{
+    display: none;
+}
+
+select
+{
+    border: 2px solid green;
+    background-color: white;
+    border-radius: 8px;
+    width: 100%;
+    min-height: 2em;
+}
+
+option:hover
+{
+    background-color:lightgreen;
+}
+
+.inputBoxSmall
+{
+    width: 50% !important;
+}
+
+.inputBoxSmaller
+{
+    width: 25% !important;
+}
+
+.selectSmall
+{
+    width: 49% !important;
+}
+
+.selectSmaller
+{
+    width: 25% !important;
+}
+
+.linkBox
+{
+    display: block;
+    margin-top: 5px;
+    border-radius: 10px;
+    font-size: 17px;
+    clear:left;
+}
+
+.linkBox:hover
+{
+    color: rgb(40, 136, 43);
+}
+
+.container {
+    display: block;
+    position: relative;
+    margin-bottom: 12px;
+    padding-right: 25px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.containerCheckMark {
+    display: block;
+    position: relative;
+    padding-top: 2px;
+    margin-bottom: 12px;
+    padding-left: 32px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Custom checkbox appearance */
+.checkBox {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 25px;
+    width: 25px;
+    background-color: rgb(231, 231, 231);
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkBox{
+    background-color: lightgray;
+    transition: .2s;
+}
+  
+/* When the checkbox is checked, add a green background */
+.container input:checked ~ .checkBox {
+    background-color: #4CAF50;
+    transition: .2s;
+}
+  
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkBox:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+/* Show the checkmark when checked */
+.container input:checked ~ .checkBox:after {
+    display: block;
+}
+  
+/* Style the checkmark/indicator */
+.container .checkBox:after {
+    left: 9px;
+    top: 2px;
+    width: 5px;
+    height: 15px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* Create a custom radio button */
+.checkMark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 2px solid #eee;
+}
+  
+  /* On mouse-over, add a grey background color */
+.containerCheckMark:hover input ~ .checkMark {
+    background-color: rgb(240,240,240);
+    transition: .2s;
+}
+  
+  /* When the radio button is checked, add a green border */
+.containerCheckMark input:checked ~ .checkMark {
+    border: 2px solid #4CAF50;
+    transition: .2s;
+}
+  
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+.checkMark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+  /* Show the indicator (dot/circle) when checked */
+.containerCheckMark input:checked ~ .checkMark:after {
+    display: block;
+}
+  
+  /* Style the indicator (dot/circle) */
+.containerCheckMark .checkMark:after {
+    top: 5px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #4CAF50;
+}
+
+.slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-left: 5%;
+    margin-top: 20px;
+    width: 90%; /* Full-width */
+    height: 10px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 15px; /* Set a specific slider handle width */
+    height: 40px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+  
+/* Mark the active step: */
+.step.active {
+    opacity: 1;
+}
+  
+  /* Mark the steps that are finished and valid: */
+.step.finish {
+    background-color: #4CAF50;
+}
+
+@media screen and (max-width: 1024px) 
+{
+    h1
+    {
+        font-size: 28px;
+    }
+
+    section
+    {
+        width: 100%;
+    }
+
+    body
+    {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #mainbox
+    {
+        width: 90%;
+    }
+
+    #topnav
+    {
+        margin-top: 0;
+    }
+    select
+    {
+        border-width: 1px;
+        font-size: 20px;
+    }
+
+    option
+    {
+        font-size: 15px;
+    }
+
+    input[type=button]
+    {
+        padding: 20px;
+        font-size: 24px;
+    }
+
+    textarea
+    {
+        height: 12em;
+    }
+
+    .inputBox, .areaBox, .radioBox, .picBox
+    {
+        padding: 3vw;
+        width: 90%;
+    }
+
+    .containerCheckMark
+    {
+        padding-top: 0;
+    }
+
+    .checkMark
+    {
+        top: 3px;
+        left: 3px;
+    }
+
+    #lungBtn
+    {
+        margin-left: 26px;
+    }
+}
+
+@media screen and (max-width: 600px) 
+{
+
+    section
+    {
+        width: 100%;
+    }
+
+    body
+    {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #mainbox
+    {
+        width: 90%;
+        margin: 3%;
+    }
+
+    input[type=button]
+    {
+        padding: 10px
+    }
+
+    .inputBox, .areaBox, .radioBox, .picBox
+    {
+        padding: 3vw;
+        width: 90%;
+    }
+
+    #lungBtn
+    {
+        margin-left: 10px;
+    }
+}

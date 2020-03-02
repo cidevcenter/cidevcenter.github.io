@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Menu</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="jquery-3.4.1.js"></script>
+    
+</head>
+
+<body>
+    <div id="formID" style="display: none;">mainMenu</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+    <section><h1>Main Menu</h1></section>
+    <div id="mainbox">
+        <div id="links" style="margin-top: 0;">
+            <a href="referralform.html" class="linkBox">Referral Form</a>
+            <a href="medicalAssessment.html" class="linkBox">Medical & Nursing Assessment</a>
+            <a href="patientContinuationSheet.html" class="linkBox">Patient Continuation Sheet</a>
+            <a href="search.html" class="linkBox">Search for Patient Records (Extra Notes, Medications Given, Medication Equipments Loaned, Home Visit Records, End of Life Issues)</a>
+            <a href="referralRecord.html" class="linkBox">Display Referral Form Records</a>
+            <a href="medicalAssessmentRecord.html" class="linkBox">Display Medical & Nursing Assessment Records</a>
+            <a href="patientContinuationRecord.html" class="linkBox">Display Patient Continuation Records</a>
+            <a href="https://docs.google.com/spreadsheets/d/166N0W-UDffO7Rkj20JGBGN7jo1d82ljHmMUGM364Aio/edit#gid=0" target="_blank"  class="linkBox">Sheets</a>
+            <input type="file" id="input">
+            <button onclick="sendStuff()">Send Test File</button>
+            <div id="content">
+                <pre id="content" style="white-space: pre-wrap;"></pre>
+            </div>
+        </div>
+    </div>
+    
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>

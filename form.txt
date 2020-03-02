@@ -1,0 +1,3 @@
+Client key = 932651169905-s46uqrcjcb4ttq2jl18m9vcgtim1ller.apps.googleusercontent.com
+Client secret = JhB8H-Hfkka_vb7YZJiL0EMq
+API key = AIzaSyCHseUgij1b5PJ6XpVGRHFKHy8y8NA7HpE

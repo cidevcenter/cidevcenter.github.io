@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="jquery-3.4.1.js"></script>
+    <script src="source.js"></script>
+</head>
+
+<body>
+    <div id="formID" style="display: none;">searchForm</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <label id="email"></label>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+
+    <div id="mainbox">
+
+        <div id="patientName" class="inputBox">
+            <label>Enter patient KHC No</label><br><br>
+            <input type="text" id="patientNameSearch">
+            <button onclick="searchSheet('Medical & Nursing Assessment')"
+                style="background-color: transparent; border: transparent;"><i
+                    class="material-icons">search</i></button>
+        </div>
+
+        <div id="row" style="display: none;">
+
+        </div>
+
+
+        <div style="overflow: auto;">
+            <a href="index.html" class="revBtn">Main Menu</a>
+        </div>
+
+        <div id="links" style="display: none;">
+            <a href='extraNotes.html' id="extraNotes" class="linkBox">Extra Notes</a>
+            <a href='medicationForm.html' id="medicationForm" class="linkBox">Medication Form</a>
+            <a href='medicationEquipmentForm.html' id="medicationEquipmentForm" class="linkBox">Medication Equipment
+                Form</a>
+            <a href='homeVisitForm.html' id="homeVisitForm" class="linkBox">Home Visit Form</a>
+            <a href='endOfLifeForm.html' id="endOfLifeForm" class="linkBox">End of Life Issue</a>
+        </div>
+
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    <script>
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
+    </script>
+</body>
+
+</html>
