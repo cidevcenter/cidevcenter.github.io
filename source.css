@@ -71,6 +71,12 @@ body
     height: 32px;
 }
 
+#scrollButtons
+{
+    display: flex;
+    flex-direction: column;
+}
+
 #table
 {
     overflow-x: auto;
@@ -133,7 +139,21 @@ i
     background-color: green;
     color: white;
     padding: 10px;
+}
 
+.redirectButton
+{
+    margin-bottom: 20px;
+}
+
+.redirectButton i
+{
+    border-radius: 50%;
+    border: 1px solid gray;
+    background-color: white;
+    color: gray;
+    padding: 15px;
+    box-shadow: 1px;
 }
 
 #patientNameSearch
