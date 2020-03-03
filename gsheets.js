@@ -11,7 +11,8 @@ var SCOPES = "https://www.googleapis.com/auth/drive";
 
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
-var spreadsheetId = '1lE6qktHAAPnLMoSMPeigxpuIwZsJriWZkxipgS4rt7U';
+var spreadsheetId = '166N0W-UDffO7Rkj20JGBGN7jo1d82ljHmMUGM364Aio';
+var folderID = ['1KLZ6NzFh60oYAtY8dImWTkzaWVyyuygH'];
 
 var table = document.querySelector("table");
 var header;
@@ -103,6 +104,41 @@ function appendPre(message) {
     var textContent = document.createTextNode(message + '\n');
     pre.setAttribute('style', 'white-space: pre-wrap;');
     pre.appendChild(textContent);
+}
+
+function sendStuff() {
+    var fileContent = document.getElementById('input').files[0]; // As a sample, upload a text file.
+    var fileName = fileContent.name;
+    fileName = fileName.slice(0, -4); // Removes the '.png' at the end of the file name.
+    var file = new Blob([fileContent], {
+        type: 'image/png'
+    });
+    var metadata = {
+        'name': fileName, // Filename at Google Drive
+        'mimeType': 'image/png', // mimeType at Google Drive
+        'parents': folderID, // Folder ID at Google Drive
+    };
+
+    var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+    var form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], {
+        type: 'application/json'
+    }));
+    form.append('file', file);
+    console.log(form);
+
+    fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + accessToken
+        }),
+        body: form,
+    }).then((res) => {
+        console.log(res.json());
+        appendPre("Image uploaded. Check https://drive.google.com/drive/u/0/folders/1KLZ6NzFh60oYAtY8dImWTkzaWVyyuygH");
+    }).then(function (val) {
+        console.log(val);
+    });
 }
 
 //Searches the sheet for the record
@@ -207,11 +243,7 @@ function generateTableHead(table, header) {
     //Header
     for (var key in header) {
         var th = document.createElement("th");
-        if (key == 0) {
-            var text = document.createTextNode(" ");
-        } else {
-            var text = document.createTextNode(header[key]);
-        }
+        var text = document.createTextNode(header[key]);
         th.appendChild(text);
         trow.appendChild(th);
     }
