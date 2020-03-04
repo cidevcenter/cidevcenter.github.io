@@ -122,6 +122,26 @@ function showStuff(checkbox, id) {
     }
 }
 
+function showPopUp(popUpId, buttonId, index) {
+    var modal = document.getElementById(popUpId);
+
+    var btn = document.getElementById(buttonId);
+
+    var span = document.getElementsByClassName("close")[index];
+
+    modal.style.display = "block";
+    
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
 function showRow() {
     document.getElementById("rowCount").innerText = "";
     for(var i = 0; i < document.getElementsByName("row").length; i++){
