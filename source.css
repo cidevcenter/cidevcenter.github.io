@@ -156,6 +156,12 @@ i
     box-shadow: 1px;
 }
 
+.redirectButton i:hover
+{
+    background-color: rgb(220,220,220);
+    transition: 0.2s;
+}
+
 #patientNameSearch
 {
     width: calc(90% - 34px);
@@ -221,6 +227,12 @@ i
     min-height: 8em;
     padding: 1vw;
     border-radius: 8px;
+}
+
+.areaBNReq
+{
+    border:none;
+    border: 2px solid green;
 }
 
 textarea[name='extraNotes'] {
@@ -406,6 +418,27 @@ option:hover
     color: rgb(40, 136, 43);
 }
 
+.linkBoxSel
+{
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: auto;
+    border-radius: 10px;
+    padding: 1em;
+    font-size: 17px;
+    width: 90%;
+    height: auto;
+    background-color: green;
+    color: white;
+}
+
+.linkBoxSel:hover
+{
+    background-color: darkgreen;
+    transition: 0.2s;
+}
+
 .container {
     display: block;
     position: relative;
@@ -524,25 +557,25 @@ option:hover
     appearance: none;
     margin-left: 5%;
     margin-top: 20px;
-    width: 90%; /* Full-width */
-    height: 10px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
-    outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    width: 90%;
+    height: 10px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
     transition: opacity .2s;
 }
 
 .slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
+    opacity: 1;
 }
 
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
     appearance: none;
-    width: 15px; /* Set a specific slider handle width */
-    height: 40px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    width: 15px;
+    height: 40px;
+    background: #4CAF50;
+    cursor: pointer;
 }
 
 /* Make circles that indicate the steps of the form: */
@@ -560,11 +593,6 @@ option:hover
 /* Mark the active step: */
 .step.active {
     opacity: 1;
-}
-  
-  /* Mark the steps that are finished and valid: */
-.step.finish {
-    background-color: #4CAF50;
 }
 
 @media screen and (max-width: 1024px) 

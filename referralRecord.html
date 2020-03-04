@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" href="source.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script src="jquery-3.4.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -45,24 +45,24 @@
         </div>
 
         <div class="tab">
-            <div id="patientName" , class="inputBox">
+            <div id="patientName" class="inputBox">
                 <label>Patient's Name</label><br><br>
                 <input type="text" name="patientName" required>
             </div>
 
             <div id="ic" class="inputBox">
                 <label>NRIC</label><br><br>
-                <input type="text" name="ic">
+                <input type="text" name="ic" required>
             </div>
 
             <div id="rn" class="inputBox">
                 <label>RN</label><br><br>
-                <input type="text" name="rn">
+                <input type="text" name="rn" required>
             </div>
 
             <div id="age" class="inputBox">
                 <label>Age</label><br><br>
-                <input type="text" name="age">
+                <input type="number" name="age" min="0" max="200" value="60">
             </div>
 
             <div id="sex" class="inputBox">
@@ -86,7 +86,7 @@
 
             <div id="handphoneNo" class="inputBox">
                 <label>H/P No.</label><br><br>
-                <input type="text" name="handphoneNo">
+                <input type="text" name="handphoneNo" placeholder="xxx-xxxxxxx"pattern="\d{3}[\-]\d{7}">
             </div>
 
             <div id="contactPerson" class="inputBox">
@@ -101,7 +101,7 @@
 
             <div id="telephoneNo" class="inputBox">
                 <label>Telephone No.</label><br><br>
-                <input type="text" name="telephoneNo">
+                <input type="text" name="telephoneNo" placeholder="xxx-xxxxxxx"pattern="\d{3}[\-]\d{7}">
                 <div id="inputLine"></div>
             </div>
 
@@ -114,12 +114,12 @@
         <div class="tab">
             <div id="history" class="areaBox">
                 <label>History / Diagnosis & Present Problems</label><br><br>
-                <textarea id="history" rows="4" cols="50" name="history"></textarea>
+                <textarea id="history" class="areaBNReq" rows="4" cols="50" name="history" required></textarea>
             </div>
 
             <div id="diagnosisDate" class="inputBox">
                 <label>Date of Diagnosis</label><br><br>
-                <input type="text" name="diagnosisDate">
+                <input type="text" name="diagnosisDate" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="dd/mm/yyyy">
             </div>
 
             <!--Need to make special inputs for these-->
@@ -130,7 +130,7 @@
                     <input type="radio" name="prognosis" value="Poor">
                     <span class="checkMark"></span>
                 </label>
-
+                    
                 <label class="containerCheckMark">Fair
                     <input type="radio" name="prognosis" value="Fair">
                     <span class="checkMark"></span>
@@ -142,7 +142,7 @@
                 </label>
             </div>
 
-            <div id="diagnosisInform" , class="radioBox">
+            <div id="diagnosisInform", class="radioBox">
                 <label>Has the patient been informed of the diagnosis:</label><br><br>
                 <label class="containerCheckMark">Yes
                     <input type="radio" name="diagnosisInform" value="Yes">
@@ -154,7 +154,7 @@
                 </label>
             </div>
 
-            <div id="prognosisInform" , class="radioBox">
+            <div id="prognosisInform", class="radioBox">
                 <label>Has the patient been informed of the prognosis:</label><br><br>
                 <label class="containerCheckMark">Yes
                     <input type="radio" name="prognosisInform" value="Yes">
@@ -164,55 +164,55 @@
                     <input type="radio" name="prognosisInform" value="No">
                     <span class="checkMark"></span>
                 </label>
-
+                
             </div>
             <!----------------------------------------->
 
-            <div id="treatment" , class="areaBox">
+            <div id="treatment", class="areaBox">
                 <label>Treatment Given</label><br><br>
-                <textarea name="treatment" id="treatment" rows="4" cols="50"></textarea>
+                <textarea name="treatment" id="treatment" class="areaBNReq" rows="4" cols="50"></textarea>
             </div>
 
-            <div id="currentMedication" , class="inputBox">
+            <div id="currentMedication", class="inputBox">
                 <label>Current Medications</label><br><br>
                 <input type="text" name="currentMedication">
             </div>
 
-            <div id="investigationResult" , class="areaBox">
+            <div id="investigationResult", class="areaBox">
                 <label>Recent Investigation Results</label><br><br>
-                <textarea name="investRes" id="investRes" rows="4" cols="50"></textarea>
+                <textarea name="investRes" id="investRes" class="areaBNReq" rows="4" cols="50"></textarea>
             </div>
         </div>
 
         <div class="tab">
-            <div id="referringDoctor" , class="inputBox">
+            <div id="referringDoctor", class="inputBox">
                 <label>Referring Doctor</label><br><br>
                 <input type="text" name="referringDoctor">
             </div>
 
-            <div id="speciality" , class="inputBox">
+            <div id="speciality", class="inputBox">
                 <label>Speciality</label><br><br>
-                <input type="text" name="speciality" required>
+                <input type="text" name="speciality">
             </div>
 
-            <div id="hospital" , class="inputBox">
+            <div id="hospital", class="inputBox">
                 <label>Hospital / Clinic</label><br><br>
-                <input type="text" name="hospital" required>
+                <input type="text" name="hospital">
             </div>
 
-            <div id="officePhoneNo" , class="inputBox">
+            <div id="officePhoneNo", class="inputBox">
                 <label>Office Phone No.</label><br><br>
-                <input type="text" name="officePhoneNo" required>
+                <input type="text" name="officePhoneNo">
             </div>
 
-            <div id="faxNo" , class="inputBox">
+            <div id="faxNo", class="inputBox">
                 <label>Fax No.</label><br><br>
-                <input type="text" name="faxNo" required>
+                <input type="text" name="faxNo">
             </div>
 
-            <div id="date" , class="inputBox">
+            <div id="date", class="inputBox">
                 <label>Date</label><br><br>
-                <input type="text" name="date" required>
+                <input type="text" name="date" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="dd/mm/yyyy">
             </div>
 
             <!--Checkbox-->
@@ -221,17 +221,17 @@
                     <input type="checkbox" name="patientInformed" value="Yes">
                     <span class="checkBox"></span><br>
                 </label>
-
+                
                 <label class="container">Has Patient's Relative Been Informed of the Referral?
                     <input type="checkbox" name="relativeInformed" value="Yes">
                     <span class="checkBox"></span><br>
                 </label>
-
-                <label class="container">Are all the information required filled up?
+                
+                <label class="container itemRequired">Are all the information required filled up?
                     <input type="checkbox" name="allFilled" value="Yes" required>
                     <span class="checkBox"></span><br>
                 </label>
-
+                
             </div>
         </div>
 

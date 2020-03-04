@@ -11,8 +11,7 @@ var SCOPES = "https://www.googleapis.com/auth/drive";
 
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
-var spreadsheetId = '166N0W-UDffO7Rkj20JGBGN7jo1d82ljHmMUGM364Aio';
-var folderID = ['1KLZ6NzFh60oYAtY8dImWTkzaWVyyuygH'];
+var spreadsheetId = '1lE6qktHAAPnLMoSMPeigxpuIwZsJriWZkxipgS4rt7U';
 
 var table = document.querySelector("table");
 var header;
@@ -24,18 +23,12 @@ var name;
 var data = [];
 
 var rangeForm;
-/**
- *  On load, called to load the auth2 library and API client library.
- */
+
 function handleClientLoad() {
     gapi.load('client:auth2', initClient);
     
 }
 
-/**
- *  Initializes the API client library and sets up sign-in state
- *  listeners.
- */
 function initClient() {
     gapi.client.init({
         apiKey: API_KEY,
@@ -55,10 +48,6 @@ function initClient() {
     });
 }
 
-/**
- *  Called when the signed in status changes, to update the UI
- *  appropriately. After a sign-in, the API is called.
- */
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         authorizeButton.style.display = 'none'; //none
@@ -69,16 +58,10 @@ function updateSigninStatus(isSignedIn) {
     }
 }
 
-/**
- *  Sign in the user upon button click.
- */
 function handleAuthClick(event) {
     gapi.auth2.getAuthInstance().signIn();
 }
 
-/**
- *  Sign out the user upon button click.
- */
 function handleSignoutClick(event) {
     gapi.auth2.getAuthInstance().signOut();
 }
@@ -93,12 +76,6 @@ function checkSheetLoaded() {
     }
 }
 
-/**
- * Append a pre element to the body containing the given message
- * as its text node. Used to display the results of the API call.
- *
- * @param {string} message Text to be placed in pre element.
- */
 function appendPre(message) {
     var pre = document.getElementById('content');
     var textContent = document.createTextNode(message + '\n');
@@ -106,46 +83,12 @@ function appendPre(message) {
     pre.appendChild(textContent);
 }
 
-function sendStuff() {
-    var fileContent = document.getElementById('input').files[0]; // As a sample, upload a text file.
-    var fileName = fileContent.name;
-    fileName = fileName.slice(0, -4); // Removes the '.png' at the end of the file name.
-    var file = new Blob([fileContent], {
-        type: 'image/png'
-    });
-    var metadata = {
-        'name': fileName, // Filename at Google Drive
-        'mimeType': 'image/png', // mimeType at Google Drive
-        'parents': folderID, // Folder ID at Google Drive
-    };
-
-    var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
-    var form = new FormData();
-    form.append('metadata', new Blob([JSON.stringify(metadata)], {
-        type: 'application/json'
-    }));
-    form.append('file', file);
-    console.log(form);
-
-    fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {
-        method: 'POST',
-        headers: new Headers({
-            'Authorization': 'Bearer ' + accessToken
-        }),
-        body: form,
-    }).then((res) => {
-        console.log(res.json());
-        appendPre("Image uploaded. Check https://drive.google.com/drive/u/0/folders/1KLZ6NzFh60oYAtY8dImWTkzaWVyyuygH");
-    }).then(function (val) {
-        console.log(val);
-    });
-}
-
 //Searches the sheet for the record
 function searchSheet(range) {
     data = [];
     var formID = document.getElementById("formID").innerText;
 
+    //Obtains the search field values
     if(formID == 'searchForm' || formID == 'medicalAssessmentRecord' || formID == 'referralRecord' || formID == 'patientContinuationRecord'){
         var input = document.getElementById("patientNameSearch").value;
     }
@@ -163,17 +106,14 @@ function searchSheet(range) {
         header = range.values[0];
         if (range.values.length > 0) {
             removeTable();
-            console.log(headerGenerated);
             //i = 1 because we skip the header
             for (i = 1; i < range.values.length; i++) {
                 var row = range.values[i];
                 // Searches against which row, we control how we want user to search here
                 if (input === row[2] || (input === row[3] && formID == 'referralRecord') || (input === row[2] && formID == 'medicalAssessmentRecord') || (input === row[123] && formID == 'patientContinuationRecord')) {
-                    console.log(input);
-                    console.log(row[2]);
                     khcno = row[2];
                     name = row[3];
-
+                    //Show searched records
                     if (formID == 'extraNotesForm' || formID == 'medicationForm' || formID == 'medicationEquipmentForm' || formID == 'homeVisitForm' ||
                         formID == 'endOfLifeForm' || formID == 'referralRecord' || formID == 'medicalAssessmentRecord' || formID == 'patientContinuationRecord') {
                         if (!headerGenerated) {
@@ -198,10 +138,8 @@ function searchSheet(range) {
                     count++;
                 }
             }
-            console.log(data);
             if (count > 0) {
                 alert("We have found " + count + " record(s).");
-                //tableDelete = true;
                 document.getElementById("extraNotes").setAttribute("href", "extraNotes.html?khcno=" + khcno +"&name=" + name);
                 document.getElementById("medicationForm").setAttribute("href", "medicationForm.html?khcno=" + khcno +"&name=" + name);
                 document.getElementById("medicationEquipmentForm").setAttribute("href", "medicationEquipmentForm.html?khcno=" + khcno +"&name=" + name);
@@ -220,10 +158,8 @@ function searchSheet(range) {
     });
 }
 
+//Removes the generated tables
 function removeTable() {
-    console.log($("table").length);
-    console.log($("thead").length);
-    console.log($("tbody").length);
     if ($("thead").length) {
         $("thead").remove();
     }
@@ -243,7 +179,11 @@ function generateTableHead(table, header) {
     //Header
     for (var key in header) {
         var th = document.createElement("th");
-        var text = document.createTextNode(header[key]);
+        if (key == 0) {
+            var text = document.createTextNode(" ");
+        } else {
+            var text = document.createTextNode(header[key]);
+        }
         th.appendChild(text);
         trow.appendChild(th);
     }
@@ -260,7 +200,6 @@ function generateTable(table, data, count) {
         if(i == 0) {
             var id = 'checkbox' + count;
             var string2 = "showStuff(\'" + id + "\',\'" + 'buttons' + "\')";
-            console.log(string2);
             /*<label class="container" style="width: 25px;height: 10px;"><input type="checkbox" name="row" id="checkbox1" value="1" onclick="showRow();showStuff('checkbox1','buttons')">
                         <span class="checkBox"></span>
             </label>*/
@@ -837,25 +776,40 @@ function appendForm(formID) {
     
 }
 
+//Checks the input for validations before submitting
 function checkRequired() {
     var fields = $(".itemRequired").find("select, input, textarea").serializeArray();
     var valid = true;
+    var validRegEx = true;
+    var errorList = [];
 
     $.each(fields, function(i, field) {
         if (!field.value) {
-            alert(field.name + " is required.");
+            errorList.push(field.name);
             valid = false;
         }
-        console.log(field);
+        else if (document.getElementsByName(field.name)[0].getAttribute('pattern')) {
+            var regEx = new RegExp(document.getElementsByName(field.name)[0].getAttribute('pattern'), );
+            validRegEx = regEx.test(field.value);
+
+            if (!validRegEx) {
+                appendPre(field.name + " does not match requested format.");
+            }
+        }
     })
 
-    if(valid == false) {
+    if(errorList.length > 0) {
+        alert(errorList + " is required.");
+    }
+
+    if(valid == false || validRegEx == false) {
         return false;
     } else {
         return true;
     }
 }
 
+//Deletes a record
 function deleteRecord(formID, array) {
     var params = {
         spreadsheetId: spreadsheetId,
@@ -890,6 +844,7 @@ function deleteRecord(formID, array) {
     }
 )}
 
+//Edits a record
 function editRecord(formID, row) {
     //Checking for invalid row selections first
     if(row.length > 1) {

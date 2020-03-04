@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" href="source.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script src="jquery-3.4.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
 </head>
 
@@ -63,7 +63,7 @@
     
                 <div id="handphoneNo" class="inputBox itemRequired">
                     <label>H/P No.</label><br><br>
-                    <input type="text" name="handphoneNo" required>
+                    <input type="text" name="handphoneNo" placeholder="xxx-xxxxxxx"pattern="\d{3}[\-]\d{7}" required>
                 </div>
     
                 <div id="contactPerson" class="inputBox itemRequired">

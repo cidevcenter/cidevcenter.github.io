@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" href="source.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script src="jquery-3.4.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -46,7 +46,7 @@
 
                 <div id="address" class="areaBox">
                     <label>Address</label><br><br>
-                    <textarea name="address" id="addressBox" rows="4" cols="50"></textarea>
+                    <textarea name="address" id="addressBox" class="areaBNReq" rows="4" cols="50"></textarea>
                 </div>
     
                 <div id="dob" class="inputBox">
@@ -66,7 +66,7 @@
     
                 <div id="phoneNo" class="areaBox">
                     <label>Phone No</label><br><br>
-                    <textarea name="phoneNo" id="phoneBox" rows="4" cols="50"></textarea>
+                    <textarea name="phoneNo" id="phoneBox" class="areaBNReq" rows="4" cols="50"></textarea>
                 </div>
     
                 <div id="intialContact" class="inputBox">
@@ -110,12 +110,12 @@
 
                 <div id="historyIllness" class="areaBox">
                     <label>History of Current Illness</label><br><br>
-                    <textarea name="historyIllness" id="historyIllness" rows="4" cols="50"></textarea>
+                    <textarea name="historyIllness" id="historyIllness" class="areaBNReq" rows="4" cols="50"></textarea>
                 </div>
 
                 <div id="pastMedicalIllness" class="areaBox">
                     <label>Past Medical Illness</label><br><br>
-                    <textarea name="pastMedicalIllness" id="pastMedicalIllness" rows="4" cols="50"></textarea>
+                    <textarea name="pastMedicalIllness" id="pastMedicalIllness" class="areaBNReq" rows="4" cols="50"></textarea>
                 </div>
 
                 <div id="history" class="inputBox">
@@ -793,7 +793,7 @@
 
                 <div id="extNotes" class="areaBox">
                 <label>Extra notes</label><br><br>
-                <textarea name="extNotes" rows="4" cols="50"></textarea>
+                <textarea name="extNotes" class="areaBNReq" rows="4" cols="50"></textarea>
                 </div>
             </div>
 
@@ -815,10 +815,9 @@
                 <span class="step"></span>
             </div>
         </form>
-    </div>
-    
-    <div id="content">
-        <pre id="content" style="white-space: pre-wrap;"></pre>
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
     </div>
     
     <script src="source.js"></script>

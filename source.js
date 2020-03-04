@@ -59,10 +59,9 @@ function nextPrev(n) {
     // This function will figure out which tab to display
     var x = document.getElementsByClassName("tab");
     console.log(x);
-    // Exit the function if any field in the current tab is invalid:
-    /*if (n == 1 && !validateForm()){
-        return false;
-    }*/
+
+    var pre = document.getElementById('content');
+    pre.innerText = "";
     // Hide the current tab:
     x[currentTab].style.display = "none";
     // Increase or decrease the current tab by 1:
@@ -113,6 +112,7 @@ function fixStepIndicator(n) {
     x[n].className += " active";
 }
 
+//Hides and show an element
 function showStuff(checkbox, id) {
     if($("#" + checkbox).is(":checked")) {
         document.getElementById(id).style.display = "block";
@@ -133,6 +133,7 @@ function showRow() {
     }
 }
 
+//For use with deleteRecord and editRecords, returns array of chosen records
 function toArray() {
     var array = new Array();
     var number = "";
@@ -150,203 +151,7 @@ function toArray() {
     return array;
 }
 
-function showRow() {
-    document.getElementById("rowCount").innerText = "";
-    for(var i = 0; i < document.getElementsByName("row").length; i++){
-        if(document.getElementsByName("row")[i].checked == true) {
-            var textNode = document.createTextNode(document.getElementsByName("row")[i].value + '\n');
-            document.getElementById('rowCount').appendChild(textNode);
-        }
-        
-    }
-}
-
-function toArray() {
-    var array = new Array();
-    var number = "";
-
-    for(var i = 0; i < document.getElementById('rowCount').innerText.length; i++) {
-        if(document.getElementById('rowCount').innerText[i] != '\n') {
-            number += document.getElementById('rowCount').innerText[i];
-        }
-        else {
-            array.push(parseInt(number));
-            number = "";
-        }
-    }
-
-    return array;
-}
-
-function showRow() {
-    document.getElementById("rowCount").innerText = "";
-    for(var i = 0; i < document.getElementsByName("row").length; i++){
-        if(document.getElementsByName("row")[i].checked == true) {
-            var textNode = document.createTextNode(document.getElementsByName("row")[i].value + '\n');
-            document.getElementById('rowCount').appendChild(textNode);
-        }
-        
-    }
-}
-
-function toArray() {
-    var array = new Array();
-    var number = "";
-
-    for(var i = 0; i < document.getElementById('rowCount').innerText.length; i++) {
-        if(document.getElementById('rowCount').innerText[i] != '\n') {
-            number += document.getElementById('rowCount').innerText[i];
-        }
-        else {
-            array.push(parseInt(number));
-            number = "";
-        }
-    }
-
-    return array;
-}
-
-function showRow() {
-    document.getElementById("rowCount").innerText = "";
-    for(var i = 0; i < document.getElementsByName("row").length; i++){
-        if(document.getElementsByName("row")[i].checked == true) {
-            var textNode = document.createTextNode(document.getElementsByName("row")[i].value + '\n');
-            document.getElementById('rowCount').appendChild(textNode);
-        }
-        
-    }
-}
-
-function toArray() {
-    var array = new Array();
-    var number = "";
-
-    for(var i = 0; i < document.getElementById('rowCount').innerText.length; i++) {
-        if(document.getElementById('rowCount').innerText[i] != '\n') {
-            number += document.getElementById('rowCount').innerText[i];
-        }
-        else {
-            array.push(parseInt(number));
-            number = "";
-        }
-    }
-
-    return array;
-}
-
-function showRow() {
-    document.getElementById("rowCount").innerText = "";
-    for(var i = 0; i < document.getElementsByName("row").length; i++){
-        if(document.getElementsByName("row")[i].checked == true) {
-            var textNode = document.createTextNode(document.getElementsByName("row")[i].value + '\n');
-            document.getElementById('rowCount').appendChild(textNode);
-        }
-        
-    }
-}
-
-function toArray() {
-    var array = new Array();
-    var number = "";
-
-    for(var i = 0; i < document.getElementById('rowCount').innerText.length; i++) {
-        if(document.getElementById('rowCount').innerText[i] != '\n') {
-            number += document.getElementById('rowCount').innerText[i];
-        }
-        else {
-            array.push(parseInt(number));
-            number = "";
-        }
-    }
-
-    return array;
-}
-
-function showRow() {
-    document.getElementById("rowCount").innerText = "";
-    for(var i = 0; i < document.getElementsByName("row").length; i++){
-        if(document.getElementsByName("row")[i].checked == true) {
-            var textNode = document.createTextNode(document.getElementsByName("row")[i].value + '\n');
-            document.getElementById('rowCount').appendChild(textNode);
-        }
-        
-    }
-}
-
-function toArray() {
-    var array = new Array();
-    var number = "";
-
-    for(var i = 0; i < document.getElementById('rowCount').innerText.length; i++) {
-        if(document.getElementById('rowCount').innerText[i] != '\n') {
-            number += document.getElementById('rowCount').innerText[i];
-        }
-        else {
-            array.push(parseInt(number));
-            number = "";
-        }
-    }
-
-    return array;
-}
-
-function showRow() {
-    document.getElementById("rowCount").innerText = "";
-    for(var i = 0; i < document.getElementsByName("row").length; i++){
-        if(document.getElementsByName("row")[i].checked == true) {
-            var textNode = document.createTextNode(document.getElementsByName("row")[i].value + '\n');
-            document.getElementById('rowCount').appendChild(textNode);
-        }
-        
-    }
-}
-
-function toArray() {
-    var array = new Array();
-    var number = "";
-
-    for(var i = 0; i < document.getElementById('rowCount').innerText.length; i++) {
-        if(document.getElementById('rowCount').innerText[i] != '\n') {
-            number += document.getElementById('rowCount').innerText[i];
-        }
-        else {
-            array.push(parseInt(number));
-            number = "";
-        }
-    }
-
-    return array;
-}
-
-function showRow() {
-    document.getElementById("rowCount").innerText = "";
-    for(var i = 0; i < document.getElementsByName("row").length; i++){
-        if(document.getElementsByName("row")[i].checked == true) {
-            var textNode = document.createTextNode(document.getElementsByName("row")[i].value + '\n');
-            document.getElementById('rowCount').appendChild(textNode);
-        }
-        
-    }
-}
-
-function toArray() {
-    var array = new Array();
-    var number = "";
-
-    for(var i = 0; i < document.getElementById('rowCount').innerText.length; i++) {
-        if(document.getElementById('rowCount').innerText[i] != '\n') {
-            number += document.getElementById('rowCount').innerText[i];
-        }
-        else {
-            array.push(parseInt(number));
-            number = "";
-        }
-    }
-
-    return array;
-}
-
-$(':required').one('blur keydown', function() {
-    console.log('touched', this);
+//Makes it so the required inputs only show styles after user has clicked it
+$(':required').on('blur keydown', function() {
     $(this).addClass('touched');
 });

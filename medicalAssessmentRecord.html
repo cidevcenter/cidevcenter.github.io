@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" href="source.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script src="jquery-3.4.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -67,7 +67,7 @@
 
             <div id="address" class="areaBox">
                 <label>Address</label><br><br>
-                <textarea name="address" id="addressBox" rows="4" cols="50"></textarea>
+                <textarea name="address" id="addressBox" class="areaBNReq" rows="4" cols="50"></textarea>
             </div>
 
             <div id="dob" class="inputBox">
@@ -87,7 +87,7 @@
 
             <div id="phoneNo" class="areaBox">
                 <label>Phone No</label><br><br>
-                <textarea name="phoneNo" id="phoneBox" rows="4" cols="50"></textarea>
+                <textarea name="phoneNo" id="phoneBox" class="areaBNReq" rows="4" cols="50"></textarea>
             </div>
 
             <div id="intialContact" class="inputBox">
@@ -113,7 +113,7 @@
 
                 <label>Caregiver</label><br><br>
                 <input type="text" name="languageSpokenCaregiver">
-
+             
             </div>
         </div>
 
@@ -131,12 +131,12 @@
 
             <div id="historyIllness" class="areaBox">
                 <label>History of Current Illness</label><br><br>
-                <textarea name="historyIllness" id="historyIllness" rows="4" cols="50"></textarea>
+                <textarea name="historyIllness" id="historyIllness" class="areaBNReq" rows="4" cols="50"></textarea>
             </div>
 
             <div id="pastMedicalIllness" class="areaBox">
                 <label>Past Medical Illness</label><br><br>
-                <textarea name="pastMedicalIllness" id="pastMedicalIllness" rows="4" cols="50"></textarea>
+                <textarea name="pastMedicalIllness" id="pastMedicalIllness" class="areaBNReq" rows="4" cols="50"></textarea>
             </div>
 
             <div id="history" class="inputBox">
@@ -242,7 +242,7 @@
 
                 <div id="genoGram" class="inputBox">
                     <label>Genogram</label><br><br>
-                    <input type="button" id="genoImage" value="Show Image">
+                  <input type="button" id="genoImage" value="Show Image">
                 </div>
             </div>
         </div>
@@ -252,9 +252,8 @@
             <h2>Emotional Assessment of Patient</h2>
             <div id="emotionAssessment">
                 <div id="emotionStatement" class="inputBox">
-                    <p>Over the last two weeks, is the patient having the following symptoms?
-                        (If patient has 5 of these symptoms nearly every day for two weeks, they may be suffering from
-                        depression)</p>
+                    <p>Over the last two weeks, is the patient having the following symptoms? 
+                    (If patient has 5 of these symptoms nearly every day for two weeks, they may be suffering from depression)</p>
                 </div>
 
                 <div class="radioBox">
@@ -268,7 +267,7 @@
                         <span class="checkMark"></span>
                     </label>
                 </div>
-
+                
                 <div class="radioBox">
                     <label>2. Feeling hopeless</label><br><br>
                     <label class="containerCheckMark">Yes
@@ -371,7 +370,7 @@
             </div>
 
         </div>
-
+   
         <!--General Examination-->
         <div class="tab">
             <h2>General Examination</h2>
@@ -457,34 +456,31 @@
 
             <div id="pulse" class="inputBox">
                 <label>Pulse</label><br><br>
-                <input type="text" name="pulse" class="inputBoxSmaller">&nbsp;/ min <input type="text" name="pulseMin"
-                    class="inputBoxSmaller">
+                <input type="text" name="pulse" class="inputBoxSmaller">&nbsp;/ min <input type="text" name="pulseMin" class="inputBoxSmaller">
             </div>
 
-            <div id="respiratoryRate" class="inputBox">
+            <div id="respiratoryRate"  class="inputBox">
                 <label>Respiratory Rate</label><br><br>
                 <input type="text" name="respiratory" class="inputBoxSmall">&nbsp;/ min
             </div>
 
-            <div id="spO2" class="inputBox">
+            <div id="spO2"  class="inputBox">
                 <label>spO2</label><br><br>
                 <input type="text" name="spO2roomAirPercent" class="inputBoxSmaller">&nbsp;% (room air)<br>
-                <input type="text" name="spO2L%" class="inputBoxSmaller">&nbsp;% (<input type="text" name="spO2L"
-                    class="inputBoxSmaller">&nbsp;L O2)
+                <input type="text" name="spO2L%" class="inputBoxSmaller">&nbsp;% (<input type="text" name="spO2L" class="inputBoxSmaller">&nbsp;L O2)
             </div>
 
-            <div id="glucose" class="inputBox">
+            <div id="glucose"  class="inputBox">
                 <label>Glucose</label><br><br>
-                <input type="text" name="glucose" class="inputBoxSmaller">&nbsp;mmol/l&nbsp;<input type="text"
-                    name="glucoseMMOL" class="inputBoxSmaller">
+                <input type="text" name="glucose" class="inputBoxSmaller">&nbsp;mmol/l&nbsp;<input type="text" name="glucoseMMOL" class="inputBoxSmaller">
             </div>
 
-            <div id="temperature" class="inputBox">
+            <div id="temperature"  class="inputBox">
                 <label>Temperature</label><br><br>
                 <input type="text" name="temperature" class="inputBoxSmall">°C
             </div>
 
-            <div id="oralCavity" class="inputBox">
+            <div id="oralCavity"  class="inputBox">
                 <label>Oral Cavity</label><br><br>
                 <input type="text" name="oralCavity">
             </div>
@@ -611,7 +607,7 @@
             <h3><u>Musculoskeletal System</u></h3>
             <div id="musclePow" class="inputBox">
                 <label>Muscle Power</label><br><br>
-                <div id="rightUL">
+                <div id="rightUL" >
                     <label>Right UL</label><br><br>
                     <input type="text" name="rightUL"><br><br>
                 </div>
@@ -732,93 +728,93 @@
             <h2>Systemic Examination</h2>
             <h3><u>Cranial Nerves</u></h3>
             <div id="smell" class="inputBox">
-                <label>I. Smell</label><br><br>
-                <input type="text" name="smell">
+            <label>I. Smell</label><br><br>
+            <input type="text" name="smell">
             </div>
 
             <div id="vision" class="inputBox">
-                <label>II. Vision</label><br><br>
-                <input type="text" name="vision">
+            <label>II. Vision</label><br><br>
+            <input type="text" name="vision">
             </div>
 
             <div id="lightDetection" class="inputBox">
-                <label>Detection of Light</label><br><br>
-                <input type="text" name="lightDetection">
+            <label>Detection of Light</label><br><br>
+            <input type="text" name="lightDetection">
             </div>
 
             <div id="eyeMovement" class="inputBox">
-                <label>III. Eye movement upward, downward, inward</label><br><br>
-                <input type="text" name="eyeMovement">
+            <label>III. Eye movement upward, downward, inward</label><br><br>
+            <input type="text" name="eyeMovement">
             </div>
 
             <div id="raiseEyelid" class="inputBox">
-                <label>IV. Raises eyelid</label><br><br>
-                <input type="text" name="raiseEyelid">
+            <label>IV. Raises eyelid</label><br><br>
+            <input type="text" name="raiseEyelid">
             </div>
 
             <div id="eyeMovement2" class="inputBox">
-                <label>V. Eye movement downward and inward</label><br><br>
-                <input type="text" name="eyeMovement2">
+            <label>V. Eye movement downward and inward</label><br><br>
+            <input type="text" name="eyeMovement2">
             </div>
 
             <div id="facialSensation" class="inputBox">
-                <label>VI. Facial sensation and chewing</label><br><br>
-                <input type="text" name="facialSensation">
+            <label>VI. Facial sensation and chewing</label><br><br>
+            <input type="text" name="facialSensation">
             </div>
 
             <div id="eyeMovement3" class="inputBox">
-                <label>VII. Eye movement outward</label><br><br>
-                <input type="text" name="eyeMovement3">
+            <label>VII. Eye movement outward</label><br><br>
+            <input type="text" name="eyeMovement3">
             </div>
 
             <div id="facialExpression" class="inputBox">
-                <label>Facial expression</label><br><br>
-                <input type="text" name="facialExpression">
+            <label>Facial expression</label><br><br>
+            <input type="text" name="facialExpression">
             </div>
 
             <div id="taste" class="inputBox">
-                <label>Taste in front 2/3 of tongue</label><br><br>
-                <input type="text" name="taste">
+            <label>Taste in front 2/3 of tongue</label><br><br>
+            <input type="text" name="taste">
             </div>
 
             <div id="productionTears" class="inputBox">
-                <label>VIII. Production of tears and saliva</label><br><br>
-                <input type="text" name="productionTears">
+            <label>VIII. Production of tears and saliva</label><br><br>
+            <input type="text" name="productionTears">
             </div>
 
             <div id="hearingBalance" class="inputBox">
-                <label>IX,X. Hearing and Balance</label><br><br>
-                <input type="text" name="hearingBalance">
+            <label>IX,X. Hearing and Balance</label><br><br>
+            <input type="text" name="hearingBalance">
             </div>
 
             <div id="swallowing" class="inputBox">
-                <label>Swallowing</label><br><br>
-                <input type="text" name="swallowing">
+            <label>Swallowing</label><br><br>
+            <input type="text" name="swallowing">
             </div>
 
             <div id="gagReflex" class="inputBox">
-                <label>Gag reflex</label><br><br>
-                <input type="text" name="gagReflex">
+            <label>Gag reflex</label><br><br>
+            <input type="text" name="gagReflex">
             </div>
 
             <div id="speechNerve" class="inputBox">
-                <label>XI. Speech</label><br><br>
-                <input type="text" name="speechNerve">
+            <label>XI. Speech</label><br><br>
+            <input type="text" name="speechNerve">
             </div>
 
             <div id="shrugging" class="inputBox">
-                <label>XII. Shrugging of shoulder</label><br><br>
-                <input type="text" name="shrugging">
+            <label>XII. Shrugging of shoulder</label><br><br>
+            <input type="text" name="shrugging">
             </div>
 
             <div id="tongueMovement" class="inputBox">
-                <label>Tongue movement</label><br><br>
-                <input type="text" name="tongueMovement">
+            <label>Tongue movement</label><br><br>
+            <input type="text" name="tongueMovement">
             </div>
 
             <div id="extNotes" class="areaBox">
-                <label>Extra notes</label><br><br>
-                <textarea name="extNotes" rows="4" cols="50"></textarea>
+            <label>Extra notes</label><br><br>
+            <textarea name="extNotes" class="areaBNReq" rows="4" cols="50"></textarea>
             </div>
         </div>
 
