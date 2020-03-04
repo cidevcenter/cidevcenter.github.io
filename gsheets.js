@@ -96,66 +96,74 @@ function searchSheet(range) {
         var input = document.getElementById("patientNameSearch").innerText;
     }
 
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: spreadsheetId,
-        range: range,
-    }).then(function (response) {
-        headerGenerated = false;
-        var range = response.result;
-        var count = 0;
-        header = range.values[0];
-        if (range.values.length > 0) {
-            removeTable();
-            //i = 1 because we skip the header
-            for (i = 1; i < range.values.length; i++) {
-                var row = range.values[i];
-                // Searches against which row, we control how we want user to search here
-                if (input === row[2] || (input === row[3] && formID == 'referralRecord') || (input === row[2] && formID == 'medicalAssessmentRecord') || (input === row[123] && formID == 'patientContinuationRecord')) {
-                    khcno = row[2];
-                    name = row[3];
-                    //Show searched records
-                    if (formID == 'extraNotesForm' || formID == 'medicationForm' || formID == 'medicationEquipmentForm' || formID == 'homeVisitForm' ||
-                        formID == 'endOfLifeForm' || formID == 'referralRecord' || formID == 'medicalAssessmentRecord' || formID == 'patientContinuationRecord') {
+    //Checks if user is authorized first before doing anything
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        alert("Please authorize before searching records.");
+        return;
+    } else {
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: spreadsheetId,
+            range: range,
+        }).then(function (response) {
+            headerGenerated = false;
+            var range = response.result;
+            var count = 0;
+            header = range.values[0];
+            if (range.values.length > 0) {
+                removeTable();
+                //i = 1 because we skip the header
+                for (i = 1; i < range.values.length; i++) {
+                    var row = range.values[i];
+                    // Searches against which row, we control how we want user to search here
+                    if (input === row[2] || (input === row[3] && formID == 'referralRecord') || (input === row[2] && formID == 'medicalAssessmentRecord') || (input === row[123] && formID == 'patientContinuationRecord')) {
+                        khcno = row[2];
+                        name = row[3];
+                        //Show searched records
+                        if (formID == 'extraNotesForm' || formID == 'medicationForm' || formID == 'medicationEquipmentForm' || formID == 'homeVisitForm' ||
+                            formID == 'endOfLifeForm' || formID == 'referralRecord' || formID == 'medicalAssessmentRecord' || formID == 'patientContinuationRecord') {
+                            if (!headerGenerated) {
+                                generateTableHead(table, header);
+                                
+                                headerGenerated = true;
+                            }
+                            data.push(row);
+                            generateTable(table, row, i);
+                        }
+    
+                        count++;
+                    }
+                    //Shows all records
+                    else if ((formID == 'medicalAssessmentRecord' || formID == 'referralRecord' || formID == 'patientContinuationRecord') && input === "") {
                         if (!headerGenerated) {
                             generateTableHead(table, header);
-                            
                             headerGenerated = true;
                         }
                         data.push(row);
                         generateTable(table, row, i);
+                        count++;
                     }
+                }
+                if (count > 0) {
+                    alert("We have found " + count + " record(s).");
+                    document.getElementById("extraNotes").setAttribute("href", "extraNotes.html?khcno=" + khcno +"&name=" + name);
+                    document.getElementById("medicationForm").setAttribute("href", "medicationForm.html?khcno=" + khcno +"&name=" + name);
+                    document.getElementById("medicationEquipmentForm").setAttribute("href", "medicationEquipmentForm.html?khcno=" + khcno +"&name=" + name);
+                    document.getElementById("homeVisitForm").setAttribute("href", "homeVisitForm.html?khcno=" + khcno +"&name=" + name);
+                    document.getElementById("endOfLifeForm").setAttribute("href", "endOfLifeForm.html?khcno=" + khcno +"&name=" + name);
+                    document.getElementById("links").setAttribute("style", "display: block");
+                }
+                else {
+                    alert('No records found.');
+                }
+            } else {
+                alert('Not initialized.');
+            }
+        }, function (response) {
+            alert('Error: ' + response.result.error.message);
+        });
+    }
 
-                    count++;
-                }
-                //Shows all records
-                else if ((formID == 'medicalAssessmentRecord' || formID == 'referralRecord' || formID == 'patientContinuationRecord') && input === "") {
-                    if (!headerGenerated) {
-                        generateTableHead(table, header);
-                        headerGenerated = true;
-                    }
-                    data.push(row);
-                    generateTable(table, row, i);
-                    count++;
-                }
-            }
-            if (count > 0) {
-                alert("We have found " + count + " record(s).");
-                document.getElementById("extraNotes").setAttribute("href", "extraNotes.html?khcno=" + khcno +"&name=" + name);
-                document.getElementById("medicationForm").setAttribute("href", "medicationForm.html?khcno=" + khcno +"&name=" + name);
-                document.getElementById("medicationEquipmentForm").setAttribute("href", "medicationEquipmentForm.html?khcno=" + khcno +"&name=" + name);
-                document.getElementById("homeVisitForm").setAttribute("href", "homeVisitForm.html?khcno=" + khcno +"&name=" + name);
-                document.getElementById("endOfLifeForm").setAttribute("href", "endOfLifeForm.html?khcno=" + khcno +"&name=" + name);
-                document.getElementById("links").setAttribute("style", "display: block");
-            }
-            else {
-                alert('No records found.');
-            }
-        } else {
-            alert('Not initialized.');
-        }
-    }, function (response) {
-        alert('Error: ' + response.result.error.message);
-    });
+    
 }
 
 //Removes the generated tables
@@ -762,16 +770,21 @@ function appendForm(formID) {
     }
 
     if(checkRequired()){
-        gapi.client.sheets.spreadsheets.values.append({
-            spreadsheetId: spreadsheetId,
-            range: rangeForm,
-            valueInputOption: "RAW",
-            resource: body
-        }).then((response) => {
-            var result = response.result;
-            console.log(`${result.updates.updatedCells} cells appended.`)
-            appendPre("Submitted.");
-        });
+        if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+            gapi.client.sheets.spreadsheets.values.append({
+                spreadsheetId: spreadsheetId,
+                range: rangeForm,
+                valueInputOption: "RAW",
+                resource: body
+            }).then((response) => {
+                var result = response.result;
+                console.log(`${result.updates.updatedCells} cells appended.`)
+                appendPre("Submitted.");
+            });
+        }
+        else{
+            alert('Please authorize before submitting.');
+        }
     }
     
 }
@@ -811,38 +824,43 @@ function checkRequired() {
 
 //Deletes a record
 function deleteRecord(formID, array) {
-    var params = {
-        spreadsheetId: spreadsheetId,
-    }
-
-    var batchUpdateValuesRequestBody = {
-        requests: []
-    };
-
-    for(var i = 0; i < array.length; i++) {
-        batchUpdateValuesRequestBody.requests.push(
-            {
-                "deleteDimension":{
-                    "range": {
-                        "sheetId": formID,
-                        "dimension": "ROWS",
-                        "startIndex": parseInt(array[i]),
-                        "endIndex": parseInt(array[i]) + 1,
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        alert("Please authorize before deleting records.");
+        return;
+    } else {
+        var params = {
+            spreadsheetId: spreadsheetId,
+        }
+    
+        var batchUpdateValuesRequestBody = {
+            requests: []
+        };
+    
+        for(var i = 0; i < array.length; i++) {
+            batchUpdateValuesRequestBody.requests.push(
+                {
+                    "deleteDimension":{
+                        "range": {
+                            "sheetId": formID,
+                            "dimension": "ROWS",
+                            "startIndex": parseInt(array[i]),
+                            "endIndex": parseInt(array[i]) + 1,
+                        }
                     }
                 }
+            )
+    
+            for(var j = 0; j < array.length; j++) {
+                array[j]--;
             }
-        )
-
-        for(var j = 0; j < array.length; j++) {
-            array[j]--;
         }
+        console.log(batchUpdateValuesRequestBody.requests);
+        gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateValuesRequestBody).then(function(response) {
+            console.log(response.result);
+            appendPre("Records deleted. Refresh the page to see the result.")
+        })
     }
-    console.log(batchUpdateValuesRequestBody.requests);
-    gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateValuesRequestBody).then(function(response) {
-        console.log(response.result);
-        appendPre("Records deleted. Refresh the page to see the result.")
-    }
-)}
+}
 
 //Edits a record
 function editRecord(formID, row) {
@@ -1368,13 +1386,17 @@ function editRecord(formID, row) {
 
     }
 
-    var request = gapi.client.sheets.spreadsheets.values.update(params, body);
-    request.then(function(response) {
-        console.log(response.result);
-        appendPre("Records edited. Refresh the page to see the result.")
-    }, function(reason) {
-        console.log(reason);
-        console.log('error: ' + reason.result.error.message);
-    
-    });
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        alert("Please authorize before editing records.");
+        return;
+    } else {
+        var request = gapi.client.sheets.spreadsheets.values.update(params, body);
+        request.then(function(response) {
+            console.log(response.result);
+            appendPre("Records edited. Refresh the page to see the result.")
+        }, function(reason) {
+            console.log(reason);
+            console.log('error: ' + reason.result.error.message);
+        });
+    }
 }
