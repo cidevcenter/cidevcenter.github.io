@@ -50,9 +50,17 @@ function initClient() {
 
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
+        if (document.getElementById("formID").innerText == 'mainMenu') {
+            document.getElementById('warning').style.display = 'none';
+            document.getElementById('links').style.display = 'block';
+        }
         authorizeButton.style.display = 'none'; //none
         signoutButton.style.display = 'block';
     } else {
+        if (document.getElementById("formID").innerText == 'mainMenu') {
+            document.getElementById('warning').style.display = 'block';
+            document.getElementById('links').style.display = 'none';
+        }
         authorizeButton.style.display = 'block';
         signoutButton.style.display = 'none'; //none
     }
