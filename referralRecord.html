@@ -68,6 +68,7 @@
             <div id="sex" class="inputBox">
                 <label>Sex</label><br><br>
                 <select name="sex">
+                    <option value="">--Select Sex--</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
@@ -86,7 +87,7 @@
 
             <div id="handphoneNo" class="inputBox">
                 <label>H/P No.</label><br><br>
-                <input type="text" name="handphoneNo" placeholder="xxx-xxxxxxx"pattern="\d{3}[\-]\d{7}">
+                <input type="text" name="handphoneNo" pattern="[0-9]">
             </div>
 
             <div id="contactPerson" class="inputBox">
@@ -101,7 +102,7 @@
 
             <div id="telephoneNo" class="inputBox">
                 <label>Telephone No.</label><br><br>
-                <input type="text" name="telephoneNo" placeholder="xxx-xxxxxxx"pattern="\d{3}[\-]\d{7}">
+                <input type="text" name="telephoneNo" pattern="[0-9]">
                 <div id="inputLine"></div>
             </div>
 
@@ -138,6 +139,11 @@
 
                 <label class="containerCheckMark">Good
                     <input type="radio" name="prognosis" value="Good">
+                    <span class="checkMark"></span>
+                </label>
+
+                <label class="containerCheckMark">None
+                    <input type="radio" name="prognosis" value="None">
                     <span class="checkMark"></span>
                 </label>
             </div>
@@ -202,12 +208,12 @@
 
             <div id="officePhoneNo", class="inputBox">
                 <label>Office Phone No.</label><br><br>
-                <input type="text" name="officePhoneNo">
+                <input type="text" name="officePhoneNo" pattern="[0-9]">
             </div>
 
             <div id="faxNo", class="inputBox">
                 <label>Fax No.</label><br><br>
-                <input type="text" name="faxNo">
+                <input type="text" name="faxNo" pattern="[0-9]">
             </div>
 
             <div id="date", class="inputBox">

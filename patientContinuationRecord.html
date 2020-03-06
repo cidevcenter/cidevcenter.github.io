@@ -46,7 +46,7 @@
         </div>
 
         <div class="tab">
-            <div id="patientName", class="inputBox">
+            <div id="patientName" , class="inputBox">
                 <label>Patient Name</label><br><br>
                 <input type="text" name="patientName" required>
             </div>
@@ -87,18 +87,21 @@
                         <label>Duration</label><br><br>
                         <input type="text" name="duration1" placeholder="a)" class="inputBoxSmall">
                         <select name="durationDayWeekMonth1" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="Day">Day</option>
                             <option value="Week">Week</option>
                             <option value="Month">Month</option>
                         </select>
                         <input type="text" name="duration2" placeholder="b)" class="inputBoxSmall">
                         <select name="durationDayWeekMonth2" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="Day">Day</option>
                             <option value="Week">Week</option>
                             <option value="Month">Month</option>
                         </select>
                         <input type="text" name="duration3" placeholder="c)" class="inputBoxSmall">
                         <select name="durationDayWeekMonth3" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="Day">Day</option>
                             <option value="Week">Week</option>
                             <option value="Month">Month</option>
@@ -108,11 +111,13 @@
                     <div id="radiationPain" class="inputBox">
                         <label class="container">Radiation of Pain<br><br>
                             <label class="containerCheckMark">Y
-                                <input type="radio" name="radiationPain" id="radiationPainYes" value="Yes" onchange="showStuff('radiationPainYes', 'placeOfPain')">
+                                <input type="radio" name="radiationPain" id="radiationPainYes" value="Yes"
+                                    onchange="showStuff('radiationPainYes', 'placeOfPain')">
                                 <span class="checkMark"></span>
                             </label>
                             <label class="containerCheckMark">N
-                                <input type="radio" name="radiationPain" value="No" onchange="showStuff('radiationPainYes', 'placeOfPain')">
+                                <input type="radio" name="radiationPain" value="No"
+                                    onchange="showStuff('radiationPainYes', 'placeOfPain')">
                                 <span class="checkMark"></span>
                             </label>
                         </label>
@@ -125,11 +130,15 @@
 
                     <div id="painInterval" class="inputBox">
                         <label class="containerCheckMark">Intermittent
-                            <input type="radio" name="painInterval" value="Intermittent"">
-                            <span class="checkMark"></span>
+                            <input type="radio" name="painInterval" value="Intermittent">
+                                <span class=" checkMark"></span>
                         </label>
                         <label class="containerCheckMark">Continuous
-                            <input type="radio" name="painInterval" value="Continuous"">
+                            <input type="radio" name="painInterval" value="Continuous">
+                                <span class=" checkMark"></span>
+                        </label>
+                        <label class="containerCheckMark">N/A
+                            <input type="radio" name="painInterval" value="N/A">
                             <span class="checkMark"></span>
                         </label>
                     </div>
@@ -200,7 +209,8 @@
                         <div id="numericalScale">
                             <label>Numerical Scale (0 - No Pain, 10 - Severe Pain)</label>
                             <div class="slidecontainer">
-                                <input type="range" min="0" max="10" value="0" class="slider" id="range" name="numericalScale">
+                                <input type="range" min="0" max="10" value="0" class="slider" id="range"
+                                    name="numericalScale">
                             </div>
                             <div id="numberBar">
                                 <table>
@@ -224,6 +234,7 @@
                         <div id="verbalScore">
                             <label>Verbal Description Score</label><br><br>
                             <select name="verbalScore" class="select">
+                                <option value="">--Select Verbal Score--</option>
                                 <option value="Mild">Mild</option>
                                 <option value="Moderate">Moderate</option>
                                 <option value="Severe">Severe</option>
@@ -259,6 +270,7 @@
                         <label>Pain Relieved After</label><br><br>
                         <input type="text" name="painRelievedAfterValue" class="inputBoxSmall">
                         <select name="painRelievedAfterMinHr" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="mins">mins</option>
                             <option value="hrs">hrs</option>
                         </select>
@@ -269,7 +281,8 @@
                         <div id="numericalScaleAfter">
                             <label>Numerical Scale (0 - No Pain, 10 - Severe Pain)</label>
                             <div class="slidecontainer">
-                                <input type="range" min="0" max="10" value="0" class="slider" id="range" name="numericalScaleAfter">
+                                <input type="range" min="0" max="10" value="0" class="slider" id="range"
+                                    name="numericalScaleAfter">
                             </div>
                             <div id="numberBar">
                                 <table>
@@ -293,6 +306,7 @@
                         <div id="verbalScoreAfter">
                             <label>Verbal Description Score</label><br><br>
                             <select name="verbalScoreAfter" class="select">
+                                <option value="">--Select Verbal Score--</option>
                                 <option value="Mild">Mild</option>
                                 <option value="Moderate">Moderate</option>
                                 <option value="Severe">Severe</option>
@@ -303,7 +317,8 @@
                 </div>
 
                 <label class="container" style="margin-top: 10px;"><b>Shortness of Breath</b>
-                    <input type="checkbox" name="shortnessBreath" id="shortnessBreath" value="Yes" onchange="showStuff('shortnessBreath', 'shortnessBreathMenu')">
+                    <input type="checkbox" name="shortnessBreath" id="shortnessBreath" value="Yes"
+                        onchange="showStuff('shortnessBreath', 'shortnessBreathMenu')">
                     <span class="checkBox"></span><br>
                 </label>
 
@@ -312,6 +327,7 @@
                         <label>Duration</label><br><br>
                         <input type="text" name="durationShortnessBreath" class="inputBoxSmall">
                         <select name="durationShortnessBreathDayWeekMonth" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="Day">Day</option>
                             <option value="Week">Week</option>
                             <option value="Months">Months</option>
@@ -328,6 +344,10 @@
                             <span class="checkMark"></span>
                         </label>
                         <input type="text" name="whatExertion" placeholder="(what exertion)">
+                        <label class="containerCheckMark">N/A
+                            <input type="radio" name="shortnessBreathAt" value="N/A">
+                            <span class="checkMark"></span>
+                        </label>
                     </div>
 
                     <div id="shortnessBreathRelievedBy" class="inputBox">
@@ -338,6 +358,7 @@
                         </label>
                         <input type="text" name="durationResting" class="inputBoxSmall" style="margin-bottom: 15px;">
                         <select name="durationRestingDayWeekMonth" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="Minutes">mins</option>
                             <option value="Hours">hrs</option>
                         </select>
@@ -354,15 +375,18 @@
                         </label>
                         <input type="text" name="medicationsWithin" class="inputBoxSmall" style="margin-bottom: 15px;">
                         <select name="medicationsWithinMinHrs" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="Minutes">mins</option>
                             <option value="Hours">hrs</option>
                         </select>
-                        <input type="text" name="medicationsDosageFrequency" placeholder="(Medication, Dosage, Frequency)">
+                        <input type="text" name="medicationsDosageFrequency"
+                            placeholder="(Medication, Dosage, Frequency)">
                     </div>
                 </div>
 
                 <label class="container" style="margin-top: 10px;"><b>Cough</b>
-                    <input type="checkbox" name="cough" id="cough" value="Yes" onchange="showStuff('cough', 'coughMenu')">
+                    <input type="checkbox" name="cough" id="cough" value="Yes"
+                        onchange="showStuff('cough', 'coughMenu')">
                     <span class="checkBox"></span>
                 </label>
 
@@ -371,6 +395,7 @@
                         <label>Duration</label><br><br>
                         <input type="text" name="durationCough" class="inputBoxSmall">
                         <select name="durationCoughDuration" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="Day">Day</option>
                             <option value="Week">Week</option>
                             <option value="Months">Months</option>
@@ -387,29 +412,42 @@
                                 <input type="radio" name="productivity" value="Non Productive">
                                 <span class="checkMark"></span>
                             </label>
+                            <label class="containerCheckMark">N/A
+                                <input type="radio" name="productivity" value="N/A">
+                                <span class="checkMark"></span>
+                            </label>
                         </label>
                     </div>
-                    
+
                     <div id="sputum" class="inputBox">
                         <label class="container">Sputum<br><br>
                             <label class="containerCheckMark">Whitish
-                                <input type="radio" name="sputum" value="Whitist" onchange="showStuff('sputumOtr', 'sputumSta')">
+                                <input type="radio" name="sputum" value="Whitist"
+                                    onchange="showStuff('sputumOtr', 'sputumSta')">
                                 <span class="checkMark"></span>
                             </label>
                             <label class="containerCheckMark">Yellowish
-                                <input type="radio" name="sputum" value="Yellowish" onchange="showStuff('sputumOtr', 'sputumSta')">
+                                <input type="radio" name="sputum" value="Yellowish"
+                                    onchange="showStuff('sputumOtr', 'sputumSta')">
                                 <span class="checkMark"></span>
                             </label>
                             <label class="containerCheckMark">Greenish
-                                <input type="radio" name="sputum" value="Greenish" onchange="showStuff('sputumOtr', 'sputumSta')">
+                                <input type="radio" name="sputum" value="Greenish"
+                                    onchange="showStuff('sputumOtr', 'sputumSta')">
                                 <span class="checkMark"></span>
                             </label>
                             <label class="containerCheckMark">Blood Stained
-                                <input type="radio" name="sputum" value="Blood Stained" onchange="showStuff('sputumOtr', 'sputumSta')">
+                                <input type="radio" name="sputum" value="Blood Stained"
+                                    onchange="showStuff('sputumOtr', 'sputumSta')">
                                 <span class="checkMark"></span>
                             </label>
                             <label class="containerCheckMark">Other
-                                <input type="radio" name="sputum" id="sputumOtr" value="Other" onchange="showStuff('sputumOtr', 'sputumSta')">
+                                <input type="radio" name="sputum" id="sputumOtr" value="Other"
+                                    onchange="showStuff('sputumOtr', 'sputumSta')">
+                                <span class="checkMark"></span>
+                            </label>
+                            <label class="containerCheckMark">N/A
+                                <input type="radio" name="sputum" value="N/A">
                                 <span class="checkMark"></span>
                             </label>
                         </label>
@@ -429,12 +467,18 @@
                                 <input type="radio" name="expectoration" value="Difficult To Expectorate Out">
                                 <span class="checkMark"></span>
                             </label>
+                            <label class="containerCheckMark">N/A
+                                <input type="radio" name="expectoration" value="N/A">
+                                <span class="checkMark"></span>
+                            </label>
                         </label>
                     </div>
 
                     <div id="coughConsistency" class="inputBox">
                         <label>Consistency</label><br><br>
                         <select name="coughConsistency">
+                            <option value="">--Select Cough Consistency--</option>
+                            <option value="None">None</option>
                             <option value="Clear">Clear</option>
                             <option value="Frothy">Frothy</option>
                             <option value="Thick">Thick</option>
@@ -452,33 +496,43 @@
             <div id="physicalComplaints2" class="inputBox">
                 <label><b>Appetite</b></label><br><br>
                 <label class="containerCheckMark">Good
-                    <input type="radio" name="appetite" value="Good" onchange="showStuff('appetitePoor', 'durationAppetite')">
+                    <input type="radio" name="appetite" value="Good"
+                        onchange="showStuff('appetitePoor', 'durationAppetite')">
                     <span class="checkMark"></span>
                 </label>
-                
+
                 <label class="containerCheckMark">Moderate
-                    <input type="radio" name="appetite" value="Moderate" onchange="showStuff('appetitePoor', 'durationAppetite')">
+                    <input type="radio" name="appetite" value="Moderate"
+                        onchange="showStuff('appetitePoor', 'durationAppetite')">
                     <span class="checkMark"></span>
                 </label>
 
                 <label class="containerCheckMark">Poor
-                    <input type="radio" name="appetite" value="Poor" id="appetitePoor" onchange="showStuff('appetitePoor', 'durationAppetite')">
+                    <input type="radio" name="appetite" value="Poor" id="appetitePoor"
+                        onchange="showStuff('appetitePoor', 'durationAppetite')">
                     <span class="checkMark"></span>
                 </label>
-                    
+
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="appetite" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
+
                 <div id="durationAppetite" style="display: none;">
                     <label>If poor, duration </label><br>
                     <input type="text" name="durationAppetite" placeholder="" class="inputBoxSmall">
                     <select name="durationAppetiteDayWeekMonth" class="selectSmall">
+                        <option value="">--Select duration--</option>
                         <option value="Day">Day</option>
                         <option value="Week">Week</option>
                         <option value="Month">Month</option>
                     </select>
                 </div><br>
-        
+
                 <div id="oralBox">
                     <label class="container" style="margin-top: 10px;">Oral
-                        <input type="checkbox" name="oral" id="oral" value="Yes" onchange="showStuff('oral', 'oralInput')">
+                        <input type="checkbox" name="oral" id="oral" value="Yes"
+                            onchange="showStuff('oral', 'oralInput')">
                         <span class="checkBox"></span><br>
                     </label>
 
@@ -489,7 +543,8 @@
 
                 <div id="ngTubeBox">
                     <label class="container" style="margin-top: 10px;">NG Tube
-                        <input type="checkbox" name="ngTube" id="ngTube" value="Yes" onchange="showStuff('ngTube', 'ngInput')">
+                        <input type="checkbox" name="ngTube" id="ngTube" value="Yes"
+                            onchange="showStuff('ngTube', 'ngInput')">
                         <span class="checkBox"></span><br>
                     </label>
 
@@ -504,7 +559,8 @@
 
                 <div id="pegTubeBox">
                     <label class="container" style="margin-top: 10px;">PEG Tube
-                        <input type="checkbox" name="pegTube" id="pegTube" value="Yes" onchange="showStuff('pegTube', 'pegInput')">
+                        <input type="checkbox" name="pegTube" id="pegTube" value="Yes"
+                            onchange="showStuff('pegTube', 'pegInput')">
                         <span class="checkBox"></span><br>
                     </label>
 
@@ -517,7 +573,8 @@
                 </div>
 
                 <label class="container">Dysphagia
-                    <input type="checkbox" name="dysphagia" id="dysphagia" value="Yes" onchange="showStuff('dysphagia', 'dysphagiaType')">
+                    <input type="checkbox" name="dysphagia" id="dysphagia" value="Yes"
+                        onchange="showStuff('dysphagia', 'dysphagiaType')">
                     <span class="checkBox"></span><br>
                 </label>
 
@@ -529,6 +586,10 @@
                     <label class="containerCheckMark">Food
                         <input type="radio" name="dysphagiaType" value="Food">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">Both
+                        <input type="radio" name="dysphagiaType" value="Both">
+                        <span class="checkMark"></span>
                     </label><br>
                 </div>
 
@@ -536,14 +597,15 @@
                     <input type="checkbox" name="swallow" value="Yes">
                     <span class="checkBox"></span><br>
                 </label>
-            </div>          
+            </div>
         </div>
 
         <div class="tab">
             <h2>Physical Complaints</h2>
             <div id="physicalComplaints3" class="inputBox">
                 <label class="container" style="margin-top: 10px;"><b>Nausea and Vomiting</b>
-                    <input type="checkbox" name="nauseaVomit" id="nauseaVomit" value="Yes" onchange="showStuff('nauseaVomit', 'nauseaVomitMenu')">
+                    <input type="checkbox" name="nauseaVomit" id="nauseaVomit" value="Yes"
+                        onchange="showStuff('nauseaVomit', 'nauseaVomitMenu')">
                     <span class="checkBox"></span><br>
                 </label>
 
@@ -552,6 +614,7 @@
                         <label>Duration</label><br><br>
                         <input type="text" name="durationNV" class="inputBoxSmall">
                         <select name="durationNVDayWeekMonth" class="selectSmall">
+                            <option value="">--Select Duration--</option>
                             <option value="Day">Day</option>
                             <option value="Week">Week</option>
                             <option value="Months">Months</option>
@@ -563,26 +626,44 @@
                             <input type="radio" name="nauseaOrVomiting" value="Nausea">
                             <span class="checkMark"></span>
                         </label>
-                    
+
                         <label class="containerCheckMark">Vomiting
                             <input type="radio" name="nauseaOrVomiting" value="Vomiting">
+                            <span class="checkMark"></span>
+                        </label>
+
+                        <label class="containerCheckMark">Both
+                            <input type="radio" name="nauseaOrVomiting" value="Both">
+                            <span class="checkMark"></span>
+                        </label>
+
+                        <label class="containerCheckMark">N/A
+                            <input type="radio" name="nauseaOrVomiting" value="N/A">
                             <span class="checkMark"></span>
                         </label>
                     </div>
 
                     <div id="causeOfNV" class="inputBox">
                         <label class="containerCheckMark">Without food
-                            <input type="radio" name="causeOfNV" value="Without food" onchange="showStuff('hrsOfFood', 'hrsOfFoodInput')">
+                            <input type="radio" name="causeOfNV" value="Without food"
+                                onchange="showStuff('hrsOfFood', 'hrsOfFoodInput')">
                             <span class="checkMark"></span>
                         </label>
-                    
+
                         <label class="containerCheckMark">Immediately after food
-                            <input type="radio" name="causeOfNV" value="Immediately after food" onchange="showStuff('hrsOfFood', 'hrsOfFoodInput')">
+                            <input type="radio" name="causeOfNV" value="Immediately after food"
+                                onchange="showStuff('hrsOfFood', 'hrsOfFoodInput')">
                             <span class="checkMark"></span>
                         </label>
 
                         <label class="containerCheckMark">After hours of food
-                            <input type="radio" name="causeOfNV" value="After hours of food" id="hrsOfFood" onchange="showStuff('hrsOfFood', 'hrsOfFoodInput')">
+                            <input type="radio" name="causeOfNV" value="After hours of food" id="hrsOfFood"
+                                onchange="showStuff('hrsOfFood', 'hrsOfFoodInput')">
+                            <span class="checkMark"></span>
+                        </label>
+
+                        <label class="containerCheckMark">N/A
+                            <input type="radio" name="causeOfNV" value="N/A">
                             <span class="checkMark"></span>
                         </label>
 
@@ -596,7 +677,7 @@
                             <input type="radio" name="timeOfNV" value="Morning">
                             <span class="checkMark"></span>
                         </label>
-                    
+
                         <label class="containerCheckMark">Afternoon
                             <input type="radio" name="timeOfNV" value="Afternoon">
                             <span class="checkMark"></span>
@@ -604,6 +685,11 @@
 
                         <label class="containerCheckMark">Night
                             <input type="radio" name="timeOfNV" value="Night">
+                            <span class="checkMark"></span>
+                        </label>
+
+                        <label class="containerCheckMark">N/A
+                            <input type="radio" name="timeOfNV" value="N/A">
                             <span class="checkMark"></span>
                         </label>
                     </div>
@@ -629,19 +715,27 @@
                     <div id="vomitConsistency" class="inputBox">
                         <label class="container">Consistency of vomitus<br><br>
                             <label class="containerCheckMark">Undigested Food
-                                <input type="radio" name="vomitConsistency" value="Undigested Food" onchange="showStuff('vomitConsistencyOtr', 'vomitConsistencySta')">
+                                <input type="radio" name="vomitConsistency" value="Undigested Food"
+                                    onchange="showStuff('vomitConsistencyOtr', 'vomitConsistencySta')">
                                 <span class="checkMark"></span>
                             </label>
                             <label class="containerCheckMark">Coffee Ground
-                                <input type="radio" name="vomitConsistency" value="Coffee Ground" onchange="showStuff('vomitConsistencyOtr', 'vomitConsistencySta')">
+                                <input type="radio" name="vomitConsistency" value="Coffee Ground"
+                                    onchange="showStuff('vomitConsistencyOtr', 'vomitConsistencySta')">
                                 <span class="checkMark"></span>
                             </label>
                             <label class="containerCheckMark">Greenish
-                                <input type="radio" name="vomitConsistency" value="Greenish" onchange="showStuff('vomitConsistencyOtr', 'vomitConsistencySta')">
+                                <input type="radio" name="vomitConsistency" value="Greenish"
+                                    onchange="showStuff('vomitConsistencyOtr', 'vomitConsistencySta')">
                                 <span class="checkMark"></span>
                             </label>
                             <label class="containerCheckMark">Other
-                                <input type="radio" name="vomitConsistency" id="vomitConsistencyOtr" value="Other" onchange="showStuff('vomitConsistencyOtr', 'vomitConsistencySta')">
+                                <input type="radio" name="vomitConsistency" id="vomitConsistencyOtr" value="Other"
+                                    onchange="showStuff('vomitConsistencyOtr', 'vomitConsistencySta')">
+                                <span class="checkMark"></span>
+                            </label>
+                            <label class="containerCheckMark">N/A
+                                <input type="radio" name="vomitConsistency" value="N/A">
                                 <span class="checkMark"></span>
                             </label>
                         </label>
@@ -659,7 +753,7 @@
                     <input type="checkbox" name="bmAnus" value="Anus">
                     <span class="checkBox"></span><br>
                 </label>
-                
+
                 <label class="container">Colostomy
                     <input type="checkbox" name="bmColostomy" value="Colostomy">
                     <span class="checkBox"></span><br>
@@ -670,14 +764,15 @@
                     <span class="checkBox"></span><br>
                 </label><br>
 
-               
+
                 <label>Frequency</label><br>
-                <input type="text" name="bmFrequency" class="inputBoxSmaller">&nbsp;x per 
+                <input type="text" name="bmFrequency" class="inputBoxSmaller">&nbsp;x per
                 <select name="durationBMFrequncy" class="selectSmall">
+                    <option value="">--Select Duration--</option>
                     <option value="Day">Day</option>
                     <option value="Week">Week</option>
                 </select><br><br>
-                
+
                 <label>NBO</label><br>
                 <input type="text" name="bmNBO" class="inputBoxSmaller">&nbsp;days<br><br>
 
@@ -694,31 +789,41 @@
                         <input type="radio" name="stoolConsistency" value="Hard">
                         <span class="checkMark"></span>
                     </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="stoolConsistency" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </label>
 
                 <label class="container">Nature of stool<br><br>
                     <label class="containerCheckMark">Brownish
-                        <input type="radio" name="stoolNature" value="Brownish" onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
+                        <input type="radio" name="stoolNature" value="Brownish"
+                            onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
                         <span class="checkMark"></span>
                     </label>
                     <label class="containerCheckMark">Malena
-                        <input type="radio" name="stoolNature" value="Malena" onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
+                        <input type="radio" name="stoolNature" value="Malena"
+                            onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
                         <span class="checkMark"></span>
                     </label>
                     <label class="containerCheckMark">Greenish
-                        <input type="radio" name="stoolNature" value="Greenish" onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
+                        <input type="radio" name="stoolNature" value="Greenish"
+                            onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
                         <span class="checkMark"></span>
                     </label>
                     <label class="containerCheckMark">Mucous
-                        <input type="radio" name="stoolNature" value="Mucous" onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
+                        <input type="radio" name="stoolNature" value="Mucous"
+                            onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
                         <span class="checkMark"></span>
                     </label>
                     <label class="containerCheckMark">Fresh blood stained
-                        <input type="radio" name="stoolNature" id="freshBloodStain" value="Fresh blood stained" onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
+                        <input type="radio" name="stoolNature" id="freshBloodStain" value="Fresh blood stained"
+                            onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
                         <span class="checkMark"></span>
                     </label>
 
-                    <div id="freshBloodStainDetail" style="display: none; margin-bottom: 10px; padding-bottom: 0;" class="radioBox">
+                    <div id="freshBloodStainDetail" style="display: none; margin-bottom: 10px; padding-bottom: 0;"
+                        class="radioBox">
                         <label class="containerCheckMark">Before BO
                             <input type="radio" name="freshBloodStainDetail" value="Before BO">
                             <span class="checkMark"></span>
@@ -727,10 +832,21 @@
                             <input type="radio" name="freshBloodStainDetail" value="After BO">
                             <span class="checkMark"></span>
                         </label>
+                        <label class="containerCheckMark">N/A
+                            <input type="radio" name="freshBloodStainDetail" value="N/A">
+                            <span class="checkMark"></span>
+                        </label>
                     </div>
 
                     <label class="containerCheckMark">Water
-                        <input type="radio" name="stoolNature" id="waterStool" value="Water" onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
+                        <input type="radio" name="stoolNature" id="waterStool" value="Water"
+                            onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
+                        <span class="checkMark"></span>
+                    </label>
+
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="stoolNature" value="N/A"
+                            onchange="showStuff('waterStool', 'waterStoolDay'); showStuff('freshBloodStain', 'freshBloodStainDetail')">
                         <span class="checkMark"></span>
                     </label>
                 </label>
@@ -738,7 +854,7 @@
                 <div id="waterStoolDay" style="display: none;">
                     <input type="text" name="waterStoolDay" class="inputBoxSmaller">&nbsp;xday
                 </div><br>
-               
+
                 <label class="container">Incontinence<br><br>
                     <label class="containerCheckMark">Yes
                         <input type="radio" name="bmIncontinence" value="Yes">
@@ -757,7 +873,7 @@
                     <input type="checkbox" name="urineNormal" value="Normal (Toilet/Pampers)">
                     <span class="checkBox"></span><br>
                 </label>
-                
+
                 <label class="container">CBD
                     <input type="checkbox" name="urineCBD" value="CBD">
                     <span class="checkBox"></span><br>
@@ -769,7 +885,8 @@
                 </label>
 
                 <label class="container">Nephrostomy
-                    <input type="checkbox" id="urineNep" name="urineNep" value="Nephrostomy" onchange="showStuff('urineNep', 'nephrostomyRL')">
+                    <input type="checkbox" id="urineNep" name="urineNep" value="Nephrostomy"
+                        onchange="showStuff('urineNep', 'nephrostomyRL')">
                     <span class="checkBox"></span><br>
                 </label><br>
 
@@ -782,24 +899,40 @@
                         <input type="radio" name="nephrostomyRL" value="Left">
                         <span class="checkMark"></span>
                     </label>
+                    <label class="containerCheckMark">Both
+                        <input type="radio" name="nephrostomyRL" value="Both">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="nephrostomyRL" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div><br>
 
 
                 <label class="container">Colour<br><br>
                     <label class="containerCheckMark">Light Yellow
-                        <input type="radio" name="urineColour" value="Light Yellow" onchange="showStuff('urineColourOtr', 'urineColourSta')">
+                        <input type="radio" name="urineColour" value="Light Yellow"
+                            onchange="showStuff('urineColourOtr', 'urineColourSta')">
                         <span class="checkMark"></span>
                     </label>
                     <label class="containerCheckMark">Dark Tea Colour
-                        <input type="radio" name="urineColour" value="Dark Tea Colour" onchange="showStuff('urineColourOtr', 'urineColourSta')">
+                        <input type="radio" name="urineColour" value="Dark Tea Colour"
+                            onchange="showStuff('urineColourOtr', 'urineColourSta')">
                         <span class="checkMark"></span>
                     </label>
                     <label class="containerCheckMark">Haematuria
-                        <input type="radio" name="urineColour" value="Haematuria" onchange="showStuff('urineColourOtr', 'urineColourSta')">
+                        <input type="radio" name="urineColour" value="Haematuria"
+                            onchange="showStuff('urineColourOtr', 'urineColourSta')">
                         <span class="checkMark"></span>
                     </label>
                     <label class="containerCheckMark">Others
-                        <input type="radio" name="urineColour" id="urineColourOtr" value="Other" onchange="showStuff('urineColourOtr', 'urineColourSta')">
+                        <input type="radio" name="urineColour" id="urineColourOtr" value="Other"
+                            onchange="showStuff('urineColourOtr', 'urineColourSta')">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="urineColour" value="N/A">
                         <span class="checkMark"></span>
                     </label>
                 </label>
@@ -823,6 +956,10 @@
                     </label>
                     <label class="containerCheckMark">Pyuria
                         <input type="radio" name="urineNature" value="Pyuria">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="urineNature" value="N/A">
                         <span class="checkMark"></span>
                     </label>
                 </label><br>
@@ -892,6 +1029,10 @@
                 <label class="containerCheckMark">Disturbed
                     <input type="radio" name="sleepPattern" value="Disturbed">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="sleepPattern" value="N/A">
+                    <span class="checkMark"></span>
                 </label><br>
 
                 <input type="text" name="sleepHrs" class="inputBoxSmaller">&nbsp;hours per day<br>
@@ -906,7 +1047,7 @@
         </div>
 
         <div class="tab">
-            <div id="patientName", class="inputBox">
+            <div id="patientName" , class="inputBox">
                 <label>Patient Name</label><br><br>
                 <input type="text" name="examPatientName" required>
             </div>
@@ -929,6 +1070,7 @@
             <div id="examECOG" class="inputBox">
                 <label><u>On examination:</u> ECOG:&nbsp;</label>
                 <select name="examECOG" class="selectSmall">
+                    <option value="">--Select ECOG--</option>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -947,19 +1089,22 @@
                 </label>
                 <label class="container">Drowsy
 
-                    <input type="checkbox" name="drowsy" id="drowsy" value="Drowsy" onchange="showStuff('drowsy', 'arousalSel')">
+                    <input type="checkbox" name="drowsy" id="drowsy" value="Drowsy"
+                        onchange="showStuff('drowsy', 'arousalSel')">
                     <span class="checkBox"></span><br>
                 </label>
-                
+
                 <div id="arousalSel" style="display: none;">
                     <select name="arousal" class="selectSmall" display="none">
+                        <option value="">--Select Status--</option>
                         <option value="Arousable">Arousable</option>
                         <option value="Not arousable">Not arousable</option>
                     </select> to call<br><br>
                 </div>
-               
+
                 <label class="container">Confused
-                    <input type="checkbox" name="confused" id="confused" value="Confused" onchange="showStuff('confused', 'confusedTxt')">
+                    <input type="checkbox" name="confused" id="confused" value="Confused"
+                        onchange="showStuff('confused', 'confusedTxt')">
                     <span class="checkBox"></span><br>
                 </label>
 
@@ -1012,11 +1157,13 @@
                     <span class="checkBox"></span><br>
                 </label>
                 <select name="pitting1" class="selectSmaller">
+                    <option value="">--Select Pitting--</option>
                     <option value="Pitting">Pitting</option>
                     <option value="Non Pitting">Non Pitting</option>
                 </select>
                 <input type="text" name="pittingState1" class="inputBoxSmall"><br>
                 <select name="pitting2" class="selectSmaller">
+                    <option value="">--Select Pitting--</option>
                     <option value="Pitting">Pitting</option>
                     <option value="Non Pitting">Non Pitting</option>
                 </select>
@@ -1029,6 +1176,7 @@
                     <span class="checkBox"></span><br>
                 </label>
                 <select name="soreGrade1" class="selectSmaller">
+                    <option value="">--Select Grade--</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -1036,6 +1184,7 @@
                 </select>
                 <input type="text" name="soreGradeState1" class="inputBoxSmall"><br>
                 <select name="soreGrade2" class="selectSmaller">
+                    <option value="">--Select Grade--</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -1063,7 +1212,8 @@
                     <span class="checkBox"></span><br>
                 </label>
                 <label class="container">Other
-                    <input type="checkbox" name="ocOther" id="ocOther" value="Other" onchange="showStuff('ocOther', 'ocOtherTxt')">
+                    <input type="checkbox" name="ocOther" id="ocOther" value="Other"
+                        onchange="showStuff('ocOther', 'ocOtherTxt')">
                     <span class="checkBox"></span><br>
                 </label>
 
@@ -1091,7 +1241,8 @@
                     <span class="checkBox"></span>
                 </label>
                 <label class="container">Others
-                    <input type="checkbox" name="skinOthers" id="skinOtr" value="Yes" onchange="showStuff('skinOtr', 'skinSta')">
+                    <input type="checkbox" name="skinOthers" id="skinOtr" value="Yes"
+                        onchange="showStuff('skinOtr', 'skinSta')">
                     <span class="checkBox"></span>
                 </label>
 
@@ -1102,35 +1253,42 @@
 
             <div id="generalExam8" class="inputBox">
                 <label>BP:&nbsp;
-                <input type="text" name="bp" class="inputBoxSmall">&nbsp;mm Hg</label>
+                    <input type="text" name="bp" class="inputBoxSmall">&nbsp;mm Hg</label>
                 <select name="brState" class="selectSmaller">
+                    <option value="">--Select Position--</option>
                     <option value="Sitting">Sitting</option>
                     <option value="Lying">Lying</option>
                 </select><br><br>
                 <label>PR:&nbsp;
-                <input type="text" name="pulse" class="inputBoxSmaller">&nbsp;per min <input type="text" name="pulseMin" class="inputBoxSmaller"></label>
+                    <input type="text" name="pulse" class="inputBoxSmaller">&nbsp;per min <input type="text"
+                        name="pulseMin" class="inputBoxSmaller"></label>
                 <select name="prState" class="selectSmaller">
+                    <option value="">--Select Interval--</option>
                     <option value="Regular">Regular</option>
                     <option value="Irregular">Irregular</option>
                 </select><br><br>
                 <label>spO2:&nbsp;
-                <input type="text" name="spO2roomAirPercent" class="inputBoxSmaller">&nbsp;room air<br>
-                <input type="text" name="spO2L%" class="inputBoxSmaller">&nbsp;(<input type="text" name="spO2L" class="inputBoxSmaller">&nbsp;L O2)</label><br><br>
+                    <input type="text" name="spO2roomAirPercent" class="inputBoxSmaller">&nbsp;room air<br>
+                    <input type="text" name="spO2L%" class="inputBoxSmaller">&nbsp;(<input type="text" name="spO2L"
+                        class="inputBoxSmaller">&nbsp;L O2)</label><br><br>
                 <label>RR:&nbsp;
-                <input type="text" name="respiratory" class="inputBoxSmall">&nbsp;per min</label>
+                    <input type="text" name="respiratory" class="inputBoxSmall">&nbsp;per min</label>
                 <select name="rrState" class="selectSmaller">
+                    <option value="">--Select Pattern--</option>
                     <option value="Regular">Regular</option>
                     <option value="Cheyne Stroke">Cheyne Stroke</option>
                 </select><br><br>
                 <label>Temperature:&nbsp;
-                <input type="text" name="temperature" class="inputBoxSmall">°C</label>
+                    <input type="text" name="temperature" class="inputBoxSmall">°C</label>
                 <select name="tempState" class="selectSmaller">
+                    <option value="">--Select Place--</option>
                     <option value="Oral">Oral</option>
                     <option value="Axilla">Axilla</option>
                     <option value="Ear">Ear</option>
                 </select><br><br>
                 <label>GM:&nbsp;
-                <input type="text" name="glucose" class="inputBoxSmaller">&nbsp;mmol/L&nbsp;(<input type="text" name="glucoseMMOL" class="inputBoxSmaller"> hrs after food)</label>
+                    <input type="text" name="glucose" class="inputBoxSmaller">&nbsp;mmol/L&nbsp;(<input type="text"
+                        name="glucoseMMOL" class="inputBoxSmaller"> hrs after food)</label>
             </div>
         </div>
 
@@ -1142,6 +1300,7 @@
 
                 <label>Right Lung:</label><br>
                 <select name="rlCon" class="selectSmaller">
+                    <option value="">--Select State--</option>
                     <option value="Clear">Clear</option>
                     <option value="Clear">Rhonchi</option>
                 </select>
@@ -1151,11 +1310,18 @@
                 <label>Coarse Crepitation</label><input type="text" name="rlCoarseCrep" class="inputBoxSmaller"><br><br>
                 <label>Air Entry</label><br><br>
                 <label class="containerCheckMark">Normal
-                    <input type="radio" name="rlAir" value="Normal" onchange="showStuff('rlAirDecreased', 'rlAirDecreasedTxt')">
+                    <input type="radio" name="rlAir" value="Normal"
+                        onchange="showStuff('rlAirDecreased', 'rlAirDecreasedTxt')">
                     <span class="checkMark"></span>
                 </label>
                 <label class="containerCheckMark">Decreased
-                    <input type="radio" name="rlAir" id="rlAirDecreased" value="Decreased" onchange="showStuff('rlAirDecreased', 'rlAirDecreasedTxt')">
+                    <input type="radio" name="rlAir" id="rlAirDecreased" value="Decreased"
+                        onchange="showStuff('rlAirDecreased', 'rlAirDecreasedTxt')">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="rlAir" value="N/A"
+                        onchange="showStuff('rlAirDecreased', 'rlAirDecreasedTxt')">
                     <span class="checkMark"></span>
                 </label><br>
 
@@ -1165,6 +1331,7 @@
 
                 <label>Left Lung:</label><br>
                 <select name="llCon" class="selectSmaller">
+                    <option value="">--Select State--</option>
                     <option value="Clear">Clear</option>
                     <option value="Clear">Rhonchi</option>
                 </select>
@@ -1174,11 +1341,18 @@
                 <label>Coarse Crepitation</label><input type="text" name="llCoarseCrep" class="inputBoxSmaller"><br><br>
                 <label>Air Entry</label><br><br>
                 <label class="containerCheckMark">Normal
-                    <input type="radio" name="llAir" value="Normal" onchange="showStuff('llAirDecreased', 'llAirDecreasedTxt')">
+                    <input type="radio" name="llAir" value="Normal"
+                        onchange="showStuff('llAirDecreased', 'llAirDecreasedTxt')">
                     <span class="checkMark"></span>
                 </label>
                 <label class="containerCheckMark">Decreased
-                    <input type="radio" name="llAir" id="llAirDecreased" value="Decreased" onchange="showStuff('llAirDecreased', 'llAirDecreasedTxt')">
+                    <input type="radio" name="llAir" id="llAirDecreased" value="Decreased"
+                        onchange="showStuff('llAirDecreased', 'llAirDecreasedTxt')">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="llAir" value="N/A"
+                        onchange="showStuff('llAirDecreased', 'llAirDecreasedTxt')">
                     <span class="checkMark"></span>
                 </label>
 
@@ -1189,7 +1363,8 @@
 
             <div id="lungDiagram" class="picBox">
                 <img src="img/Lungs.png" alt="Lungs Image" class="picBox" width="200" height="200">
-                <input type="button" id="lungBtn" class="picBox" value="Show Image" onclick="showPopUp('popUp1', 'lungBtn', 0)">
+                <input type="button" id="lungBtn" class="picBox" value="Show Image"
+                    onclick="showPopUp('popUp1', 'lungBtn', 0)">
             </div>
 
             <!--Lung popups-->
@@ -1197,7 +1372,13 @@
                 <div class="popUpContent">
                     <span class="close">&times;</span>
                     <h1>Lung image</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <input type="file" id="inputLung">
+                    <button onclick="sendStuff('inputLung', 'lungBtn')">Upload</button>
                 </div>
             </div>
 
@@ -1205,21 +1386,27 @@
                 <label>Cardiovascular System</label><br><br>
                 <label>Heart Sounds</label><br><br>
                 <label class="containerCheckMark">Normal
-                    <input type="radio" name="heartSound" value="Normal" onchange="showStuff('heartMurmur', 'heartMurmurTxt')">
+                    <input type="radio" name="heartSound" value="Normal"
+                        onchange="showStuff('heartMurmur', 'heartMurmurTxt')">
                     <span class="checkMark"></span>
                 </label>
                 <label class="containerCheckMark">Murmur
-                    <input type="radio" name="heartSound" id="heartMurmur" value="Murmur" onchange="showStuff('heartMurmur', 'heartMurmurTxt')">
+                    <input type="radio" name="heartSound" id="heartMurmur" value="Murmur"
+                        onchange="showStuff('heartMurmur', 'heartMurmurTxt')">
                     <span class="checkMark"></span>
                 </label>
-                
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="heartSound" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
+
                 <div id="heartMurmurTxt" style="display: none;">
                     <input type="text" name="heartMurmurTxt" class="inputBoxSmall">
                 </div>
             </div>
         </div>
 
-        
+
         <div class="tab">
             <h2>Systemic Examination</h2>
             <div id="gastrointentinalSys" class="inputBox">
@@ -1234,7 +1421,11 @@
                     <span class="checkMark"></span>
                 </label>
                 <label class="containerCheckMark">Scar
-                    <input type="radio" name="abdominalWall"value="Scar">
+                    <input type="radio" name="abdominalWall" value="Scar">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="abdominalWall" value="N/A">
                     <span class="checkMark"></span>
                 </label>
                 <input type="text" name="abdomWallLoc" placeholder="(Location)"><br><br>
@@ -1245,28 +1436,37 @@
                     <span class="checkMark"></span>
                 </label>
                 <label class="containerCheckMark">Tender
-                    <input type="radio" name="abdomen" id="abdoTender" value="Tender" onchange="showStuff('abdoTender', 'abdoTenderTxt')">
+                    <input type="radio" name="abdomen" id="abdoTender" value="Tender"
+                        onchange="showStuff('abdoTender', 'abdoTenderTxt')">
                     <span class="checkMark"></span>
-                </label> 
+                </label>
                 <div id="abdoTenderTxt" style="display: none;">
                     <input type="text" name="abdoTenderTxt" class="inputBoxSmall"><br><br>
                 </div>
                 <label class="containerCheckMark">Guarded
-                    <input type="radio" name="abdomen"value="Guarded" onchange="showStuff('abdoTender', 'abdoTenderTxt')">
+                    <input type="radio" name="abdomen" value="Guarded"
+                        onchange="showStuff('abdoTender', 'abdoTenderTxt')">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="abdomen" value="N/A">
                     <span class="checkMark"></span>
                 </label>
                 <input type="text" name="abdomenLoc" placeholder="(Location)"><br><br>
 
                 <label>Mass:</label><br>
                 <select name="massTenderness">
+                    <option value="">--Select Mass--</option>
                     <option value="Tender">Tender</option>
                     <option value="Not Tender">Not Tender</option>
                 </select>
                 <select name="massMobility">
+                    <option value="">--Select Mobility--</option>
                     <option value="Mobile">Mobile</option>
                     <option value="Not Mobile">Not Mobile</option>
                 </select>
                 <select name="massState">
+                    <option value="">--Select Softness--</option>
                     <option value="Soft">Soft</option>
                     <option value="Firm">Firm</option>
                     <option value="Hard">Hard</option>
@@ -1280,30 +1480,48 @@
                     <span class="checkMark"></span>
                 </label>
                 <label class="containerCheckMark">Negative
-                    <input type="radio" name="shiftDull"value="Negative">
+                    <input type="radio" name="shiftDull" value="Negative">
                     <span class="checkMark"></span>
-                </label> 
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="shiftDull" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
 
                 <label>Hepatomegaly</label><br><br>
                 <label class="containerCheckMark">Absent
-                    <input type="radio" name="hepatomegaly" value="Absent" onchange="showStuff('hepNegative', 'hepNegativeTxt')">
+                    <input type="radio" name="hepatomegaly" value="Absent"
+                        onchange="showStuff('hepNegative', 'hepNegativeTxt')">
                     <span class="checkMark"></span>
                 </label>
                 <label class="containerCheckMark">Present
-                    <input type="radio" name="hepatomegaly" id="hepNegative" value="Present" onchange="showStuff('hepNegative', 'hepNegativeTxt')">
+                    <input type="radio" name="hepatomegaly" id="hepNegative" value="Present"
+                        onchange="showStuff('hepNegative', 'hepNegativeTxt')">
                     <span class="checkMark"></span>
-                </label> 
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="hepatomegaly" value="N/A"
+                        onchange="showStuff('hepNegative', 'hepNegativeTxt')">
+                    <span class="checkMark"></span>
+                </label>
                 <div id="hepNegativeTxt" style="display: none;">
                     <input type="text" name="hepNegativeTxt" class="inputBoxSmall"><br><br>
                 </div>
 
                 <label>Splenomegaly</label><br><br>
                 <label class="containerCheckMark">Absent
-                    <input type="radio" name="splenomegaly" value="Absent" onchange="showStuff('splNegative', 'splNegativeTxt')">
+                    <input type="radio" name="splenomegaly" value="Absent"
+                        onchange="showStuff('splNegative', 'splNegativeTxt')">
                     <span class="checkMark"></span>
                 </label>
                 <label class="containerCheckMark">Present
-                    <input type="radio" name="splenomegaly" id="splNegative" value="Present" onchange="showStuff('splNegative', 'splNegativeTxt')">
+                    <input type="radio" name="splenomegaly" id="splNegative" value="Present"
+                        onchange="showStuff('splNegative', 'splNegativeTxt')">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="splenomegaly" value="N/A"
+                        onchange="showStuff('splNegative', 'splNegativeTxt')">
                     <span class="checkMark"></span>
                 </label><br>
                 <div id="splNegativeTxt" style="display: none;">
@@ -1312,6 +1530,7 @@
 
                 <label>Bowel Sounds:&nbsp;</label>
                 <select name="bowelSound" class="selectSmall">
+                    <option value="">--Select Bowel Sound--</option>
                     <option value="Normal">Normal</option>
                     <option value="Sluggish">Sluggish</option>
                     <option value="Hyperactive">Hyperactive</option>
@@ -1320,6 +1539,7 @@
 
                 <label>Per Rectum:&nbsp;</label>
                 <select name="perRectum" class="selectSmall">
+                    <option value="">--Select Per Rectum--</option>
                     <option value="Tip">Tip</option>
                     <option value="High End">High End</option>
                     <option value="Empty">Empty</option>
@@ -1335,7 +1555,8 @@
 
             <div id="lowerBodyDiagram" class="picBox">
                 <img src="img/LowerBody.png" alt="Lower Body Image" class="picBox" width="200" height="200">
-                <input type="button" id="lungBtn" class="picBox" value="Show Image" onclick="showPopUp('popUp2', 'lowerBodyBtn', 1)">
+                <input type="button" id="lungBtn" class="picBox" value="Show Image"
+                    onclick="showPopUp('popUp2', 'lowerBodyBtn', 1)">
             </div>
 
             <!--Lower Body popups-->
@@ -1343,7 +1564,13 @@
                 <div class="popUpContent">
                     <span class="close">&times;</span>
                     <h1>Lower Body image</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <input type="file" id="inputLowerBody">
+                    <button onclick="sendStuff('inputLowerBody', 'lowerBodyBtn')">Upload</button>
                 </div>
             </div>
 
@@ -1372,13 +1599,17 @@
 
                 <label><b>Sensation</b></label><br><br>
                 <label>Right UL</label><br><br>
-                <div id="senseRightUL" >
+                <div id="senseRightUL">
                     <label class="containerCheckMark">Present
                         <input type="radio" name="senseRightUL" id="hepNegative" value="Present">
                         <span class="checkMark"></span>
-                    </label>                        
+                    </label>
                     <label class="containerCheckMark">Absent
                         <input type="radio" name="senseRightUL" value="Absent">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="senseRightUL" value="N/A">
                         <span class="checkMark"></span>
                     </label>
                 </div>
@@ -1388,9 +1619,13 @@
                     <label class="containerCheckMark">Present
                         <input type="radio" name="senseleftUL" id="hepNegative" value="Present">
                         <span class="checkMark"></span>
-                    </label>                        
+                    </label>
                     <label class="containerCheckMark">Absent
                         <input type="radio" name="senseleftUL" value="Absent">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="senseleftUL" value="N/A">
                         <span class="checkMark"></span>
                     </label>
                 </div>
@@ -1400,9 +1635,13 @@
                     <label class="containerCheckMark">Present
                         <input type="radio" name="senserightLL" id="hepNegative" value="Present">
                         <span class="checkMark"></span>
-                    </label>                        
+                    </label>
                     <label class="containerCheckMark">Absent
                         <input type="radio" name="senserightLL" value="Absent">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="senserightLL" value="N/A">
                         <span class="checkMark"></span>
                     </label>
                 </div>
@@ -1412,9 +1651,13 @@
                     <label class="containerCheckMark">Present
                         <input type="radio" name="senseleftLL" id="hepNegative" value="Present">
                         <span class="checkMark"></span>
-                    </label>                        
+                    </label>
                     <label class="containerCheckMark">Absent
                         <input type="radio" name="senseleftLL" value="Absent">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="senseleftLL" value="N/A">
                         <span class="checkMark"></span>
                     </label>
                 </div><br>

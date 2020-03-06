@@ -12,6 +12,9 @@ var SCOPES = "https://www.googleapis.com/auth/drive";
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 var spreadsheetId = '1lE6qktHAAPnLMoSMPeigxpuIwZsJriWZkxipgS4rt7U';
+var folderID = '1gS2LXwlGZCpzIVIFJXwnIBm82KkIy7Wr';
+var fileDetail;
+var linkGenogram = '', linkLung = '', linkLowerBody = '', linkFullBody = '';
 
 var table = document.querySelector("table");
 var header;
@@ -89,6 +92,77 @@ function appendPre(message) {
     var textContent = document.createTextNode(message + '\n');
     pre.setAttribute('style', 'white-space: pre-wrap;');
     pre.appendChild(textContent);
+}
+
+function sendStuff(fileID, buttonID) {
+    var fileContent = document.getElementById(fileID).files[0];
+    var fileName = fileContent.name;
+    fileName = fileName.slice(0, -4); // Removes the '.png' at the end of the file name.
+    var file = new Blob([fileContent], {
+        type: 'image/png'
+    });
+    var metadata = {
+        'name': fileName, // Filename at Google Drive
+        'mimeType': 'image/png', // mimeType at Google Drive
+        'parents': [folderID], // Folder ID at Google Drive
+    };
+
+    var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+    var form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], {
+        type: 'application/json'
+    }));
+    form.append('file', file);
+    console.log(form);
+
+    fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + accessToken
+        }),
+        body: form,
+    }).then((res) => {
+        fileDetail = res.json();
+        console.log(fileDetail);
+        fileDetail.then(function (res) {
+            var id = res.id;
+
+            if(!id) {
+                alert("Error " + err.error.errors.code + " " + err.error.errors.message);
+                return;
+            } else {
+                var link = "https://drive.google.com/uc?export=view&id=" +  id;
+                alert("Image uploaded.");
+                console.log("Image uploaded. Check https://drive.google.com/drive/u/0/folders/1KLZ6NzFh60oYAtY8dImWTkzaWVyyuygH");
+                console.log(link);
+
+                switch (buttonID) {
+                    case 'genoImage': {
+                        linkGenogram = link;
+                        break;
+                    }
+                    case 'lungBtn': {
+                        linkLung = link;
+                        break;
+                    }
+                    case 'lowerBodyBtn': {
+                        linkLowerBody = link;
+                        break;
+                    }
+                    case 'fullBodyBtn': {
+                        linkFullBody = link;
+                        break;
+                    }
+                }
+            }
+
+            
+        }, function(err) {
+            alert("Error " + err.error.errors.code + " " + err.error.errors.message);
+        })
+    }, function (val) {
+        console.log(val);
+    });
 }
 
 //Searches the sheet for the record
@@ -208,11 +282,13 @@ function generateTableHead(table, header) {
 //Generates table rows
 function generateTable(table, data, count) {
     var row = table.insertRow();
+    var link = "https://drive.google.com/uc?export=view&id="
     for (var i = 0; i < data.length; i++) {
         var cell = row.insertCell();
         var text = document.createTextNode(data[i]);
         cell.appendChild(text);
 
+        //Shows checkbox in the first column
         if(i == 0) {
             var id = 'checkbox' + count;
             var string2 = "showStuff(\'" + id + "\',\'" + 'buttons' + "\')";
@@ -220,6 +296,12 @@ function generateTable(table, data, count) {
                         <span class="checkBox"></span>
             </label>*/
             var string = "<label class='container' style='width: 25px; height: 10px; padding-right: 0;'><input type='checkbox' name='row' id='" + id + "' value = " + count + " onclick=showRow();" + string2 + "><span class='checkBox'></span></input></label>";
+            cell.innerHTML = string;
+        } 
+
+        //Shows links as actual link
+        if (data[i].includes(link)) {
+            var string = "<a href='" + data[i] + "'>" + data[i] + "</a>";
             cell.innerHTML = string;
         }
     }
@@ -350,6 +432,7 @@ function appendForm(formID) {
                     $("input[name='emotionalStatusDefensive']:checked").val(),
                     $("input[name='emotionalStatusControlling']:checked").val(),
                     $("select[name='financialStatus']").val(),
+                    linkGenogram,
                     $("input[name='emotionalAssess1']:checked").val(),
                     $("input[name='emotionalAssess2']:checked").val(),
                     $("input[name='emotionalAssess3']:checked").val(),
@@ -384,12 +467,14 @@ function appendForm(formID) {
                     $("input[name='pressureSores']").val(),
                     $("input[name='chestWall']").val(),
                     $("select[name='breathSound']").val(),
+                    $("input[name='crepitationDetail']").val(),
                     $("input[name='rt']").val(),
                     $("input[name='lt']").val(),
                     $("input[name='rtAir']").val(),
                     $("input[name='ltAir']").val(),
                     $("input[name='heartSounds']").val(),
                     $("input[name='jvp']").val(),
+                    linkLung,
                     $("input[name='abdominalWall']").val(),
                     $("input[name='ascites']").val(),
                     $("input[name='hepatomegaly']").val(),
@@ -397,13 +482,14 @@ function appendForm(formID) {
                     $("input[name='bowelSounds']").val(),
                     $("input[name='perRectum']").val(),
                     $("input[name='perVagina']").val(),
+                    linkLowerBody,
                     $("input[name='rightUL']").val(),
                     $("input[name='leftUL']").val(),
                     $("input[name='rightLL']").val(),
                     $("input[name='leftLL']").val(),
                     $("input[name='muscleWasting']").val(),
                     $("input[name='bodyTenderness']").val(),
-                    $("input[name='conciousness']").val(),
+                    $("select[name='consciousness']").val(),
                     $("input[name='time']:checked").val(),
                     $("input[name='place']:checked").val(),
                     $("input[name='people']:checked").val(),
@@ -411,6 +497,7 @@ function appendForm(formID) {
                     $("input[name='pain']:checked").val(),
                     $("input[name='unresponsiveness']:checked").val(),
                     $("input[name='sensoryLoss']").val(),
+                    linkFullBody,
                     $("input[name='smell']").val(),
                     $("input[name='vision']").val(),
                     $("input[name='lightDetection']").val(),
@@ -736,6 +823,7 @@ function appendForm(formID) {
                     $("input[name='llCoarseCrep']").val(),
                     $("input[name='llAir']:checked").val(),
                     $("input[name='llAirDecreasedTxt']").val(),
+                    linkLung,
                     $("input[name='heartSound']:checked").val(),
                     $("input[name='heartMurmurTxt']").val(),
                     $("input[name='abdominalWall']:checked").val(),
@@ -755,6 +843,7 @@ function appendForm(formID) {
                     $("input[name='splNegativeTxt']").val(),
                     $("select[name='bowelSound']").val(),
                     $("select[name='perRectum']").val(),
+                    linkLowerBody,
                     $("input[name='gastroOtr']").val(),
                     $("input[name='muscleRightUL']").val(),
                     $("input[name='muscleLeftUL']").val(),
@@ -973,86 +1062,90 @@ function editRecord(formID, row) {
                     ($("input[name='emotionalStatusDefensive']:checked").val()  === "" ? data[row-1][34] : $("input[name='emotionalStatusDefensive']:checked").val()),
                     ($("input[name='emotionalStatusControlling']:checked").val()=== "" ? data[row-1][35] : $("input[name='emotionalStatusControlling']:checked").val()),
                     ($("select[name='financialStatus']").val()                  === "" ? data[row-1][36] : $("select[name='financialStatus']").val()),
-                    ($("input[name='emotionalAssess1']:checked").val()          === "" ? data[row-1][37] : $("input[name='emotionalAssess1']:checked").val()),
-                    ($("input[name='emotionalAssess2']:checked").val()          === "" ? data[row-1][38] : $("input[name='emotionalAssess2']:checked").val()),
-                    ($("input[name='emotionalAssess3']:checked").val()          === "" ? data[row-1][39] : $("input[name='emotionalAssess3']:checked").val()),
-                    ($("input[name='emotionalAssess4']:checked").val()          === "" ? data[row-1][40] : $("input[name='emotionalAssess4']:checked").val()),
-                    ($("input[name='emotionalAssess5']:checked").val()          === "" ? data[row-1][41] : $("input[name='emotionalAssess5']:checked").val()),
-                    ($("input[name='emotionalAssess6']:checked").val()          === "" ? data[row-1][42] : $("input[name='emotionalAssess6']:checked").val()),
-                    ($("input[name='emotionalAssess7']:checked").val()          === "" ? data[row-1][43] : $("input[name='emotionalAssess7']:checked").val()),
-                    ($("input[name='emotionalAssess8']:checked").val()          === "" ? data[row-1][44] : $("input[name='emotionalAssess8']:checked").val()),
-                    ($("input[name='emotionalAssess9']:checked").val()          === "" ? data[row-1][45] : $("input[name='emotionalAssess9']:checked").val()),
-                    ($("input[name='emotionalAssess10']:checked").val()         === "" ? data[row-1][46] : $("input[name='emotionalAssess10']:checked").val()),
-                    ($("input[name='generalAppearance']").val()                 === "" ? data[row-1][47] : $("input[name='generalAppearance']").val()),
-                    ($("input[name='speech']").val()                            === "" ? data[row-1][48] : $("input[name='speech']").val()),
-                    ($("input[name='hearing']").val()                           === "" ? data[row-1][49] : $("input[name='hearing']").val()),
-                    ($("input[name='hydration']").val()                         === "" ? data[row-1][50] : $("input[name='hydration']").val()),
-                    ($("select[name='ecog']").val()                             === "" ? data[row-1][51] : $("select[name='ecog']").val()),
-                    ($("input[name='cachexia']:checked").val()                  === "" ? data[row-1][52] : $("input[name='cachexia']:checked").val()),
-                    ($("input[name='pallor']:checked").val()                    === "" ? data[row-1][53] : $("input[name='pallor']:checked").val()),
-                    ($("input[name='jaundice']:checked").val()                  === "" ? data[row-1][54] : $("input[name='jaundice']:checked").val()),
-                    ($("input[name='cyanosis']:checked").val()                  === "" ? data[row-1][55] : $("input[name='cyanosis']:checked").val()),
-                    ($("input[name='bp']").val()                                === "" ? data[row-1][56] : $("input[name='bp']").val()),
-                    ($("input[name='pulse']").val()                             === "" ? data[row-1][57] : $("input[name='pulse']").val()),
-                    ($("input[name='pulseMin']").val()                          === "" ? data[row-1][58] : $("input[name='pulseMin']").val()),
-                    ($("input[name='respiratory']").val()                       === "" ? data[row-1][59] : $("input[name='respiratory']").val()),
-                    ($("input[name='spO2roomAirPercent']").val()                === "" ? data[row-1][60] : $("input[name='spO2roomAirPercent']").val()),
-                    ($("input[name='spO2L%']").val()                            === "" ? data[row-1][61] : $("input[name='spO2L%']").val()),
-                    ($("input[name='spO2L']").val()                             === "" ? data[row-1][62] : $("input[name='spO2L']").val()),
-                    ($("input[name='glucose']").val()                           === "" ? data[row-1][63] : $("input[name='glucose']").val()),
-                    ($("input[name='glucoseMMOL']").val()                       === "" ? data[row-1][64] : $("input[name='glucoseMMOL']").val()),
-                    ($("input[name='temperature']").val()                       === "" ? data[row-1][65] : $("input[name='temperature']").val()),
-                    ($("input[name='oralCavity']").val()                        === "" ? data[row-1][66] : $("input[name='oralCavity']").val()),
-                    ($("input[name='lymphoedema']").val()                       === "" ? data[row-1][67] : $("input[name='lymphoedema']").val()),
-                    ($("input[name='pressureSores']").val()                     === "" ? data[row-1][68] : $("input[name='pressureSores']").val()),
-                    ($("input[name='chestWall']").val()                         === "" ? data[row-1][69] : $("input[name='chestWall']").val()),
-                    ($("select[name='breathSound']").val()                      === "" ? data[row-1][70] : $("select[name='breathSound']").val()),
-                    ($("input[name='crepitationDetail']").val()                 === "" ? data[row-1][71] : $("input[name='crepitationDetail']").val())
-                    ($("input[name='rt']").val()                                === "" ? data[row-1][72] : $("input[name='rt']").val()),
-                    ($("input[name='lt']").val()                                === "" ? data[row-1][73] : $("input[name='lt']").val()),
-                    ($("input[name='rtAir']").val()                             === "" ? data[row-1][74] : $("input[name='rtAir']").val()),
-                    ($("input[name='ltAir']").val()                             === "" ? data[row-1][75] : $("input[name='ltAir']").val()),
-                    ($("input[name='heartSounds']").val()                       === "" ? data[row-1][76] : $("input[name='heartSounds']").val()),
-                    ($("input[name='jvp']").val()                               === "" ? data[row-1][77] : $("input[name='jvp']").val()),
-                    ($("input[name='abdominalWall']").val()                     === "" ? data[row-1][78] : $("input[name='abdominalWall']").val()),
-                    ($("input[name='ascites']").val()                           === "" ? data[row-1][79] : $("input[name='ascites']").val()),
-                    ($("input[name='hepatomegaly']").val()                      === "" ? data[row-1][80] : $("input[name='hepatomegaly']").val()),
-                    ($("input[name='splenomegaly']").val()                      === "" ? data[row-1][81] : $("input[name='splenomegaly']").val()),
-                    ($("input[name='bowelSounds']").val()                       === "" ? data[row-1][82] : $("input[name='bowelSounds']").val()),
-                    ($("input[name='perRectum']").val()                         === "" ? data[row-1][83] : $("input[name='perRectum']").val()),
-                    ($("input[name='perVagina']").val()                         === "" ? data[row-1][84] : $("input[name='perVagina']").val()),
-                    ($("input[name='rightUL']").val()                           === "" ? data[row-1][85] : $("input[name='rightUL']").val()),
-                    ($("input[name='leftUL']").val()                            === "" ? data[row-1][86] : $("input[name='leftUL']").val()),
-                    ($("input[name='rightLL']").val()                           === "" ? data[row-1][87] : $("input[name='rightLL']").val()),
-                    ($("input[name='leftLL']").val()                            === "" ? data[row-1][88] : $("input[name='leftLL']").val()),
-                    ($("input[name='muscleWasting']").val()                     === "" ? data[row-1][89] : $("input[name='muscleWasting']").val()),
-                    ($("input[name='bodyTenderness']").val()                    === "" ? data[row-1][90] : $("input[name='bodyTenderness']").val()),
-                    ($("select[name='conciousness']").val()                     === "" ? data[row-1][91] : $("select[name='conciousness']").val()),
-                    ($("input[name='time']:checked").val()                      === "" ? data[row-1][92] : $("input[name='time']:checked").val()),
-                    ($("input[name='place']:checked").val()                     === "" ? data[row-1][93] : $("input[name='place']:checked").val()),
-                    ($("input[name='people']:checked").val()                    === "" ? data[row-1][94] : $("input[name='people']:checked").val()),
-                    ($("input[name='voice']:checked").val()                     === "" ? data[row-1][95] : $("input[name='voice']:checked").val()),
-                    ($("input[name='pain']:checked").val()                      === "" ? data[row-1][96] : $("input[name='pain']:checked").val()),
-                    ($("input[name='unresponsiveness']:checked").val()          === "" ? data[row-1][97] : $("input[name='unresponsiveness']:checked").val()),
-                    ($("input[name='sensoryLoss']").val()                       === "" ? data[row-1][98] : $("input[name='sensoryLoss']").val()),
-                    ($("input[name='smell']").val()                             === "" ? data[row-1][99] : $("input[name='smell']").val()),
-                    ($("input[name='vision']").val()                            === "" ? data[row-1][100] : $("input[name='vision']").val()),
-                    ($("input[name='lightDetection']").val()                    === "" ? data[row-1][101] : $("input[name='lightDetection']").val()),
-                    ($("input[name='eyeMovement']").val()                       === "" ? data[row-1][102] : $("input[name='eyeMovement']").val()),
-                    ($("input[name='raiseEyelid']").val()                       === "" ? data[row-1][103] : $("input[name='raiseEyelid']").val()),
-                    ($("input[name='eyeMovement2']").val()                      === "" ? data[row-1][104] : $("input[name='eyeMovement2']").val()),
-                    ($("input[name='facialSensation']").val()                   === "" ? data[row-1][105] : $("input[name='facialSensation']").val()),
-                    ($("input[name='eyeMovement3']").val()                      === "" ? data[row-1][106] : $("input[name='eyeMovement3']").val()),
-                    ($("input[name='facialExpression']").val()                  === "" ? data[row-1][107] : $("input[name='facialExpression']").val()),
-                    ($("input[name='taste']").val()                             === "" ? data[row-1][108] : $("input[name='taste']").val()),
-                    ($("input[name='productionTears']").val()                   === "" ? data[row-1][109] : $("input[name='productionTears']").val()),
-                    ($("input[name='hearingBalance']").val()                    === "" ? data[row-1][110] : $("input[name='hearingBalance']").val()),
-                    ($("input[name='swallowing']").val()                        === "" ? data[row-1][111] : $("input[name='swallowing']").val()),
-                    ($("input[name='gagReflex']").val()                         === "" ? data[row-1][112] : $("input[name='gagReflex']").val()),
-                    ($("input[name='speechNerve']").val()                       === "" ? data[row-1][113] : $("input[name='speechNerve']").val()),
-                    ($("input[name='shrugging']").val()                         === "" ? data[row-1][114] : $("input[name='shrugging']").val()),
-                    ($("input[name='tongueMovement']").val()                    === "" ? data[row-1][115] : $("input[name='tongueMovement']").val()),
-                    ($("textarea[name='extNotes']").val()                       === "" ? data[row-1][116] : $("textarea[name='extNotes']").val()),
+                    (linkGenogram                                               === "" ? data[row-1][37] : linkGenogram),
+                    ($("input[name='emotionalAssess1']:checked").val()          === "" ? data[row-1][38] : $("input[name='emotionalAssess1']:checked").val()),
+                    ($("input[name='emotionalAssess2']:checked").val()          === "" ? data[row-1][39] : $("input[name='emotionalAssess2']:checked").val()),
+                    ($("input[name='emotionalAssess3']:checked").val()          === "" ? data[row-1][40] : $("input[name='emotionalAssess3']:checked").val()),
+                    ($("input[name='emotionalAssess4']:checked").val()          === "" ? data[row-1][41] : $("input[name='emotionalAssess4']:checked").val()),
+                    ($("input[name='emotionalAssess5']:checked").val()          === "" ? data[row-1][42] : $("input[name='emotionalAssess5']:checked").val()),
+                    ($("input[name='emotionalAssess6']:checked").val()          === "" ? data[row-1][43] : $("input[name='emotionalAssess6']:checked").val()),
+                    ($("input[name='emotionalAssess7']:checked").val()          === "" ? data[row-1][44] : $("input[name='emotionalAssess7']:checked").val()),
+                    ($("input[name='emotionalAssess8']:checked").val()          === "" ? data[row-1][45] : $("input[name='emotionalAssess8']:checked").val()),
+                    ($("input[name='emotionalAssess9']:checked").val()          === "" ? data[row-1][46] : $("input[name='emotionalAssess9']:checked").val()),
+                    ($("input[name='emotionalAssess10']:checked").val()         === "" ? data[row-1][47] : $("input[name='emotionalAssess10']:checked").val()),
+                    ($("input[name='generalAppearance']").val()                 === "" ? data[row-1][48] : $("input[name='generalAppearance']").val()),
+                    ($("input[name='speech']").val()                            === "" ? data[row-1][49] : $("input[name='speech']").val()),
+                    ($("input[name='hearing']").val()                           === "" ? data[row-1][50] : $("input[name='hearing']").val()),
+                    ($("input[name='hydration']").val()                         === "" ? data[row-1][51] : $("input[name='hydration']").val()),
+                    ($("select[name='ecog']").val()                             === "" ? data[row-1][52] : $("select[name='ecog']").val()),
+                    ($("input[name='cachexia']:checked").val()                  === "" ? data[row-1][53] : $("input[name='cachexia']:checked").val()),
+                    ($("input[name='pallor']:checked").val()                    === "" ? data[row-1][54] : $("input[name='pallor']:checked").val()),
+                    ($("input[name='jaundice']:checked").val()                  === "" ? data[row-1][55] : $("input[name='jaundice']:checked").val()),
+                    ($("input[name='cyanosis']:checked").val()                  === "" ? data[row-1][56] : $("input[name='cyanosis']:checked").val()),
+                    ($("input[name='bp']").val()                                === "" ? data[row-1][57] : $("input[name='bp']").val()),
+                    ($("input[name='pulse']").val()                             === "" ? data[row-1][58] : $("input[name='pulse']").val()),
+                    ($("input[name='pulseMin']").val()                          === "" ? data[row-1][59] : $("input[name='pulseMin']").val()),
+                    ($("input[name='respiratory']").val()                       === "" ? data[row-1][60] : $("input[name='respiratory']").val()),
+                    ($("input[name='spO2roomAirPercent']").val()                === "" ? data[row-1][61] : $("input[name='spO2roomAirPercent']").val()),
+                    ($("input[name='spO2L%']").val()                            === "" ? data[row-1][62] : $("input[name='spO2L%']").val()),
+                    ($("input[name='spO2L']").val()                             === "" ? data[row-1][63] : $("input[name='spO2L']").val()),
+                    ($("input[name='glucose']").val()                           === "" ? data[row-1][64] : $("input[name='glucose']").val()),
+                    ($("input[name='glucoseMMOL']").val()                       === "" ? data[row-1][65] : $("input[name='glucoseMMOL']").val()),
+                    ($("input[name='temperature']").val()                       === "" ? data[row-1][66] : $("input[name='temperature']").val()),
+                    ($("input[name='oralCavity']").val()                        === "" ? data[row-1][67] : $("input[name='oralCavity']").val()),
+                    ($("input[name='lymphoedema']").val()                       === "" ? data[row-1][68] : $("input[name='lymphoedema']").val()),
+                    ($("input[name='pressureSores']").val()                     === "" ? data[row-1][69] : $("input[name='pressureSores']").val()),
+                    ($("input[name='chestWall']").val()                         === "" ? data[row-1][70] : $("input[name='chestWall']").val()),
+                    ($("select[name='breathSound']").val()                      === "" ? data[row-1][71] : $("select[name='breathSound']").val()),
+                    ($("input[name='crepitationDetail']").val()                 === "" ? data[row-1][72] : $("input[name='crepitationDetail']").val())
+                    ($("input[name='rt']").val()                                === "" ? data[row-1][73] : $("input[name='rt']").val()),
+                    ($("input[name='lt']").val()                                === "" ? data[row-1][74] : $("input[name='lt']").val()),
+                    ($("input[name='rtAir']").val()                             === "" ? data[row-1][75] : $("input[name='rtAir']").val()),
+                    ($("input[name='ltAir']").val()                             === "" ? data[row-1][76] : $("input[name='ltAir']").val()),
+                    ($("input[name='heartSounds']").val()                       === "" ? data[row-1][77] : $("input[name='heartSounds']").val()),
+                    ($("input[name='jvp']").val()                               === "" ? data[row-1][78] : $("input[name='jvp']").val()),
+                    (linkLung                                                   === "" ? data[row-1][79] : linkLung),
+                    ($("input[name='abdominalWall']").val()                     === "" ? data[row-1][80] : $("input[name='abdominalWall']").val()),
+                    ($("input[name='ascites']").val()                           === "" ? data[row-1][81] : $("input[name='ascites']").val()),
+                    ($("input[name='hepatomegaly']").val()                      === "" ? data[row-1][82] : $("input[name='hepatomegaly']").val()),
+                    ($("input[name='splenomegaly']").val()                      === "" ? data[row-1][83] : $("input[name='splenomegaly']").val()),
+                    ($("input[name='bowelSounds']").val()                       === "" ? data[row-1][84] : $("input[name='bowelSounds']").val()),
+                    ($("input[name='perRectum']").val()                         === "" ? data[row-1][85] : $("input[name='perRectum']").val()),
+                    ($("input[name='perVagina']").val()                         === "" ? data[row-1][86] : $("input[name='perVagina']").val()),
+                    (linkLowerBody                                              === "" ? data[row-1][87] : linkLowerBody),
+                    ($("input[name='rightUL']").val()                           === "" ? data[row-1][88] : $("input[name='rightUL']").val()),
+                    ($("input[name='leftUL']").val()                            === "" ? data[row-1][89] : $("input[name='leftUL']").val()),
+                    ($("input[name='rightLL']").val()                           === "" ? data[row-1][90] : $("input[name='rightLL']").val()),
+                    ($("input[name='leftLL']").val()                            === "" ? data[row-1][91] : $("input[name='leftLL']").val()),
+                    ($("input[name='muscleWasting']").val()                     === "" ? data[row-1][92] : $("input[name='muscleWasting']").val()),
+                    ($("input[name='bodyTenderness']").val()                    === "" ? data[row-1][93] : $("input[name='bodyTenderness']").val()),
+                    ($("select[name='conciousness']").val()                     === "" ? data[row-1][94] : $("select[name='conciousness']").val()),
+                    ($("input[name='time']:checked").val()                      === "" ? data[row-1][95] : $("input[name='time']:checked").val()),
+                    ($("input[name='place']:checked").val()                     === "" ? data[row-1][96] : $("input[name='place']:checked").val()),
+                    ($("input[name='people']:checked").val()                    === "" ? data[row-1][97] : $("input[name='people']:checked").val()),
+                    ($("input[name='voice']:checked").val()                     === "" ? data[row-1][98] : $("input[name='voice']:checked").val()),
+                    ($("input[name='pain']:checked").val()                      === "" ? data[row-1][99] : $("input[name='pain']:checked").val()),
+                    ($("input[name='unresponsiveness']:checked").val()          === "" ? data[row-1][100] : $("input[name='unresponsiveness']:checked").val()),
+                    ($("input[name='sensoryLoss']").val()                       === "" ? data[row-1][101] : $("input[name='sensoryLoss']").val()),
+                    (linkFullBody                                               === "" ? data[row-1][102] : linkFullBody),
+                    ($("input[name='smell']").val()                             === "" ? data[row-1][103] : $("input[name='smell']").val()),
+                    ($("input[name='vision']").val()                            === "" ? data[row-1][104] : $("input[name='vision']").val()),
+                    ($("input[name='lightDetection']").val()                    === "" ? data[row-1][105] : $("input[name='lightDetection']").val()),
+                    ($("input[name='eyeMovement']").val()                       === "" ? data[row-1][106] : $("input[name='eyeMovement']").val()),
+                    ($("input[name='raiseEyelid']").val()                       === "" ? data[row-1][107] : $("input[name='raiseEyelid']").val()),
+                    ($("input[name='eyeMovement2']").val()                      === "" ? data[row-1][108] : $("input[name='eyeMovement2']").val()),
+                    ($("input[name='facialSensation']").val()                   === "" ? data[row-1][109] : $("input[name='facialSensation']").val()),
+                    ($("input[name='eyeMovement3']").val()                      === "" ? data[row-1][110] : $("input[name='eyeMovement3']").val()),
+                    ($("input[name='facialExpression']").val()                  === "" ? data[row-1][111] : $("input[name='facialExpression']").val()),
+                    ($("input[name='taste']").val()                             === "" ? data[row-1][112] : $("input[name='taste']").val()),
+                    ($("input[name='productionTears']").val()                   === "" ? data[row-1][113] : $("input[name='productionTears']").val()),
+                    ($("input[name='hearingBalance']").val()                    === "" ? data[row-1][114] : $("input[name='hearingBalance']").val()),
+                    ($("input[name='swallowing']").val()                        === "" ? data[row-1][115] : $("input[name='swallowing']").val()),
+                    ($("input[name='gagReflex']").val()                         === "" ? data[row-1][116] : $("input[name='gagReflex']").val()),
+                    ($("input[name='speechNerve']").val()                       === "" ? data[row-1][117] : $("input[name='speechNerve']").val()),
+                    ($("input[name='shrugging']").val()                         === "" ? data[row-1][118] : $("input[name='shrugging']").val()),
+                    ($("input[name='tongueMovement']").val()                    === "" ? data[row-1][119] : $("input[name='tongueMovement']").val()),
+                    ($("textarea[name='extNotes']").val()                       === "" ? data[row-1][120] : $("textarea[name='extNotes']").val()),
                 ]
             ];
             var body = {
@@ -1256,35 +1349,37 @@ function editRecord(formID, row) {
                     ($("input[name='llCoarseCrep']").val() === "" ? data[row-1][190] : $("input[name='llCoarseCrep']").val()),
                     ($("input[name='llAir']:checked").val() === "" ? data[row-1][191] : $("input[name='llAir']:checked").val()),
                     ($("input[name='llAirDecreasedTxt']").val() === "" ? data[row-1][192] : $("input[name='llAirDecreasedTxt']").val()),
-                    ($("input[name='heartSound']:checked").val() === "" ? data[row-1][193] : $("input[name='heartSound']:checked").val()),
-                    ($("input[name='heartMurmurTxt']").val() === "" ? data[row-1][194] : $("input[name='heartMurmurTxt']").val()),
-                    ($("input[name='abdominalWall']:checked").val() === "" ? data[row-1][195] : $("input[name='abdominalWall']:checked").val()),
-                    ($("input[name='abdomWallLoc']").val() === "" ? data[row-1][196] : $("input[name='abdomWallLoc']").val()),
-                    ($("input[name='abdomen']:checked").val() === "" ? data[row-1][197] : $("input[name='abdomen']:checked").val()),
-                    ($("input[name='abdoTenderTxt']").val() === "" ? data[row-1][198] : $("input[name='abdoTenderTxt']").val()),
-                    ($("input[name='abdomenLoc']").val() === "" ? data[row-1][199] : $("input[name='abdomenLoc']").val()),
-                    ($("select[name='massTenderness']").val() === "" ? data[row-1][200] : $("select[name='massTenderness']").val()),
-                    ($("select[name='massMobility']").val() === "" ? data[row-1][201] : $("select[name='massMobility']").val()),
-                    ($("select[name='massState']").val() === "" ? data[row-1][202] : $("select[name='massState']").val()),
-                    ($("input[name='massStateQuad']").val() === "" ? data[row-1][203] : $("input[name='massStateQuad']").val()),
-                    ($("input[name='massStateSize']").val() === "" ? data[row-1][204] : $("input[name='massStateSize']").val()),
-                    ($("input[name='shiftDull']:checked").val() === "" ? data[row-1][205] : $("input[name='shiftDull']:checked").val()),
-                    ($("input[name='hepatomegaly']:checked").val() === "" ? data[row-1][206] : $("input[name='hepatomegaly']:checked").val()),
-                    ($("input[name='hepNegativeTxt']").val() === "" ? data[row-1][207] : $("input[name='hepNegativeTxt']").val()),
-                    ($("input[name='splenomegaly']:checked").val() === "" ? data[row-1][208] : $("input[name='splenomegaly']:checked").val()),
-                    ($("input[name='splNegativeTxt']").val() === "" ? data[row-1][209] : $("input[name='splNegativeTxt']").val()),
-                    ($("select[name='bowelSound']").val() === "" ? data[row-1][210] : $("select[name='bowelSound']").val()),
-                    ($("select[name='perRectum']").val() === "" ? data[row-1][211] : $("select[name='perRectum']").val()),
-                    ($("input[name='gastroOtr']").val() === "" ? data[row-1][212] : $("input[name='gastroOtr']").val()),
-                    ($("input[name='muscleRightUL']").val() === "" ? data[row-1][213] : $("input[name='muscleRightUL']").val()),
-                    ($("input[name='muscleLeftUL']").val() === "" ? data[row-1][214] : $("input[name='muscleLeftUL']").val()),
-                    ($("input[name='muscleRightLL']").val() === "" ? data[row-1][215] : $("input[name='muscleRightLL']").val()),
-                    ($("input[name='muscleLeftLL']").val() === "" ? data[row-1][216] : $("input[name='muscleLeftLL']").val()),
-                    ($("input[name='senseRightUL']:checked").val() === "" ? data[row-1][217] : $("input[name='senseRightUL']:checked").val()),
-                    ($("input[name='senseleftUL']:checked").val() === "" ? data[row-1][218] : $("input[name='senseleftUL']:checked").val()),
-                    ($("input[name='senserightLL']:checked").val() === "" ? data[row-1][219] : $("input[name='senserightLL']:checked").val()),
-                    ($("input[name='senseleftLL']:checked").val() === "" ? data[row-1][220] : $("input[name='senseleftLL']:checked").val()),
-                    ($("textarea[name='otrManage']").val() === "" ? data[row-1][221] : $("textarea[name='otrManage']").val()),
+                    (linkLung === "" ? data[row-1][193] : linkLung),
+                    ($("input[name='heartSound']:checked").val() === "" ? data[row-1][194] : $("input[name='heartSound']:checked").val()),
+                    ($("input[name='heartMurmurTxt']").val() === "" ? data[row-1][195] : $("input[name='heartMurmurTxt']").val()),
+                    ($("input[name='abdominalWall']:checked").val() === "" ? data[row-1][196] : $("input[name='abdominalWall']:checked").val()),
+                    ($("input[name='abdomWallLoc']").val() === "" ? data[row-1][197] : $("input[name='abdomWallLoc']").val()),
+                    ($("input[name='abdomen']:checked").val() === "" ? data[row-1][198] : $("input[name='abdomen']:checked").val()),
+                    ($("input[name='abdoTenderTxt']").val() === "" ? data[row-1][199] : $("input[name='abdoTenderTxt']").val()),
+                    ($("input[name='abdomenLoc']").val() === "" ? data[row-1][200] : $("input[name='abdomenLoc']").val()),
+                    ($("select[name='massTenderness']").val() === "" ? data[row-1][201] : $("select[name='massTenderness']").val()),
+                    ($("select[name='massMobility']").val() === "" ? data[row-1][202] : $("select[name='massMobility']").val()),
+                    ($("select[name='massState']").val() === "" ? data[row-1][203] : $("select[name='massState']").val()),
+                    ($("input[name='massStateQuad']").val() === "" ? data[row-1][204] : $("input[name='massStateQuad']").val()),
+                    ($("input[name='massStateSize']").val() === "" ? data[row-1][205] : $("input[name='massStateSize']").val()),
+                    ($("input[name='shiftDull']:checked").val() === "" ? data[row-1][206] : $("input[name='shiftDull']:checked").val()),
+                    ($("input[name='hepatomegaly']:checked").val() === "" ? data[row-1][207] : $("input[name='hepatomegaly']:checked").val()),
+                    ($("input[name='hepNegativeTxt']").val() === "" ? data[row-1][208] : $("input[name='hepNegativeTxt']").val()),
+                    ($("input[name='splenomegaly']:checked").val() === "" ? data[row-1][209] : $("input[name='splenomegaly']:checked").val()),
+                    ($("input[name='splNegativeTxt']").val() === "" ? data[row-1][210] : $("input[name='splNegativeTxt']").val()),
+                    ($("select[name='bowelSound']").val() === "" ? data[row-1][211] : $("select[name='bowelSound']").val()),
+                    ($("select[name='perRectum']").val() === "" ? data[row-1][212] : $("select[name='perRectum']").val()),
+                    (linkLowerBody === "" ? data[row-1][213] : linkLowerBody),
+                    ($("input[name='gastroOtr']").val() === "" ? data[row-1][214] : $("input[name='gastroOtr']").val()),
+                    ($("input[name='muscleRightUL']").val() === "" ? data[row-1][215] : $("input[name='muscleRightUL']").val()),
+                    ($("input[name='muscleLeftUL']").val() === "" ? data[row-1][216] : $("input[name='muscleLeftUL']").val()),
+                    ($("input[name='muscleRightLL']").val() === "" ? data[row-1][217] : $("input[name='muscleRightLL']").val()),
+                    ($("input[name='muscleLeftLL']").val() === "" ? data[row-1][218] : $("input[name='muscleLeftLL']").val()),
+                    ($("input[name='senseRightUL']:checked").val() === "" ? data[row-1][219] : $("input[name='senseRightUL']:checked").val()),
+                    ($("input[name='senseleftUL']:checked").val() === "" ? data[row-1][220] : $("input[name='senseleftUL']:checked").val()),
+                    ($("input[name='senserightLL']:checked").val() === "" ? data[row-1][221] : $("input[name='senserightLL']:checked").val()),
+                    ($("input[name='senseleftLL']:checked").val() === "" ? data[row-1][222] : $("input[name='senseleftLL']:checked").val()),
+                    ($("textarea[name='otrManage']").val() === "" ? data[row-1][223] : $("textarea[name='otrManage']").val()),
                 ]
             ]
 

@@ -45,6 +45,7 @@
                 <div id="sex" class="inputBox">
                     <label>Sex</label><br><br>
                     <select name="sex">
+                        <option value="">--Select Sex--</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
@@ -63,7 +64,7 @@
     
                 <div id="handphoneNo" class="inputBox itemRequired">
                     <label>H/P No.</label><br><br>
-                    <input type="text" name="handphoneNo" placeholder="xxx-xxxxxxx"pattern="\d{3}[\-]\d{7}" required>
+                    <input type="text" name="handphoneNo" pattern="[0-9]" required>
                 </div>
     
                 <div id="contactPerson" class="inputBox itemRequired">
@@ -78,7 +79,7 @@
     
                 <div id="telephoneNo" class="inputBox itemRequired">
                     <label>Telephone No.</label><br><br>
-                    <input type="text" name="telephoneNo" placeholder="xxx-xxxxxxx"pattern="\d{3}[\-]\d{7}" required>
+                    <input type="text" name="telephoneNo" pattern="[0-9]" required>
                     <div id="inputLine"></div>
                 </div>
     
@@ -115,6 +116,11 @@
 
                     <label class="containerCheckMark">Good
                         <input type="radio" name="prognosis" value="Good">
+                        <span class="checkMark"></span>
+                    </label>
+
+                    <label class="containerCheckMark">None
+                        <input type="radio" name="prognosis" value="None">
                         <span class="checkMark"></span>
                     </label>
                 </div>
@@ -179,7 +185,7 @@
     
                 <div id="officePhoneNo", class="inputBox itemRequired">
                     <label>Office Phone No.</label><br><br>
-                    <input type="text" name="officePhoneNo" required>
+                    <input type="text" name="officePhoneNo" pattern="[0-9]" required>
                 </div>
     
                 <div id="faxNo", class="inputBox itemRequired">

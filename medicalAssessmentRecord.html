@@ -44,6 +44,7 @@
             </div>
         </div>
 
+        <!--Patient Detail-->
         <div class="tab">
             <div id="allergies" class="inputBox">
                 <label>Allergies</label><br><br>
@@ -113,7 +114,7 @@
 
                 <label>Caregiver</label><br><br>
                 <input type="text" name="languageSpokenCaregiver">
-             
+
             </div>
         </div>
 
@@ -136,7 +137,8 @@
 
             <div id="pastMedicalIllness" class="areaBox">
                 <label>Past Medical Illness</label><br><br>
-                <textarea name="pastMedicalIllness" id="pastMedicalIllness" class="areaBNReq" rows="4" cols="50"></textarea>
+                <textarea name="pastMedicalIllness" id="pastMedicalIllness" class="areaBNReq" rows="4"
+                    cols="50"></textarea>
             </div>
 
             <div id="history" class="inputBox">
@@ -159,6 +161,7 @@
                 <div id="maritalStatus" class="inputBox">
                     <label>Marital Status</label><br><br>
                     <select name="maritalStatus">
+                        <option value=" ">--Select Maritial Status--</option>
                         <option value="Unknown">Unknown</option>
                         <option value="Single">Single</option>
                         <option value="Married">Married</option>
@@ -227,13 +230,13 @@
                         <input type="checkbox" name="emotionalStatusControlling" value="Yes">
                         <span class="checkBox"></span><br>
                     </label>
-                    
+
                 </div>
 
                 <div id="financialStatus" class="inputBox">
                     <label>Financial Status</label><br><br>
                     <select name="financialStatus">
-                        <option value="N/A">Select Status:</option>
+                        <option value=" ">--Select Status--</option>
                         <option value="Good">Good</option>
                         <option value="Self-sufficient">Self-sufficient</option>
                         <option value="In need of financial assistance">In need of financial assistance</option>
@@ -242,7 +245,8 @@
 
                 <div id="genoGram" class="inputBox">
                     <label>Genogram</label><br><br>
-                  <input type="button" id="genoImage" value="Show Image" onclick="showPopUp('popUp0', 'genoImage', 0)">
+                    <input type="button" id="genoImage" value="Show Image"
+                        onclick="showPopUp('popUp0', 'genoImage', 0)">
                 </div>
 
                 <!--Genogram popups-->
@@ -250,7 +254,13 @@
                     <div class="popUpContent">
                         <span class="close">&times;</span>
                         <h1>Genogram</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <input type="file" id="inputGenogram">
+                        <button onclick="sendStuff('inputGenogram', 'genoImage')">Upload</button>
                     </div>
                 </div>
             </div>
@@ -261,8 +271,9 @@
             <h2>Emotional Assessment of Patient</h2>
             <div id="emotionAssessment">
                 <div id="emotionStatement" class="inputBox">
-                    <p>Over the last two weeks, is the patient having the following symptoms? 
-                    (If patient has 5 of these symptoms nearly every day for two weeks, they may be suffering from depression)</p>
+                    <p>Over the last two weeks, is the patient having the following symptoms?
+                        (If patient has 5 of these symptoms nearly every day for two weeks, they may be suffering from
+                        depression)</p>
                 </div>
 
                 <div class="radioBox">
@@ -275,8 +286,12 @@
                         <input type="radio" name="emotionalAssess1" value="No">
                         <span class="checkMark"></span>
                     </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess1" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
-                
+
                 <div class="radioBox">
                     <label>2. Feeling hopeless</label><br><br>
                     <label class="containerCheckMark">Yes
@@ -286,6 +301,11 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess2" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess2" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
                 <div class="radioBox">
@@ -297,6 +317,11 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess3" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess3" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
                 <div class="radioBox">
@@ -308,6 +333,11 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess4" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess4" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
                 <div class="radioBox">
@@ -319,6 +349,11 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess5" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess5" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
                 <div class="radioBox">
@@ -330,6 +365,11 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess6" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess6" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
                 <div class="radioBox">
@@ -341,6 +381,11 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess7" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess7" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
                 <div class="radioBox">
@@ -352,6 +397,11 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess8" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess8" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
                 <div class="radioBox">
@@ -363,6 +413,11 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess9" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess9" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
                 <div class="radioBox">
@@ -374,12 +429,17 @@
                     <label class="containerCheckMark">No
                         <input type="radio" name="emotionalAssess10" value="No">
                         <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess10" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
                 </div>
 
             </div>
 
         </div>
-   
+
         <!--General Examination-->
         <div class="tab">
             <h2>General Examination</h2>
@@ -406,6 +466,7 @@
             <div id="ecog" class="inputBox">
                 <label>ECOG</label><br><br>
                 <select name="ecog">
+                    <option value=" ">--Select ECOG--</option>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -423,6 +484,11 @@
                 <label class="containerCheckMark">N
                     <input type="radio" name="cachexia" value="No">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="cachexia" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
             </div>
 
             <div id="pallor" class="radioBox">
@@ -434,6 +500,11 @@
                 <label class="containerCheckMark">N
                     <input type="radio" name="pallor" value="No">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="pallor" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
             </div>
 
             <div id="jaundice" class="radioBox">
@@ -445,6 +516,11 @@
                 <label class="containerCheckMark">N
                     <input type="radio" name="jaundice" value="No">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="jaundice" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
             </div>
 
             <div id="cyanosis" class="radioBox">
@@ -456,6 +532,11 @@
                 <label class="containerCheckMark">N
                     <input type="radio" name="cyanosis" value="No">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="cyanosis" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
             </div>
 
             <div id="bp" class="inputBox">
@@ -465,31 +546,34 @@
 
             <div id="pulse" class="inputBox">
                 <label>Pulse</label><br><br>
-                <input type="text" name="pulse" class="inputBoxSmaller">&nbsp;/ min <input type="text" name="pulseMin" class="inputBoxSmaller">
+                <input type="text" name="pulse" class="inputBoxSmaller">&nbsp;/ min <input type="text" name="pulseMin"
+                    class="inputBoxSmaller">
             </div>
 
-            <div id="respiratoryRate"  class="inputBox">
+            <div id="respiratoryRate" class="inputBox">
                 <label>Respiratory Rate</label><br><br>
                 <input type="text" name="respiratory" class="inputBoxSmall">&nbsp;/ min
             </div>
 
-            <div id="spO2"  class="inputBox">
+            <div id="spO2" class="inputBox">
                 <label>spO2</label><br><br>
                 <input type="text" name="spO2roomAirPercent" class="inputBoxSmaller">&nbsp;% (room air)<br>
-                <input type="text" name="spO2L%" class="inputBoxSmaller">&nbsp;% (<input type="text" name="spO2L" class="inputBoxSmaller">&nbsp;L O2)
+                <input type="text" name="spO2L%" class="inputBoxSmaller">&nbsp;% (<input type="text" name="spO2L"
+                    class="inputBoxSmaller">&nbsp;L O2)
             </div>
 
-            <div id="glucose"  class="inputBox">
+            <div id="glucose" class="inputBox">
                 <label>Glucose</label><br><br>
-                <input type="text" name="glucose" class="inputBoxSmaller">&nbsp;mmol/l&nbsp;<input type="text" name="glucoseMMOL" class="inputBoxSmaller">
+                <input type="text" name="glucose" class="inputBoxSmaller">&nbsp;mmol/l&nbsp;<input type="text"
+                    name="glucoseMMOL" class="inputBoxSmaller">
             </div>
 
-            <div id="temperature"  class="inputBox">
+            <div id="temperature" class="inputBox">
                 <label>Temperature</label><br><br>
                 <input type="text" name="temperature" class="inputBoxSmall">°C
             </div>
 
-            <div id="oralCavity"  class="inputBox">
+            <div id="oralCavity" class="inputBox">
                 <label>Oral Cavity</label><br><br>
                 <input type="text" name="oralCavity">
             </div>
@@ -516,7 +600,9 @@
 
             <div id="breathSound" class="inputBox">
                 <label>Breath Sound</label><br><br>
-                <select name="breathSound" style="margin-bottom: 15px;" onchange="showStuff('crepitation', 'crepitationDetail')">
+                <select name="breathSound" style="margin-bottom: 15px;"
+                    onchange="showStuff('crepitation', 'crepitationDetail')">
+                    <option value=" ">--Select breath sound--</option>
                     <option value="Normal">Normal</option>
                     <option value="Crepitation" id="crepitation">Crepitation</option>
                     <option value="Rhonchi">Rhonchi</option>
@@ -526,7 +612,7 @@
                     <label>Crepitation Details</label><br><br>
                     <input type="text" name="crepitationDetail">
                 </div>
-                
+
             </div>
 
             <div id="rt" class="inputBox">
@@ -565,7 +651,8 @@
 
             <div id="lungDiagram" class="picBox">
                 <img src="img/Lungs.png" alt="Lungs Image" class="picBox" width="200" height="200">
-                <input type="button" id="lungBtn" class="picBox" value="Show Image" onclick="showPopUp('popUp1', 'lungBtn', 1)">
+                <input type="button" id="lungBtn" class="picBox" value="Show Image"
+                    onclick="showPopUp('popUp1', 'lungBtn', 1)">
             </div>
 
             <!--Lung popups-->
@@ -573,7 +660,13 @@
                 <div class="popUpContent">
                     <span class="close">&times;</span>
                     <h1>Lung image</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <input type="file" id="inputLung">
+                    <button onclick="sendStuff('inputLung', 'lungBtn')">Upload</button>
                 </div>
             </div>
 
@@ -615,7 +708,8 @@
 
             <div id="lowerBodyDiagram" class="picBox">
                 <img src="img/LowerBody.png" alt="Lower Body Image" class="picBox" width="200" height="200">
-                <input type="button" id="lowerBodyBtn" class="picBox" value="Show Image" onclick="showPopUp('popUp2', 'lowerBodyBtn', 2)">
+                <input type="button" id="lowerBodyBtn" class="picBox" value="Show Image"
+                    onclick="showPopUp('popUp2', 'lowerBodyBtn', 2)">
             </div>
 
             <!--Lower Body popups-->
@@ -623,7 +717,13 @@
                 <div class="popUpContent">
                     <span class="close">&times;</span>
                     <h1>Lower Body image</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <input type="file" id="inputLowerBody">
+                    <button onclick="sendStuff('inputLowerBody', 'lowerBodyBtn')">Upload</button>
                 </div>
             </div>
         </div>
@@ -634,7 +734,7 @@
             <h3><u>Musculoskeletal System</u></h3>
             <div id="musclePow" class="inputBox">
                 <label>Muscle Power</label><br><br>
-                <div id="rightUL" >
+                <div id="rightUL">
                     <label>Right UL</label><br><br>
                     <input type="text" name="rightUL"><br><br>
                 </div>
@@ -669,6 +769,7 @@
             <div id="consciousness" class="inputBox">
                 <label>Consciousness</label><br><br>
                 <select name="consciousness">
+                    <option value=" ">--Select Consciousness Status--</option>
                     <option value="Alert">Alert</option>
                     <option value="Drowsy">Drowsy</option>
                     <option value="Confused">Confused</option>
@@ -685,6 +786,10 @@
                 <label class="containerCheckMark">N
                     <input type="radio" name="time" value="No">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="time" value="N/A">
+                    <span class="checkMark"></span>
                 </label><br><br>
 
                 <label>Place:</label><br><br>
@@ -694,6 +799,10 @@
                 </label>
                 <label class="containerCheckMark">N
                     <input type="radio" name="place" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="place" value="N/A">
                     <span class="checkMark"></span>
                 </label><br><br>
 
@@ -705,6 +814,11 @@
                 <label class="containerCheckMark">N
                     <input type="radio" name="people" value="No">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="people" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
             </div>
 
             <div id="responds" class="radioBox">
@@ -717,6 +831,10 @@
                 <label class="containerCheckMark">N
                     <input type="radio" name="voice" value="No">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="voice" value="N/A">
+                    <span class="checkMark"></span>
                 </label><br><br>
 
                 <label>Pain</label><br><br>
@@ -726,6 +844,10 @@
                 </label>
                 <label class="containerCheckMark">N
                     <input type="radio" name="pain" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="pain" value="N/A">
                     <span class="checkMark"></span>
                 </label><br><br>
 
@@ -737,6 +859,11 @@
                 <label class="containerCheckMark">N
                     <input type="radio" name="unresponsiveness" value="No">
                     <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="unresponsiveness" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
             </div>
 
             <div id="sensoryLoss" class="inputBox">
@@ -746,7 +873,8 @@
 
             <div id="nerveDiagram" class="picBox">
                 <img src="img/FullBody.png" alt="Nerve Image" class="picBox" width="200" height="200">
-                <input type="button" id="fullBodyBtn" class="picBox" value="Show Image" onclick="showPopUp('popUp3', 'fullBodyBtn', 3)">
+                <input type="button" id="fullBodyBtn" class="picBox" value="Show Image"
+                    onclick="showPopUp('popUp3', 'fullBodyBtn', 3)">
             </div>
 
             <!--Full Body popups-->
@@ -754,7 +882,13 @@
                 <div class="popUpContent">
                     <span class="close">&times;</span>
                     <h1>Full Body image</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <input type="file" id="inputFullBody">
+                    <button onclick="sendStuff('inputFullBody', 'fullBodyBtn')">Upload</button>
                 </div>
             </div>
         </div>
@@ -764,93 +898,93 @@
             <h2>Systemic Examination</h2>
             <h3><u>Cranial Nerves</u></h3>
             <div id="smell" class="inputBox">
-            <label>I. Smell</label><br><br>
-            <input type="text" name="smell">
+                <label>I. Smell</label><br><br>
+                <input type="text" name="smell">
             </div>
 
             <div id="vision" class="inputBox">
-            <label>II. Vision</label><br><br>
-            <input type="text" name="vision">
+                <label>II. Vision</label><br><br>
+                <input type="text" name="vision">
             </div>
 
             <div id="lightDetection" class="inputBox">
-            <label>Detection of Light</label><br><br>
-            <input type="text" name="lightDetection">
+                <label>Detection of Light</label><br><br>
+                <input type="text" name="lightDetection">
             </div>
 
             <div id="eyeMovement" class="inputBox">
-            <label>III. Eye movement upward, downward, inward</label><br><br>
-            <input type="text" name="eyeMovement">
+                <label>III. Eye movement upward, downward, inward</label><br><br>
+                <input type="text" name="eyeMovement">
             </div>
 
             <div id="raiseEyelid" class="inputBox">
-            <label>IV. Raises eyelid</label><br><br>
-            <input type="text" name="raiseEyelid">
+                <label>IV. Raises eyelid</label><br><br>
+                <input type="text" name="raiseEyelid">
             </div>
 
             <div id="eyeMovement2" class="inputBox">
-            <label>V. Eye movement downward and inward</label><br><br>
-            <input type="text" name="eyeMovement2">
+                <label>V. Eye movement downward and inward</label><br><br>
+                <input type="text" name="eyeMovement2">
             </div>
 
             <div id="facialSensation" class="inputBox">
-            <label>VI. Facial sensation and chewing</label><br><br>
-            <input type="text" name="facialSensation">
+                <label>VI. Facial sensation and chewing</label><br><br>
+                <input type="text" name="facialSensation">
             </div>
 
             <div id="eyeMovement3" class="inputBox">
-            <label>VII. Eye movement outward</label><br><br>
-            <input type="text" name="eyeMovement3">
+                <label>VII. Eye movement outward</label><br><br>
+                <input type="text" name="eyeMovement3">
             </div>
 
             <div id="facialExpression" class="inputBox">
-            <label>Facial expression</label><br><br>
-            <input type="text" name="facialExpression">
+                <label>Facial expression</label><br><br>
+                <input type="text" name="facialExpression">
             </div>
 
             <div id="taste" class="inputBox">
-            <label>Taste in front 2/3 of tongue</label><br><br>
-            <input type="text" name="taste">
+                <label>Taste in front 2/3 of tongue</label><br><br>
+                <input type="text" name="taste">
             </div>
 
             <div id="productionTears" class="inputBox">
-            <label>VIII. Production of tears and saliva</label><br><br>
-            <input type="text" name="productionTears">
+                <label>VIII. Production of tears and saliva</label><br><br>
+                <input type="text" name="productionTears">
             </div>
 
             <div id="hearingBalance" class="inputBox">
-            <label>IX,X. Hearing and Balance</label><br><br>
-            <input type="text" name="hearingBalance">
+                <label>IX,X. Hearing and Balance</label><br><br>
+                <input type="text" name="hearingBalance">
             </div>
 
             <div id="swallowing" class="inputBox">
-            <label>Swallowing</label><br><br>
-            <input type="text" name="swallowing">
+                <label>Swallowing</label><br><br>
+                <input type="text" name="swallowing">
             </div>
 
             <div id="gagReflex" class="inputBox">
-            <label>Gag reflex</label><br><br>
-            <input type="text" name="gagReflex">
+                <label>Gag reflex</label><br><br>
+                <input type="text" name="gagReflex">
             </div>
 
             <div id="speechNerve" class="inputBox">
-            <label>XI. Speech</label><br><br>
-            <input type="text" name="speechNerve">
+                <label>XI. Speech</label><br><br>
+                <input type="text" name="speechNerve">
             </div>
 
             <div id="shrugging" class="inputBox">
-            <label>XII. Shrugging of shoulder</label><br><br>
-            <input type="text" name="shrugging">
+                <label>XII. Shrugging of shoulder</label><br><br>
+                <input type="text" name="shrugging">
             </div>
 
             <div id="tongueMovement" class="inputBox">
-            <label>Tongue movement</label><br><br>
-            <input type="text" name="tongueMovement">
+                <label>Tongue movement</label><br><br>
+                <input type="text" name="tongueMovement">
             </div>
 
             <div id="extNotes" class="areaBox">
-            <label>Extra notes</label><br><br>
-            <textarea name="extNotes" class="areaBNReq" rows="4" cols="50"></textarea>
+                <label>Extra notes</label><br><br>
+                <textarea name="extNotes" class="areaBNReq" rows="4" cols="50"></textarea>
             </div>
         </div>
 
