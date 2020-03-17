@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Medical & Nursing Assessment</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="formID" style="display: none;">medicalAssessmentForm</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+
+    <section>
+        <h1>Medical & Nursing Assessment</h1>
+    </section>
+    <div id="mainbox">
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
+        <!--Patient Detail-->
+        <div class="tab">
+            <div id="allergies" class="inputBox">
+                <label>Allergies</label><br><br>
+                <input type="text" name="allergies">
+            </div>
+
+            <div id="khcNo" class="inputBox">
+                <label>KHC NO</label><br><br>
+                <input type="text" name="khcNo">
+            </div>
+
+            <div id="name" class="inputBox">
+                <label>Name</label><br><br>
+                <input type="text" name="name">
+            </div>
+
+            <div id="ic" class="inputBox">
+                <label>NRIC</label><br><br>
+                <input type="text" name="ic">
+            </div>
+
+            <div id="address" class="areaBox">
+                <label>Address</label><br><br>
+                <textarea name="address" id="addressBox" class="areaBNReq" rows="4" cols="50"></textarea>
+            </div>
+
+            <div id="dob" class="inputBox">
+                <label>DOB</label><br><br>
+                <input type="text" name="dob">
+            </div>
+
+            <div id="sexAge" class="inputBox">
+                <label>Sex/Age</label><br><br>
+                <input type="text" name="sexAge">
+            </div>
+
+            <div id="dateReferral" class="inputBox">
+                <label>Date Referral RCVD</label><br><br>
+                <input type="text" name="dateReferral">
+            </div>
+
+            <div id="phoneNo" class="areaBox">
+                <label>Phone No</label><br><br>
+                <textarea name="phoneNo" id="phoneBox" class="areaBNReq" rows="4" cols="50"></textarea>
+            </div>
+
+            <div id="intialContact" class="inputBox">
+                <label>Initial Contact</label><br><br>
+                <input type="text" name="initialContact">
+            </div>
+
+            <div id="dateAssessment" class="inputBox">
+                <label>Date of Assessment</label><br><br>
+                <input type="text" name="dateAssessment">
+            </div>
+
+            <div id="assessedBy" class="inputBox">
+                <label>Assessed By</label><br><br>
+                <input type="text" name="assessedBy">
+            </div>
+
+            <div id="languageSpoken" class="inputBox">
+                <label>Languages Spoken By: </label><br><br>
+
+                <label>Patient</label><br><br>
+                <input type="text" name="languageSpokenPatient"><br><br>
+
+                <label>Caregiver</label><br><br>
+                <input type="text" name="languageSpokenCaregiver">
+
+            </div>
+        </div>
+
+        <!--Diagnosis-->
+        <div class="tab">
+            <div id="diagnosis" class="inputBox">
+                <label>Diagnosis</label><br><br>
+                <input type="text" name="diagnosis">
+            </div>
+
+            <div id="dateOfNextAppointment" class="inputBox">
+                <label>Date of Next Appointment</label><br><br>
+                <input type="text" name="dateOfNextAppointment">
+            </div>
+
+            <div id="historyIllness" class="areaBox">
+                <label>History of Current Illness</label><br><br>
+                <textarea name="historyIllness" id="historyIllness" class="areaBNReq" rows="4" cols="50"></textarea>
+            </div>
+
+            <div id="pastMedicalIllness" class="areaBox">
+                <label>Past Medical Illness</label><br><br>
+                <textarea name="pastMedicalIllness" id="pastMedicalIllness" class="areaBNReq" rows="4"
+                    cols="50"></textarea>
+            </div>
+
+            <div id="history" class="inputBox">
+                <label>History of: </label><br><br>
+                <label>Surgery</label><br><br>
+                <input type="text" name="historySurgery"><br><br>
+
+                <label>Radiotherapy</label><br><br>
+                <input type="text" name="historyRadiotherapy"><br><br>
+
+                <label>Chemotherapy</label><br><br>
+                <input type="text" name="historyChemotherapy">
+            </div>
+        </div>
+
+        <!--Social History-->
+        <div class="tab">
+            <div id="socialHistory">
+                <h2>Social History</h2>
+                <div id="maritalStatus" class="inputBox">
+                    <label>Marital Status</label><br><br>
+                    <select name="maritalStatus">
+                        <option value=" ">--Select Maritial Status--</option>
+                        <option value="Unknown">Unknown</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Widowed">Widowed</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Seperated">Seperated</option>
+                    </select>
+                </div>
+
+                <div id="occupation" class="inputBox">
+                    <label>Occupation (Past/Present)</label><br><br>
+                    <input type="text" name="occupation">
+                </div>
+
+                <div id="interests" class="inputBox">
+                    <label>Interests</label><br><br>
+                    <input type="text" name="interests">
+                </div>
+
+                <div id="patientReligion" class="inputBox">
+                    <label>Religion of Patient</label><br><br>
+                    <input type="text" name="patientReligion">
+                </div>
+
+                <div id="familyReligion" class="inputBox">
+                    <label>Religion of Family Members</label><br><br>
+                    <input type="text" name="familyReligion">
+                </div>
+
+                <div id="primaryCaregiver" class="inputBox">
+                    <label>Primary Caregiver</label><br><br>
+                    <input type="text" name="primaryCaregiver">
+                </div>
+
+                <div id="emotionalStatus" class="inputBox">
+                    <label>Emotional Status of Primary Caregiver</label><br><br>
+                    <label class="container">Supportive
+                        <input type="checkbox" name="emotionalStatusSupportive" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+                    <label class="container">Caring
+                        <input type="checkbox" name="emotionalStatusCaring" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+                    <label class="container">Concerned
+                        <input type="checkbox" name="emotionalStatusConcerned" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+                    <label class="container">Anxious
+                        <input type="checkbox" name="emotionalStatusAnxious" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+                    <label class="container">Weary
+                        <input type="checkbox" name="emotionalStatusWeary" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+                    <label class="container">Exhausted
+                        <input type="checkbox" name="emotionalStatusExhausted" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+                    <label class="container">Defensive
+                        <input type="checkbox" name="emotionalStatusDefensive" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+                    <label class="container">Controlling
+                        <input type="checkbox" name="emotionalStatusControlling" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+
+                </div>
+
+                <div id="financialStatus" class="inputBox">
+                    <label>Financial Status</label><br><br>
+                    <select name="financialStatus">
+                        <option value=" ">--Select Status--</option>
+                        <option value="Good">Good</option>
+                        <option value="Self-sufficient">Self-sufficient</option>
+                        <option value="In need of financial assistance">In need of financial assistance</option>
+                    </select>
+                </div>
+
+                <div id="genoGram" class="inputBox">
+                    <label>Genogram</label><br><br>
+                    <input type="button" id="genoImage" value="Show Image"
+                        onclick="showPopUp('popUp0', 'genoImage', 0)">
+                </div>
+
+                <!--Genogram popups-->
+                <div id="popUp0" class="popUp">
+                    <div class="popUpContent">
+                        <span class="close">&times;</span>
+                        <h1>Genogram</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <input type="file" id="inputGenogram">
+                        <button onclick="sendStuff('inputGenogram', 'genoImage')">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Emotional Assessment-->
+        <div class="tab">
+            <h2>Emotional Assessment of Patient</h2>
+            <div id="emotionAssessment">
+                <div id="emotionStatement" class="inputBox">
+                    <p>Over the last two weeks, is the patient having the following symptoms?
+                        (If patient has 5 of these symptoms nearly every day for two weeks, they may be suffering from
+                        depression)</p>
+                </div>
+
+                <div class="radioBox">
+                    <label>1. Feeling tired</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess1" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess1" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess1" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>2. Feeling hopeless</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess2" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess2" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess2" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>3. Loss of interest in doing things</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess3" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess3" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess3" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>4. Difficulty sleeping</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess4" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess4" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess4" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>5. Poor Appetite</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess5" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess5" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess5" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>6. Feeling of guilt</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess6" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess6" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess6" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>7. Loss of concentration</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess7" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess7" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess7" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>8. Suicidal thoughts</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess8" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess8" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess8" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>9. Feeling moody</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess9" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess9" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess9" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+                <div class="radioBox">
+                    <label>10. Uncontrolled pain and symptoms</label><br><br>
+                    <label class="containerCheckMark">Yes
+                        <input type="radio" name="emotionalAssess10" value="Yes">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">No
+                        <input type="radio" name="emotionalAssess10" value="No">
+                        <span class="checkMark"></span>
+                    </label>
+                    <label class="containerCheckMark">N/A
+                        <input type="radio" name="emotionalAssess10" value="N/A">
+                        <span class="checkMark"></span>
+                    </label>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--General Examination-->
+        <div class="tab">
+            <h2>General Examination</h2>
+            <div id="generalAppearance" class="inputBox">
+                <label>General Appearance</label><br><br>
+                <input type="text" name="generalAppearance">
+            </div>
+
+            <div id="speech" class="inputBox">
+                <label>Speech</label><br><br>
+                <input type="text" name="speech">
+            </div>
+
+            <div id="hearing" class="inputBox">
+                <label>Hearing</label><br><br>
+                <input type="text" name="hearing">
+            </div>
+
+            <div id="hydration" class="inputBox">
+                <label>Hydration</label><br><br>
+                <input type="text" name="hydration">
+            </div>
+
+            <div id="ecog" class="inputBox">
+                <label>ECOG</label><br><br>
+                <select name="ecog">
+                    <option value=" ">--Select ECOG--</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+
+            <div id="cachexia" class="radioBox">
+                <label>Cachexia</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="cachexia" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="cachexia" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="cachexia" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
+            </div>
+
+            <div id="pallor" class="radioBox">
+                <label>Pallor</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="pallor" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="pallor" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="pallor" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
+            </div>
+
+            <div id="jaundice" class="radioBox">
+                <label>Jaundice</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="jaundice" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="jaundice" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="jaundice" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
+            </div>
+
+            <div id="cyanosis" class="radioBox">
+                <label>Cyanosis</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="cyanosis" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="cyanosis" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="cyanosis" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
+            </div>
+
+            <div id="bp" class="inputBox">
+                <label>BP</label><br><br>
+                <input type="text" name="bp" class="inputBoxSmall">&nbsp;mm Hg
+            </div>
+
+            <div id="pulse" class="inputBox">
+                <label>Pulse</label><br><br>
+                <input type="text" name="pulse" class="inputBoxSmaller">&nbsp;/ min <input type="text" name="pulseMin"
+                    class="inputBoxSmaller">
+            </div>
+
+            <div id="respiratoryRate" class="inputBox">
+                <label>Respiratory Rate</label><br><br>
+                <input type="text" name="respiratory" class="inputBoxSmall">&nbsp;/ min
+            </div>
+
+            <div id="spO2" class="inputBox">
+                <label>spO2</label><br><br>
+                <input type="text" name="spO2roomAirPercent" class="inputBoxSmaller">&nbsp;% (room air)<br>
+                <input type="text" name="spO2L%" class="inputBoxSmaller">&nbsp;% (<input type="text" name="spO2L"
+                    class="inputBoxSmaller">&nbsp;L O2)
+            </div>
+
+            <div id="glucose" class="inputBox">
+                <label>Glucose</label><br><br>
+                <input type="text" name="glucose" class="inputBoxSmaller">&nbsp;mmol/l&nbsp;<input type="text"
+                    name="glucoseMMOL" class="inputBoxSmaller">
+            </div>
+
+            <div id="temperature" class="inputBox">
+                <label>Temperature</label><br><br>
+                <input type="text" name="temperature" class="inputBoxSmall">°C
+            </div>
+
+            <div id="oralCavity" class="inputBox">
+                <label>Oral Cavity</label><br><br>
+                <input type="text" name="oralCavity">
+            </div>
+
+            <div id="lymphoedema" class="inputBox">
+                <label>Lymphoedema</label><br><br>
+                <input type="text" name="lymphoedema">
+            </div>
+
+            <div id="pressureSores" class="inputBox">
+                <label>Pressure Sores</label><br><br>
+                <input type="text" name="pressureSores">
+            </div>
+        </div>
+
+        <!--Systemic Examination-->
+        <div class="tab">
+            <h2>Systemic Examination</h2>
+            <h3><u>Respiratory System</u></h3>
+            <div id="chestWall" class="inputBox">
+                <label>Chest Wall</label><br><br>
+                <input type="text" name="chestWall">
+            </div>
+
+            <div id="breathSound" class="inputBox">
+                <label>Breath Sound</label><br><br>
+                <select name="breathSound" style="margin-bottom: 15px;"
+                    onchange="showStuff('crepitation', 'crepitationDetail')">
+                    <option value=" ">--Select breath sound--</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Crepitation" id="crepitation">Crepitation</option>
+                    <option value="Rhonchi">Rhonchi</option>
+                </select>
+
+                <div id="crepitationDetail" style="display: none;">
+                    <label>Crepitation Details</label><br><br>
+                    <input type="text" name="crepitationDetail">
+                </div>
+
+            </div>
+
+            <div id="rt" class="inputBox">
+                <label>Rt</label><br><br>
+                <input type="text" name="rt">
+            </div>
+
+            <div id="lt" class="inputBox">
+                <label>Lt</label><br><br>
+                <input type="text" name="lt">
+            </div>
+
+            <div id="airEntry" class="inputBox">
+                <label>Air Entry</label><br><br>
+                <div id="rtAir">
+                    <label>Rt</label><br><br>
+                    <input type="text" name="rtAir"><br><br>
+                </div>
+
+                <div id="ltAir">
+                    <label>Lt</label><br><br>
+                    <input type="text" name="ltAir">
+                </div>
+            </div>
+
+            <h3><u>Cardiovascular System</u></h3>
+            <div id="heartSounds" class="inputBox">
+                <label>Heart Sounds</label><br><br>
+                <input type="text" name="heartSounds">
+            </div>
+
+            <div id="jvp" class="inputBox">
+                <label>JVP</label><br><br>
+                <input type="text" name="jvp">
+            </div>
+
+            <div id="lungDiagram" class="picBox">
+                <img src="img/Lungs.png" alt="Lungs Image" class="picBox" width="200" height="200">
+                <input type="button" id="lungBtn" class="picBox" value="Show Image"
+                    onclick="showPopUp('popUp1', 'lungBtn', 1)">
+            </div>
+
+            <!--Lung popups-->
+            <div id="popUp1" class="popUp">
+                <div class="popUpContent">
+                    <span class="close">&times;</span>
+                    <h1>Lung image</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <input type="file" id="inputLung">
+                    <button onclick="sendStuff('inputLung', 'lungBtn')">Upload</button>
+                </div>
+            </div>
+
+            <h3><u>Gastrointestinal System</u></h3>
+            <div id="abdominalWall" class="inputBox">
+                <label>Abdominal Wall</label><br><br>
+                <input type="text" name="abdominalWall">
+            </div>
+
+            <div id="ascites" class="inputBox">
+                <label>Ascites</label><br><br>
+                <input type="text" name="ascites">
+            </div>
+
+            <div id="hepatomegaly" class="inputBox">
+                <label>Hepatomegaly</label><br><br>
+                <input type="text" name="hepatomegaly">
+            </div>
+
+            <div id="splenomegaly" class="inputBox">
+                <label>Splenomegaly</label><br><br>
+                <input type="text" name="splenomegaly">
+            </div>
+
+            <div id="bowelSounds" class="inputBox">
+                <label>Bowel Sounds</label><br><br>
+                <input type="text" name="bowelSounds">
+            </div>
+
+            <div id="perRectum" class="inputBox">
+                <label>Per Rectum</label><br><br>
+                <input type="text" name="perRectum">
+            </div>
+
+            <div id="perVagina" class="inputBox">
+                <label>Per Vagina</label><br><br>
+                <input type="text" name="perVagina">
+            </div>
+
+            <div id="lowerBodyDiagram" class="picBox">
+                <img src="img/LowerBody.png" alt="Lower Body Image" class="picBox" width="200" height="200">
+                <input type="button" id="lowerBodyBtn" class="picBox" value="Show Image"
+                    onclick="showPopUp('popUp2', 'lowerBodyBtn', 2)">
+            </div>
+
+            <!--Lower Body popups-->
+            <div id="popUp2" class="popUp">
+                <div class="popUpContent">
+                    <span class="close">&times;</span>
+                    <h1>Lower Body image</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <input type="file" id="inputLowerBody">
+                    <button onclick="sendStuff('inputLowerBody', 'lowerBodyBtn')">Upload</button>
+                </div>
+            </div>
+        </div>
+
+        <!--Musculoskeletal System-->
+        <div class="tab">
+            <h2>Systemic Examination</h2>
+            <h3><u>Musculoskeletal System</u></h3>
+            <div id="musclePow" class="inputBox">
+                <label>Muscle Power</label><br><br>
+                <div id="rightUL">
+                    <label>Right UL</label><br><br>
+                    <input type="text" name="rightUL"><br><br>
+                </div>
+
+                <div id="leftUL">
+                    <label>Left UL</label><br><br>
+                    <input type="text" name="leftUL"><br><br>
+                </div>
+
+                <div id="rightLL">
+                    <label>Right LL</label><br><br>
+                    <input type="text" name="rightLL"><br><br>
+                </div>
+
+                <div id="leftLL">
+                    <label>Left LL</label><br><br>
+                    <input type="text" name="leftLL">
+                </div>
+            </div>
+
+            <div id="muscleWasting" class="inputBox">
+                <label>Muscle Wasting</label><br><br>
+                <input type="text" name="muscleWasting">
+            </div>
+
+            <div id="bodyTenderness" class="inputBox">
+                <label>Body Tenderness</label><br><br>
+                <input type="text" name="bodyTenderness">
+            </div>
+
+            <h3><u>Neurological Examination</u></h3>
+            <div id="consciousness" class="inputBox">
+                <label>Consciousness</label><br><br>
+                <select name="consciousness">
+                    <option value=" ">--Select Consciousness Status--</option>
+                    <option value="Alert">Alert</option>
+                    <option value="Drowsy">Drowsy</option>
+                    <option value="Confused">Confused</option>
+                </select>
+            </div>
+
+            <div id="orientation" class="radioBox">
+                <label>Orientation to:</label><br><br>
+                <label>Time:</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="time" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="time" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="time" value="N/A">
+                    <span class="checkMark"></span>
+                </label><br><br>
+
+                <label>Place:</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="place" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="place" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="place" value="N/A">
+                    <span class="checkMark"></span>
+                </label><br><br>
+
+                <label>People:</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="people" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="people" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="people" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
+            </div>
+
+            <div id="responds" class="radioBox">
+                <label>Responds to:</label>
+                <label>Voice</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="voice" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="voice" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="voice" value="N/A">
+                    <span class="checkMark"></span>
+                </label><br><br>
+
+                <label>Pain</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="pain" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="pain" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="pain" value="N/A">
+                    <span class="checkMark"></span>
+                </label><br><br>
+
+                <label>Unresponsiveness</label><br><br>
+                <label class="containerCheckMark">Y
+                    <input type="radio" name="unresponsiveness" value="Yes">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N
+                    <input type="radio" name="unresponsiveness" value="No">
+                    <span class="checkMark"></span>
+                </label>
+                <label class="containerCheckMark">N/A
+                    <input type="radio" name="unresponsiveness" value="N/A">
+                    <span class="checkMark"></span>
+                </label>
+            </div>
+
+            <div id="sensoryLoss" class="inputBox">
+                <label>Sensory Loss</label><br><br>
+                <input type="text" name="sensoryLoss">
+            </div>
+
+            <div id="nerveDiagram" class="picBox">
+                <img src="img/FullBody.png" alt="Nerve Image" class="picBox" width="200" height="200">
+                <input type="button" id="fullBodyBtn" class="picBox" value="Show Image"
+                    onclick="showPopUp('popUp3', 'fullBodyBtn', 3)">
+            </div>
+
+            <!--Full Body popups-->
+            <div id="popUp3" class="popUp">
+                <div class="popUpContent">
+                    <span class="close">&times;</span>
+                    <h1>Full Body image</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <input type="file" id="inputFullBody">
+                    <button onclick="sendStuff('inputFullBody', 'fullBodyBtn')">Upload</button>
+                </div>
+            </div>
+        </div>
+
+        <!--Cranial Nerves-->
+        <div class="tab">
+            <h2>Systemic Examination</h2>
+            <h3><u>Cranial Nerves</u></h3>
+            <div id="smell" class="inputBox">
+                <label>I. Smell</label><br><br>
+                <input type="text" name="smell">
+            </div>
+
+            <div id="vision" class="inputBox">
+                <label>II. Vision</label><br><br>
+                <input type="text" name="vision">
+            </div>
+
+            <div id="lightDetection" class="inputBox">
+                <label>Detection of Light</label><br><br>
+                <input type="text" name="lightDetection">
+            </div>
+
+            <div id="eyeMovement" class="inputBox">
+                <label>III. Eye movement upward, downward, inward</label><br><br>
+                <input type="text" name="eyeMovement">
+            </div>
+
+            <div id="raiseEyelid" class="inputBox">
+                <label>IV. Raises eyelid</label><br><br>
+                <input type="text" name="raiseEyelid">
+            </div>
+
+            <div id="eyeMovement2" class="inputBox">
+                <label>V. Eye movement downward and inward</label><br><br>
+                <input type="text" name="eyeMovement2">
+            </div>
+
+            <div id="facialSensation" class="inputBox">
+                <label>VI. Facial sensation and chewing</label><br><br>
+                <input type="text" name="facialSensation">
+            </div>
+
+            <div id="eyeMovement3" class="inputBox">
+                <label>VII. Eye movement outward</label><br><br>
+                <input type="text" name="eyeMovement3">
+            </div>
+
+            <div id="facialExpression" class="inputBox">
+                <label>Facial expression</label><br><br>
+                <input type="text" name="facialExpression">
+            </div>
+
+            <div id="taste" class="inputBox">
+                <label>Taste in front 2/3 of tongue</label><br><br>
+                <input type="text" name="taste">
+            </div>
+
+            <div id="productionTears" class="inputBox">
+                <label>VIII. Production of tears and saliva</label><br><br>
+                <input type="text" name="productionTears">
+            </div>
+
+            <div id="hearingBalance" class="inputBox">
+                <label>IX,X. Hearing and Balance</label><br><br>
+                <input type="text" name="hearingBalance">
+            </div>
+
+            <div id="swallowing" class="inputBox">
+                <label>Swallowing</label><br><br>
+                <input type="text" name="swallowing">
+            </div>
+
+            <div id="gagReflex" class="inputBox">
+                <label>Gag reflex</label><br><br>
+                <input type="text" name="gagReflex">
+            </div>
+
+            <div id="speechNerve" class="inputBox">
+                <label>XI. Speech</label><br><br>
+                <input type="text" name="speechNerve">
+            </div>
+
+            <div id="shrugging" class="inputBox">
+                <label>XII. Shrugging of shoulder</label><br><br>
+                <input type="text" name="shrugging">
+            </div>
+
+            <div id="tongueMovement" class="inputBox">
+                <label>Tongue movement</label><br><br>
+                <input type="text" name="tongueMovement">
+            </div>
+
+            <div id="extNotes" class="areaBox">
+                <label>Extra notes</label><br><br>
+                <textarea name="extNotes" class="areaBNReq" rows="4" cols="50"></textarea>
+            </div>
+        </div>
+
+        <div id="buttons" style="overflow:auto;">
+            <div style="float:right;">
+                <input type="button" id="prevBtn" value="Prev" onclick="nextPrev(-1)">
+                <input type="button" id="nextBtn" value="Next" onclick="nextPrev(1)">
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:40px;">
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+        </div>
+        <div class="loadingSpinner" style="display: none;">
+            <div class="loadingAnimation">
+                <div></div>
+            </div>
+        </div>
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>

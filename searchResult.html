@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search Result Links</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="source.js"></script>
+</head>
+
+<body>
+    <div id="formID" style="display: none;">searchResult</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <label id="email"></label>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+
+    <div id="mainbox">
+        <!--ithink there supposed to be something here-->
+        <div id="row" style="display: none;">
+            
+        </div>
+
+        <div id="links" class="inputBox">
+            <label>Patient: </label><label id="patientNameSearch" name="patientNameSearch"></label>
+            <a href="search.html" class="goBackBtn">Back to Search</a><br>
+            <a href='extraNotes.html' id="extraNotes" class="linkBoxSel">Extra Notes</a><br>
+            <a href='medicationForm.html' id="medicationForm" class="linkBoxSel">Medication Given Form</a><br>
+            <a href='medicationEquipmentForm.html' id="medicationEquipmentForm" class="linkBoxSel">Medication Equipment
+                Form</a><br>
+            <a href='homeVisitForm.html' id="homeVisitForm" class="linkBoxSel">Home Visit Form</a><br>
+            <a href='endOfLifeForm.html' id="endOfLifeForm" class="linkBoxSel">End of Life Issue</a>
+        </div>
+
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    <script>
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const myParam = urlParams.get('khcno');
+            const myParam2 = urlParams.get('name');
+
+            document.getElementById("patientNameSearch").innerHTML = myParam + ", " + myParam2;
+            document.getElementById("extraNotes").setAttribute("href", "extraNotes.html?khcno=" + myParam + "&name=" + myParam2);
+            document.getElementById("medicationForm").setAttribute("href", "medicationForm.html?khcno=" + myParam + "&name=" + myParam2);
+            document.getElementById("medicationEquipmentForm").setAttribute("href", "medicationEquipmentForm.html?khcno=" + myParam + "&name=" + myParam2);
+            document.getElementById("homeVisitForm").setAttribute("href", "homeVisitForm.html?khcno=" + myParam + "&name=" + myParam2);
+            document.getElementById("endOfLifeForm").setAttribute("href", "endOfLifeForm.html?khcno=" + myParam + "&name=" + myParam2);
+        });
+
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
+    </script>
+</body>
+
+</html>
