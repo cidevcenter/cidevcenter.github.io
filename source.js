@@ -122,6 +122,29 @@ function showStuff(checkbox, id) {
     }
 }
 
+function showStuffTable(checkbox, id) {
+    var array = toArray();
+    //selectedList = array;
+
+    if($("#" + checkbox).is(":checked")) {
+        console.log(array.length);
+        if(array.length > 0) {
+            document.getElementById(id).style.display = "inline";
+        }
+        else {
+            document.getElementById(id).style.display = "none";
+        }
+    }
+    else {
+        if(array.length > 0) {
+            document.getElementById(id).style.display = "inline";
+        }
+        else {
+            document.getElementById(id).style.display = "none";
+        }
+    }
+}
+
 function showPopUp(popUpId, buttonId, index) {
     var modal = document.getElementById(popUpId);
 
@@ -145,12 +168,27 @@ function showPopUp(popUpId, buttonId, index) {
 function showRow() {
     document.getElementById("rowCount").innerText = "";
     for(var i = 0; i < document.getElementsByName("row").length; i++){
+        var index = selectedList.indexOf(document.getElementsByName("row")[i].value);
         if(document.getElementsByName("row")[i].checked == true) {
+            selectedList.push(document.getElementsByName("row")[i].value);
             var textNode = document.createTextNode(document.getElementsByName("row")[i].value + '\n');
             document.getElementById('rowCount').appendChild(textNode);
+        } else if(document.getElementsByName("row")[i].checked == false && index > -1) {
+            selectedList.splice(index, 1);
         }
-        
     }
+
+    selectedList = toArray();
+    
+}
+
+//converts to set then converts back to array
+function normalizeArray(array) {
+    var set = new Set(array);
+
+    var tempArr = [...set];
+
+    return tempArr;
 }
 
 //For use with deleteRecord and editRecords, returns array of chosen records
@@ -168,10 +206,37 @@ function toArray() {
         }
     }
 
-    return array;
+    return normalizeArray(selectedList);
 }
 
 //Makes it so the required inputs only show styles after user has clicked it
 $(':required').on('blur keydown', function() {
     $(this).addClass('touched');
 });
+
+function showScrollButtons() {
+    var btn = document.getElementById('scrollButtons');
+    var toggle = document.getElementById('scrollButtonToggle');
+
+    if (btn.className == "scrollButtonHide" || btn.className == "") {
+        btn.className = "";
+        toggle.className = "";
+        btn.setAttribute('style', 'opacity: 0%; right: -40%');
+        toggle.setAttribute('style', 'right: 0%;');
+        toggle.innerHTML = "<i class='material-icons'>keyboard_arrow_right</i>";
+        setTimeout(function() {
+            btn.className = "scrollButtonShow";
+            toggle.className = "scrollButtonToggleShow";
+        }, 10);
+    } else if (btn.className == "scrollButtonShow") {
+        btn.className = "";
+        toggle.className = "";
+        btn.setAttribute('style', 'opacity: 100%; right: 4%');
+        toggle.setAttribute('style', 'right: calc(4% + 56px + 30px);');
+        toggle.innerHTML = "<i class='material-icons'>keyboard_arrow_left</i>";
+        setTimeout(function() {
+            btn.className = "scrollButtonHide";
+            toggle.className = "scrollButtonToggleHide";
+        }, 10);
+    }
+}

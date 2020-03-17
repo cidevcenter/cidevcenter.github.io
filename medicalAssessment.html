@@ -23,6 +23,15 @@
         <h1>Medical & Nursing Assessment</h1>
     </section>
     <div id="mainbox">
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
         <!--Patient Detail-->
         <div class="tab">
             <div id="allergies" class="inputBox">
@@ -967,7 +976,7 @@
             </div>
         </div>
 
-        <div style="overflow:auto;">
+        <div id="buttons" style="overflow:auto;">
             <div style="float:right;">
                 <input type="button" id="prevBtn" value="Prev" onclick="nextPrev(-1)">
                 <input type="button" id="nextBtn" value="Next" onclick="nextPrev(1)">
@@ -984,7 +993,11 @@
             <span class="step"></span>
             <span class="step"></span>
         </div>
-
+        <div class="loadingSpinner" style="display: none;">
+            <div class="loadingAnimation">
+                <div></div>
+            </div>
+        </div>
         <div id="content">
             <pre id="content" style="white-space: pre-wrap;"></pre>
         </div>

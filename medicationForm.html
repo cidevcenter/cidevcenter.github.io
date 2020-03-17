@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Medication Form</title>
+    <title>Medication Given Form</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" href="source.css">
@@ -21,16 +21,31 @@
     </div>
 
     <div id="mainbox">
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
         <form id="submitForm" action="" method="POST">
             <div id="patientName" class="inputBox">
                 <label>Patient: </label><label id="patientNameSearch" name="patientNameSearch"></label>
-                <div id="scrollButtons" style="position: fixed; right: 8%; bottom: 8%;">
-                    <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
-                    <a href="#buttons" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+                <a href="searchResult.html" id="backLink" class="goBackBtn">Go Back</a><br>
+                <div class="loadingSpinner">
+                    <div class="loadingAnimation">
+                        <div></div>
+                    </div>
                 </div>
                 <div id="table">
                     <table id="searchTable">
                     </table>
+                </div>
+                <div id="pageText">
+                </div>
+                <div id="buttonsTable">
                 </div>
 
                 <div id="rowCount" style="white-space: pre-wrap; display: none;">
@@ -76,11 +91,17 @@
 
             </div>
 
-            <div style="overflow: auto;">
+            <div id="buttons" style="overflow: auto;">
                 <div style="float: right;">
-                    <input type="button" value="Edit" onclick="editRecord('Medication Given', toArray())">
-                    <input type="button" value="Delete" onclick="deleteRecord(1738213257, toArray())">
+                    <input type="button" id="edit" style="display: none;" value="Edit" onclick="editRecord('Medication Given', toArray())">
+                    <input type="button" id="delete" style="display: none;" value="Delete" onclick="deleteRecord(1738213257, toArray())">
                     <input type="button" value="Submit" onclick="appendForm('medicationForm')">
+                </div>
+            </div>
+            
+            <div class="loadingSpinner" id="loadingSpinnerBottom" style="display: none;">
+                <div class="loadingAnimation">
+                    <div></div>
                 </div>
             </div>
             
@@ -107,6 +128,8 @@
 
             document.getElementById("patientNameSearch").innerHTML = myParam;
             document.getElementById("patientNameHidden").innerHTML = myParam2;
+
+            document.getElementById("backLink").setAttribute("href", "searchResult.html?khcno=" + myParam + "&name=" + myParam2);
         });
 
         document.addEventListener('readystatechange', event => {

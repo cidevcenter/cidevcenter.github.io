@@ -20,6 +20,15 @@
     </div>
     <section><h1>Referral Form</h1></section>
     <div id="mainbox">
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
         <form id="submitForm" action="" method="POST">
             <div class="tab">
                 <div id="patientName" class="inputBox itemRequired">
@@ -39,7 +48,7 @@
 
                 <div id="age" class="inputBox">
                     <label>Age</label><br><br>
-                    <input type="number" name="age" min="0" max="200" value="60">
+                    <input type="number" name="age" min="0" max="200" value="0">
                 </div>
     
                 <div id="sex" class="inputBox">
@@ -64,7 +73,7 @@
     
                 <div id="handphoneNo" class="inputBox itemRequired">
                     <label>H/P No.</label><br><br>
-                    <input type="text" name="handphoneNo" pattern="[0-9]" required>
+                    <input type="text" name="handphoneNo" required>
                 </div>
     
                 <div id="contactPerson" class="inputBox itemRequired">
@@ -79,7 +88,7 @@
     
                 <div id="telephoneNo" class="inputBox itemRequired">
                     <label>Telephone No.</label><br><br>
-                    <input type="text" name="telephoneNo" pattern="[0-9]" required>
+                    <input type="text" name="telephoneNo" required>
                     <div id="inputLine"></div>
                 </div>
     
@@ -185,7 +194,7 @@
     
                 <div id="officePhoneNo", class="inputBox itemRequired">
                     <label>Office Phone No.</label><br><br>
-                    <input type="text" name="officePhoneNo" pattern="[0-9]" required>
+                    <input type="text" name="officePhoneNo" required>
                 </div>
     
                 <div id="faxNo", class="inputBox itemRequired">
@@ -218,7 +227,7 @@
                 </div>
             </div>
             
-            <div style="overflow:auto;">
+            <div id="buttons" style="overflow:auto;">
                 <div style="float:right;">
                     <input type="button" id="prevBtn" class="navBtn" value="Prev" onclick="nextPrev(-1)">
                     <input type="button" id="nextBtn" class="navBtn" value="Next" onclick="nextPrev(1)">
@@ -233,6 +242,11 @@
                 <span class="step"></span>
                 <span class="step"></span>
                 <span class="step"></span>
+            </div>
+            <div class="loadingSpinner" style="display: none;">
+                <div class="loadingAnimation">
+                    <div></div>
+                </div>
             </div>
         </form>
     </div>

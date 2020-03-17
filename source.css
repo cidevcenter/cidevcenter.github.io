@@ -1,8 +1,3 @@
-html
-{
-    scroll-behavior: smooth;
-}
-
 body 
 {
     background-color:white;
@@ -75,6 +70,60 @@ body
 {
     display: flex;
     flex-direction: column;
+    position: fixed;
+    bottom: 8%;
+    z-index: 1;
+}
+
+.scrollButtonShow
+{
+    animation: scrollButtonAnimation 0.255s ease-in forwards !important;
+}
+
+.scrollButtonHide
+{
+    animation: scrollButtonAnimationReverse 0.25s ease-in forwards !important;
+}
+
+.scrollButtonToggleShow
+{
+    animation: scrollButtonToggleAnimation 0.255s ease-in forwards !important;
+}
+
+.scrollButtonToggleHide
+{
+    animation: scrollButtonToggleAnimationReverse 0.25s ease-in forwards !important;
+}
+
+.scrollButtonHide a
+{
+    pointer-events: none;
+    cursor: default;
+}
+
+#scrollButtonToggle
+{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: calc(6% + (152px / 2));
+    z-index: 1;
+    background-color: transparent;
+    border: 1px solid gray;
+    padding: 0;
+    right: calc(4% + 56px + 30px);
+}
+
+#scrollButtonToggle i
+{
+    color: grey;
+    background-color: white;
+}
+
+#scrollButtonToggle i:hover
+{
+    background-color: rgb(220,220,220);
+    transition: 0.2s;
 }
 
 #table
@@ -164,7 +213,8 @@ i
 
 #patientNameSearch
 {
-    width: calc(90% - 34px);
+    margin: auto;
+    width: calc(100% - 50px);
 }
 
 #mainbox
@@ -333,7 +383,7 @@ input[type=text]:focus
 
 .revBtn{
     position: absolute;
-    left: 100px;
+    left: 1vw;
     color: rgb(230, 255, 230);
     font-size: 16px;
     background-color: transparent;
@@ -345,6 +395,25 @@ input[type=text]:focus
 
 .revBtn:hover{
     background-color: rgb(40, 136, 43);
+}
+
+.goBackBtn{
+    text-align: center;
+    text-decoration: none;
+    clear: both;
+    display: block;
+    border-radius: 10px;
+    padding: 0.5em;
+    font-size: 17px;
+    width: 18%;
+    height: auto;
+    background-color: green;
+    color: white;
+}
+
+.goBackBtn:hover{
+    background-color: darkgreen;
+    transition: 0.2s;
 }
 
 input[type=button] {
@@ -386,7 +455,7 @@ option:hover
 
 .inputBoxSmall
 {
-    width: 50% !important;
+    width: 49% !important;
 }
 
 .inputBoxSmaller
@@ -560,6 +629,7 @@ option:hover
     width: 90%;
     height: 10px;
     background: #d3d3d3;
+    border-bottom: none;
     outline: none;
     opacity: 0.7;
     transition: opacity .2s;
@@ -629,6 +699,152 @@ option:hover
     cursor: pointer;
 }
 
+@keyframes loadingAnimation 
+{
+    0% { transform: translate(-50%,-50%) rotate(0deg); }
+    100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+@keyframes scrollButtonAnimation
+{
+    0% {right: -40%; opacity: 0%;}
+    100% {right: 4%; opacity: 100%;}
+}
+
+@keyframes scrollButtonAnimationReverse
+{
+    0% {right: 4%; opacity: 100%;}
+    100% {right: -40%; opacity: 0%;}
+}
+
+@keyframes scrollButtonToggleAnimation
+{
+    0% {right: 0%;}
+    100% {right: calc(4% + 56px + 30px);}
+}
+
+@keyframes scrollButtonToggleAnimationReverse
+{
+    0% {right: calc(4% + 56px + 30px);}
+    100% {right: 0%;}
+}
+  
+.loadingAnimation div 
+{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 15px solid #5be16d;
+    border-top-color: transparent;
+    border-radius: 50%;
+}
+  
+.loadingAnimation div 
+{
+    animation: loadingAnimation 1s linear infinite;
+    top: 40px;
+    left: 40px
+}
+  
+.loadingSpinner 
+{
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+  
+.loadingAnimation 
+{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+    margin: auto;
+}
+  
+.loadingAnimation div 
+{ 
+    box-sizing: content-box; 
+}
+
+#pageText
+{
+    display: flex;
+    justify-content: center;
+}
+
+#buttonsTable
+{
+    direction: rtl;
+    display: flex;
+    justify-content: space-between;
+}
+
+#prevBtnTable
+{
+    order: 2;
+}
+
+#nextBtnTable
+{
+    order: 1;
+}
+
+#nextBtnTable, #prevBtnTable
+{
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+#nextBtnTable i, #prevBtnTable i
+{
+    background-color: transparent;
+}
+
+#content
+{
+    margin: 12px;
+    font-size: 20px;
+}
+
+/*Custom scroll bar*/
+::-webkit-scrollbar
+{
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track
+{
+    background: transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-corner
+{
+    box-shadow: inset 0 0 3px lightgrey;
+    background: rgb(180, 233, 180);
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: green;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+    background: darkgreen;
+}
+
 @media screen and (max-width: 1024px) 
 {
     h1
@@ -695,7 +911,7 @@ option:hover
         left: 3px;
     }
 
-    #lungBtn
+    #lungBtn, #lowerBodyBtn, #fullBodyBtn
     {
         margin-left: 26px;
     }
@@ -721,18 +937,13 @@ option:hover
         margin: 3%;
     }
 
-    input[type=button]
-    {
-        padding: 10px
-    }
-
     .inputBox, .areaBox, .radioBox, .picBox
     {
         padding: 3vw;
         width: 90%;
     }
 
-    #lungBtn
+    #lungBtn, #lowerBodyBtn, #fullBodyBtn
     {
         margin-left: 10px;
     }

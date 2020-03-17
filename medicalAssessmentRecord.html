@@ -23,22 +23,36 @@
     </section>
 
     <div id="mainbox">
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
         <div class="tab">
             <div id="patientName" class="inputBox">
                 <label>Enter patient KHC No</label><br><br>
                 <input type="text" id="patientNameSearch">
                 <button onclick="searchSheet('Medical & Nursing Assessment')"
-                    style="background-color: transparent; border: transparent;"><i
+                    style="background-color: transparent; border: transparent;padding: 0;"><i
                         class="material-icons">search</i></button>
             </div>
-            <div id="scrollButtons" style="position: fixed; right: 8%; bottom: 8%;">
-                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
-                <a href="#buttons" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            <div class="loadingSpinner">
+                <div class="loadingAnimation">
+                    <div></div>
+                </div>
             </div>
             <div id="table">
                 <table id="searchTable">
 
                 </table>
+            </div>
+            <div id="pageText">
+            </div>
+            <div id="buttonsTable">
             </div>
             <div id="rowCount" style="white-space: pre-wrap; display: none;">
             </div>
@@ -1007,6 +1021,11 @@
                 <span class="step"></span>
                 <span class="step"></span>
                 <span class="step"></span>
+            </div>
+            <div class="loadingSpinner" id="loadingSpinnerBottom" style="display: none;">
+                <div class="loadingAnimation">
+                    <div></div>
+                </div>
             </div>
         </div>
 

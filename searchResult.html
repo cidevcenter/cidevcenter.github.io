@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Search</title>
+    <title>Search Result Links</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" href="source.css">
@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div id="formID" style="display: none;">searchForm</div>
+    <div id="formID" style="display: none;">searchResult</div>
     <!--Add buttons to initiate auth sequence and sign out-->
     <div id="topnav">
         <a href="index.html" class="revBtn">Main Menu</a>
@@ -22,33 +22,16 @@
     </div>
 
     <div id="mainbox">
-
-        <div id="patientName" class="inputBox">
-            <label>Enter patient KHC No</label><br><br>
-            <input type="text" id="patientNameSearch">
-            <button onclick="searchSheet('Medical & Nursing Assessment');document.getElementById('spinner').setAttribute('style', 'display: block;');"
-                style="background-color: transparent; border: transparent;padding: 0;"><i
-                    class="material-icons">search</i></button>
-        </div>
-
-        <div class="loadingSpinner" id="spinner" style="display: none;">
-            <div class="loadingAnimation">
-                <div></div>
-            </div>
-        </div>
-
+        <!--ithink there supposed to be something here-->
         <div id="row" style="display: none;">
-
+            
         </div>
 
-
-        <div style="overflow: auto;">
-            <a href="index.html" class="revBtn">Main Menu</a>
-        </div>
-
-        <div id="links" style="display: none;">
+        <div id="links" class="inputBox">
+            <label>Patient: </label><label id="patientNameSearch" name="patientNameSearch"></label>
+            <a href="search.html" class="goBackBtn">Back to Search</a><br>
             <a href='extraNotes.html' id="extraNotes" class="linkBoxSel">Extra Notes</a><br>
-            <a href='medicationForm.html' id="medicationForm" class="linkBoxSel">Medication Form</a><br>
+            <a href='medicationForm.html' id="medicationForm" class="linkBoxSel">Medication Given Form</a><br>
             <a href='medicationEquipmentForm.html' id="medicationEquipmentForm" class="linkBoxSel">Medication Equipment
                 Form</a><br>
             <a href='homeVisitForm.html' id="homeVisitForm" class="linkBoxSel">Home Visit Form</a><br>
@@ -65,6 +48,19 @@
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
     <script>
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const myParam = urlParams.get('khcno');
+            const myParam2 = urlParams.get('name');
+
+            document.getElementById("patientNameSearch").innerHTML = myParam + ", " + myParam2;
+            document.getElementById("extraNotes").setAttribute("href", "extraNotes.html?khcno=" + myParam + "&name=" + myParam2);
+            document.getElementById("medicationForm").setAttribute("href", "medicationForm.html?khcno=" + myParam + "&name=" + myParam2);
+            document.getElementById("medicationEquipmentForm").setAttribute("href", "medicationEquipmentForm.html?khcno=" + myParam + "&name=" + myParam2);
+            document.getElementById("homeVisitForm").setAttribute("href", "homeVisitForm.html?khcno=" + myParam + "&name=" + myParam2);
+            document.getElementById("endOfLifeForm").setAttribute("href", "endOfLifeForm.html?khcno=" + myParam + "&name=" + myParam2);
+        });
+
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
 

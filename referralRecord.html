@@ -23,22 +23,37 @@
     </section>
 
     <div id="mainbox">
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
+        
         <div class="tab">
             <div id="patientName" class="inputBox">
                 <label>Enter patient RN</label><br><br>
                 <input type="text" id="patientNameSearch">
                 <button onclick="searchSheet('Referral Form')"
-                    style="background-color: transparent; border: transparent;"><i
+                    style="background-color: transparent; border: transparent;padding: 0;"><i
                         class="material-icons">search</i></button>
             </div>
-            <div id="scrollButtons" style="position: fixed; right: 8%; bottom: 8%;">
-                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
-                <a href="#buttons" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            <div class="loadingSpinner">
+                <div class="loadingAnimation">
+                    <div></div>
+                </div>
             </div>
             <div id="table">
                 <table id="searchTable">
 
                 </table>
+            </div>
+            <div id="pageText">
+            </div>
+            <div id="buttonsTable">
             </div>
             <div id="rowCount" style="white-space: pre-wrap; display: none;">
             </div>
@@ -62,7 +77,7 @@
 
             <div id="age" class="inputBox">
                 <label>Age</label><br><br>
-                <input type="number" name="age" min="0" max="200" value="60">
+                <input type="number" name="age" min="0" max="200" value="0">
             </div>
 
             <div id="sex" class="inputBox">
@@ -87,7 +102,7 @@
 
             <div id="handphoneNo" class="inputBox">
                 <label>H/P No.</label><br><br>
-                <input type="text" name="handphoneNo" pattern="[0-9]">
+                <input type="text" name="handphoneNo">
             </div>
 
             <div id="contactPerson" class="inputBox">
@@ -102,7 +117,7 @@
 
             <div id="telephoneNo" class="inputBox">
                 <label>Telephone No.</label><br><br>
-                <input type="text" name="telephoneNo" pattern="[0-9]">
+                <input type="text" name="telephoneNo">
                 <div id="inputLine"></div>
             </div>
 
@@ -208,12 +223,12 @@
 
             <div id="officePhoneNo", class="inputBox">
                 <label>Office Phone No.</label><br><br>
-                <input type="text" name="officePhoneNo" pattern="[0-9]">
+                <input type="text" name="officePhoneNo">
             </div>
 
             <div id="faxNo", class="inputBox">
                 <label>Fax No.</label><br><br>
-                <input type="text" name="faxNo" pattern="[0-9]">
+                <input type="text" name="faxNo">
             </div>
 
             <div id="date", class="inputBox">
@@ -255,6 +270,11 @@
                 <span class="step"></span>
                 <span class="step"></span>
                 <span class="step"></span>
+            </div>
+            <div class="loadingSpinner" id="loadingSpinnerBottom" style="display: none;">
+                <div class="loadingAnimation">
+                    <div></div>
+                </div>
             </div>
         </div>
 
