@@ -21,14 +21,15 @@ body
     right: 100px;
     color: rgb(230, 255, 230);
     font-size: 16px;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 9px;
+    background-color: rgba(0,0,0,0.1);
+    border: 2px solid darkgreen;
+    border-radius: 10px;
+    padding: 8px;
     top: 0;
 }
 
 #authorize_button:hover{
-    background-color: rgb(40, 136, 43);
+    background-color: rgba(0,0,0,0.2);
 }
 
 #signout_button
@@ -37,14 +38,15 @@ body
     right: 1vw;
     color: rgb(230, 255, 230);
     font-size: 16px;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 9px;
+    background-color: rgba(0,0,0,0.1);
+    border: 2px solid darkgreen;
+    border-radius: 10px;
+    padding: 8px;
     top: 0;
 }
 
 #signout_button:hover{
-    background-color: rgb(40, 136, 43);
+    background-color: rgba(0,0,0,0.2);
 }
 
 #searchbar
@@ -386,15 +388,16 @@ input[type=text]:focus
     left: 1vw;
     color: rgb(230, 255, 230);
     font-size: 16px;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 9px;
+    background-color: rgba(0,0,0,0.1);
+    border: 2px solid darkgreen;
+    border-radius: 10px;
+    padding: 8px;
     top: 0;
     text-decoration: none;
 }
 
 .revBtn:hover{
-    background-color: rgb(40, 136, 43);
+    background-color: rgba(0,0,0,0.2);
 }
 
 .goBackBtn{

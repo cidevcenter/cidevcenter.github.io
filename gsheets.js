@@ -1062,7 +1062,7 @@ function checkRequired() {
             valid = false;
         }
         else if (document.getElementsByName(field.name)[0].getAttribute('pattern')) {
-            var regEx = new RegExp(document.getElementsByName(field.name)[0].getAttribute('pattern'), );
+            var regEx = new RegExp(document.getElementsByName(field.name)[0].getAttribute('pattern'));
             validRegEx = regEx.test(field.value);
 
             if (!validRegEx) {

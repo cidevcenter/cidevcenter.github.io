@@ -3,7 +3,9 @@ var currentTab = 0;
 var formID = document.getElementById("formID").innerText;
 
 //this
-showTab(currentTab);
+if(formID != 'mainMenu') {
+    showTab(currentTab);
+}
 
 function showTab(n) {
     var x = document.getElementsByClassName("tab");
