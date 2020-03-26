@@ -242,13 +242,7 @@
                     <div class="popUpContent">
                         <span class="close">&times;</span>
                         <h1>Genogram</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <input type="file" id="inputGenogram">
-                        <button onclick="sendStuff('inputGenogram', 'genoImage')">Upload</button>
+                        <p>Work in Progress.</p>
                     </div>
                 </div>
             </div>
@@ -640,7 +634,7 @@
             <div id="lungDiagram" class="picBox">
                 <img src="img/Lungs.png" alt="Lungs Image" class="picBox" width="200" height="200">
                 <input type="button" id="lungBtn" class="picBox" value="Show Image"
-                    onclick="showPopUp('popUp1', 'lungBtn', 1)">
+                    onclick="var link = changeLink('khcNo', 'Lungs'); if (link !== undefined) { window.open(link, '_blank'); }">
             </div>
 
             <!--Lung popups-->
@@ -648,13 +642,9 @@
                 <div class="popUpContent">
                     <span class="close">&times;</span>
                     <h1>Lung image</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <input type="file" id="inputLung">
-                    <button onclick="sendStuff('inputLung', 'lungBtn')">Upload</button>
+                    <div class="iframe-container">
+                        <iframe id="lungFrame" src="https://hospice-e4abb.web.app/#/home?id=123%2F12&img=Lungs"></iframe>
+                    </div>
                 </div>
             </div>
 
@@ -697,7 +687,7 @@
             <div id="lowerBodyDiagram" class="picBox">
                 <img src="img/LowerBody.png" alt="Lower Body Image" class="picBox" width="200" height="200">
                 <input type="button" id="lowerBodyBtn" class="picBox" value="Show Image"
-                    onclick="showPopUp('popUp2', 'lowerBodyBtn', 2)">
+                    onclick="var link = changeLink('khcNo', 'LowerBody'); if (link !== undefined) { window.open(link, '_blank'); }">
             </div>
 
             <!--Lower Body popups-->
@@ -705,13 +695,9 @@
                 <div class="popUpContent">
                     <span class="close">&times;</span>
                     <h1>Lower Body image</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <input type="file" id="inputLowerBody">
-                    <button onclick="sendStuff('inputLowerBody', 'lowerBodyBtn')">Upload</button>
+                    <div class="iframe-container">
+                        <iframe id="lowerBodyFrame" src="https://hospice-e4abb.web.app/#/home?id=123%2F12&img=LowerBody"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -862,7 +848,7 @@
             <div id="nerveDiagram" class="picBox">
                 <img src="img/FullBody.png" alt="Nerve Image" class="picBox" width="200" height="200">
                 <input type="button" id="fullBodyBtn" class="picBox" value="Show Image"
-                    onclick="showPopUp('popUp3', 'fullBodyBtn', 3)">
+                    onclick="var link = changeLink('khcNo', 'FullBody'); if (link !== undefined) { window.open(link, '_blank'); }">
             </div>
 
             <!--Full Body popups-->
@@ -870,13 +856,9 @@
                 <div class="popUpContent">
                     <span class="close">&times;</span>
                     <h1>Full Body image</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <input type="file" id="inputFullBody">
-                    <button onclick="sendStuff('inputFullBody', 'fullBodyBtn')">Upload</button>
+                    <div class="iframe-container">
+                        <iframe id="fullBodyFrame" src="https://hospice-e4abb.web.app/#/home?id=123%2F12&img=FullBody"></iframe>
+                    </div>
                 </div>
             </div>
         </div>

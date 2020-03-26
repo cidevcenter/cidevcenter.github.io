@@ -167,6 +167,23 @@ function showPopUp(popUpId, buttonId, index) {
     }
 }
 
+function changeLink(id, picNo) {
+    var patientID = document.getElementsByName(id)[0].value;
+
+    var slashLocation = patientID.indexOf("/");
+
+    if(slashLocation == -1) {
+        alert("Invalid KHC No.");
+        return;
+    }
+    else {
+        var newPatientID = patientID.substring(0, slashLocation) + "%2F" + patientID.substring(slashLocation + 1, patientID.length);
+    }
+
+    var link = "https://hospice-e4abb.web.app/#/home?id=" + newPatientID + "&img=" + picNo;
+    return link;
+}
+
 function showRow() {
     document.getElementById("rowCount").innerText = "";
     for(var i = 0; i < document.getElementsByName("row").length; i++){

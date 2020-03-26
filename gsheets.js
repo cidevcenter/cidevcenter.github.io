@@ -179,6 +179,59 @@ function sendStuff(fileID, buttonID) {
     });
 }
 
+function listStuff() {
+    var name = document.getElementById('fileName').value;
+
+    var string = "name contains '" + name + "'";
+
+    gapi.client.drive.files.list(
+        {
+            'q': string
+        }
+    ).then(function(res) {
+        console.log(res);
+    }, function(err) {
+        console.log(err);
+    })
+}
+
+function deleteStuff(formID, array) {
+    for(var i = 0; i < array.length; i++){
+        console.log(i);
+        
+        var khcNo = data[i][2];
+        
+        var string = "name contains '" + khcNo + "'";
+
+        console.log(string);
+
+        gapi.client.drive.files.list(
+            {
+                'q': string
+            }
+        ).then(function(res) {
+            console.log(res);
+            if(res.result.files.length < 1) {
+                console.log("Cannot find files. Breaking..");
+            } 
+            else {
+                for(var j = 0; j < res.result.files.length; j++) {
+                    gapi.client.drive.files.delete({
+                        'fileId': res.result.files[j].id
+                    }).then(function(res) {
+                        console.log(res);
+                    }, function(err) {
+                        console.log(err);
+                    })
+                }
+            }
+            
+        }, function(err) {
+            console.log(err);
+        })
+    }
+}
+
 //Searches the sheet for the record
 function searchSheet(range) {
     data = [];
@@ -630,7 +683,7 @@ function appendForm(formID) {
                     $("input[name='ltAir']").val(),
                     $("input[name='heartSounds']").val(),
                     $("input[name='jvp']").val(),
-                    linkLung,
+                    (changeLink('khcNo', 'Lungs') === undefined ? '' : changeLink('khcNo', 'Lungs')),
                     $("input[name='abdominalWall']").val(),
                     $("input[name='ascites']").val(),
                     $("input[name='hepatomegaly']").val(),
@@ -638,7 +691,7 @@ function appendForm(formID) {
                     $("input[name='bowelSounds']").val(),
                     $("input[name='perRectum']").val(),
                     $("input[name='perVagina']").val(),
-                    linkLowerBody,
+                    (changeLink('khcNo', 'LowerBody') === undefined ? '' : changeLink('khcNo', 'LowerBody')),
                     $("input[name='rightUL']").val(),
                     $("input[name='leftUL']").val(),
                     $("input[name='rightLL']").val(),
@@ -653,7 +706,7 @@ function appendForm(formID) {
                     $("input[name='pain']:checked").val(),
                     $("input[name='unresponsiveness']:checked").val(),
                     $("input[name='sensoryLoss']").val(),
-                    linkFullBody,
+                    (changeLink('khcNo', 'FullBody') === undefined ? '' : changeLink('khcNo', 'FullBody')),
                     $("input[name='smell']").val(),
                     $("input[name='vision']").val(),
                     $("input[name='lightDetection']").val(),
@@ -979,7 +1032,7 @@ function appendForm(formID) {
                     $("input[name='llCoarseCrep']").val(),
                     $("input[name='llAir']:checked").val(),
                     $("input[name='llAirDecreasedTxt']").val(),
-                    linkLung,
+                    (changeLink('khcNo', 'Lungs') === undefined ? '' : changeLink('khcNo', 'Lungs')),
                     $("input[name='heartSound']:checked").val(),
                     $("input[name='heartMurmurTxt']").val(),
                     $("input[name='abdominalWall']:checked").val(),
@@ -999,7 +1052,7 @@ function appendForm(formID) {
                     $("input[name='splNegativeTxt']").val(),
                     $("select[name='bowelSound']").val(),
                     $("select[name='perRectum']").val(),
-                    linkLowerBody,
+                    (changeLink('khcNo', 'LowerBody') === undefined ? '' : changeLink('khcNo', 'LowerBody')),
                     $("input[name='gastroOtr']").val(),
                     $("input[name='muscleRightUL']").val(),
                     $("input[name='muscleLeftUL']").val(),
@@ -1093,6 +1146,8 @@ function deleteRecord(formID, array) {
         if(spinner){
             spinner.setAttribute('style', 'display: block;');
         }
+		
+		deleteStuff(formID, array);
 
         var params = {
             spreadsheetId: spreadsheetId,
@@ -1141,6 +1196,579 @@ function deleteRecord(formID, array) {
 
 //Edits a record
 function editRecord(formID, row) {
+    var form = document.getElementById('formID').innerText;
+
+    var spinner = document.getElementById('loadingSpinnerBottom');
+
+    if(spinner){
+        spinner.setAttribute('style', 'display: block;');
+    }
+
+    var params = {
+        spreadsheetId: spreadsheetId, 
+    };
+
+    var batchUpdateBody = {
+        valueInputOption: 'RAW',
+        data: [],
+    }
+
+    for (var i = 0; i < row.length; i++) {
+        switch (form) {
+            case "referralRecord": {
+                var valuesReferral = [
+                    [
+                        generateTime(),
+                        ($("input[name='patientName']").val()              === "" ? dataEdit[row[i]][1] : $("input[name='patientName']").val()),
+                        ($("input[name='ic']").val()                       === "" ? dataEdit[row[i]][2] : $("input[name='ic']").val()),
+                        ($("input[name='rn']").val()                       === "" ? dataEdit[row[i]][3] : $("input[name='rn']").val()),
+                        ($("select[name='sex']").val()                     === "" ? dataEdit[row[i]][4] : $("input[name='sex']").val()),
+                        ($("input[name='age']").val()                      === "0" ? dataEdit[row[i]][5] : $("input[name='age']").val()),
+                        ($("textarea[name='addressBox']").val()            === "" ? dataEdit[row[i]][6] : $("textarea[name='addressBox']").val()),
+                        ($("input[name='homeTelephoneNo']").val()          === "" ? dataEdit[row[i]][7] : $("input[name='homeTelephoneNo']").val()),
+                        ($("input[name='handphoneNo']").val()              === "" ? dataEdit[row[i]][8] : $("input[name='handphoneNo']").val()),
+                        ($("input[name='contactPerson']").val()            === "" ? dataEdit[row[i]][9] : $("input[name='contactPerson']").val()),
+                        ($("input[name='relationship']").val()             === "" ? dataEdit[row[i]][10] : $("input[name='relationship']").val()),
+                        ($("input[name='telephoneNo']").val()              === "" ? dataEdit[row[i]][11] : $("input[name='telephoneNo']").val()),
+                        ($("input[name='languageSpoken']").val()           === "" ? dataEdit[row[i]][12] : $("input[name='languageSpoken']").val()),
+                        ($("textarea[name='history']").val()               === "" ? dataEdit[row[i]][13] : $("textarea[name='history']").val()),
+                        ($("input[name='diagnosisDate']").val()            === "" ? dataEdit[row[i]][14] : $("input[name='diagnosisDate']").val()),
+                        ($("input[name='prognosis']:checked").val()        === "" ? dataEdit[row[i]][15] : $("input[name='prognosis']:checked").val()),
+                        ($("input[name='diagnosisInform']:checked").val()  === "" ? dataEdit[row[i]][16] : $("input[name='diagnosisInform']:checked").val()),
+                        ($("input[name='prognosisInform']:checked").val()  === "" ? dataEdit[row[i]][17] : $("input[name='prognosisInform']:checked").val()),
+                        ($("textarea[name='treatment']").val()             === "" ? dataEdit[row[i]][18] : $("textarea[name='treatment']").val()),
+                        ($("input[name='currentMedication']").val()        === "" ? dataEdit[row[i]][19] : $("input[name='currentMedication']").val()),
+                        ($("textarea[name='investRes']").val()             === "" ? dataEdit[row[i]][20] : $("textarea[name='investRes']").val()),
+                        ($("input[name='referringDoctor']").val()          === "" ? dataEdit[row[i]][21] : $("input[name='referringDoctor']").val()),
+                        ($("input[name='speciality']").val()               === "" ? dataEdit[row[i]][22] : $("input[name='speciality']").val()),
+                        ($("input[name='hospital']").val()                 === "" ? dataEdit[row[i]][23] : $("input[name='hospital']").val()),
+                        ($("input[name='officePhoneNo']").val()            === "" ? dataEdit[row[i]][24] : $("input[name='officePhoneNo']").val()),
+                        ($("input[name='faxNo']").val()                    === "" ? dataEdit[row[i]][25] : $("input[name='faxNo']").val()),
+                        ($("input[name='date']").val()                     === "" ? dataEdit[row[i]][26] : $("input[name='date']").val()),
+                        ($("input[name='patientInformed']:checked").val()  === "" ? dataEdit[row[i]][27] : $("input[name='patientInformed']:checked").val()),
+                        ($("input[name='relativeInformed']:checked").val() === "" ? dataEdit[row[i]][28] : $("input[name='relativeInformed']:checked").val()),
+                        ($("input[name='allFilled']:checked").val()        === "" ? dataEdit[row[i]][29] : $("input[name='allFilled']:checked").val()),
+                    ]
+                ];
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesReferral,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "medicalAssessmentRecord": {
+                var valuesMedicalAssessment = [
+                    [
+                        generateTime(),
+                        ($("input[name='allergies']").val()                         === "" ? dataEdit[row[i]][1] : $("input[name='allergies']").val()),
+                        ($("input[name='khcNo']").val()                             === "" ? dataEdit[row[i]][2] : $("input[name='khcNo']").val()),
+                        ($("input[name='name']").val()                              === "" ? dataEdit[row[i]][3] : $("input[name='name']").val()),
+                        ($("input[name='ic']").val()                                === "" ? dataEdit[row[i]][4] : $("input[name='ic']").val()),
+                        ($("textarea[name='address']").val()                        === "" ? dataEdit[row[i]][5] : $("textarea[name='address']").val()),
+                        ($("input[name='dob']").val()                               === "" ? dataEdit[row[i]][6] : $("input[name='dob']").val()),
+                        ($("input[name='sexAge']").val()                            === "" ? dataEdit[row[i]][7] : $("input[name='sexAge']").val()),
+                        ($("input[name='dateReferral']").val()                      === "" ? dataEdit[row[i]][8] : $("input[name='dateReferral']").val()),
+                        ($("textarea[name='phoneNo']").val()                        === "" ? dataEdit[row[i]][9] : $("textarea[name='phoneNo']").val()),
+                        ($("input[name='initialContact']").val()                    === "" ? dataEdit[row[i]][10] : $("input[name='initialContact']").val()),
+                        ($("input[name='dateAssessment']").val()                    === "" ? dataEdit[row[i]][11] : $("input[name='dateAssessment']").val()),
+                        ($("input[name='assessedBy']").val()                        === "" ? dataEdit[row[i]][12] : $("input[name='assessedBy']").val()),
+                        ($("input[name='languageSpokenPatient']").val()             === "" ? dataEdit[row[i]][13] : $("input[name='languageSpokenPatient']").val()),
+                        ($("input[name='languageSpokenCaregiver']").val()           === "" ? dataEdit[row[i]][14] : $("input[name='languageSpokenCaregiver']").val()),
+                        ($("input[name='diagnosis']").val()                         === "" ? dataEdit[row[i]][15] : $("input[name='diagnosis']").val()),
+                        ($("input[name='dateOfNextAppointment']").val()             === "" ? dataEdit[row[i]][16] : $("input[name='dateOfNextAppointment']").val()),
+                        ($("textarea[name='historyIllness']").val()                 === "" ? dataEdit[row[i]][17] : $("textarea[name='historyIllness']").val()),
+                        ($("textarea[name='pastMedicalIllness']").val()             === "" ? dataEdit[row[i]][18] : $("textarea[name='pastMedicalIllness']").val()),
+                        ($("input[name='historySurgery']").val()                    === "" ? dataEdit[row[i]][19] : $("input[name='historySurgery']").val()),
+                        ($("input[name='historyRadiotherapy']").val()               === "" ? dataEdit[row[i]][20] : $("input[name='historyRadiotherapy']").val()),
+                        ($("input[name='historyChemotherapy']").val()               === "" ? dataEdit[row[i]][21] : $("input[name='historyChemotherapy']").val()),
+                        ($("select[name='maritalStatus']").val()                    === "" ? dataEdit[row[i]][22] : $("select[name='maritalStatus']").val()),
+                        ($("input[name='occupation']").val()                        === "" ? dataEdit[row[i]][23] : $("input[name='occupation']").val()),
+                        ($("input[name='interests']").val()                         === "" ? dataEdit[row[i]][24] : $("input[name='interests']").val()),
+                        ($("input[name='patientReligion']").val()                   === "" ? dataEdit[row[i]][25] : $("input[name='patientReligion']").val()),
+                        ($("input[name='familyReligion']").val()                    === "" ? dataEdit[row[i]][26] : $("input[name='familyReligion']").val()),
+                        ($("input[name='primaryCaregiver']").val()                  === "" ? dataEdit[row[i]][27] : $("input[name='primaryCaregiver']").val()),
+                        ($("input[name='emotionalStatusSupportive']:checked").val() === "" ? dataEdit[row[i]][28] : $("input[name='emotionalStatusSupportive']:checked").val()),
+                        ($("input[name='emotionalStatusCaring']:checked").val()     === "" ? dataEdit[row[i]][29] : $("input[name='emotionalStatusCaring']:checked").val()),
+                        ($("input[name='emotionalStatusConcerned']:checked").val()  === "" ? dataEdit[row[i]][30] : $("input[name='emotionalStatusConcerned']:checked").val()),
+                        ($("input[name='emotionalStatusAnxious']:checked").val()    === "" ? dataEdit[row[i]][31] : $("input[name='emotionalStatusAnxious']:checked").val()),
+                        ($("input[name='emotionalStatusWeary']:checked").val()      === "" ? dataEdit[row[i]][32] : $("input[name='emotionalStatusWeary']:checked").val()),
+                        ($("input[name='emotionalStatusExhausted']:checked").val()  === "" ? dataEdit[row[i]][33] : $("input[name='emotionalStatusExhausted']:checked").val()),
+                        ($("input[name='emotionalStatusDefensive']:checked").val()  === "" ? dataEdit[row[i]][34] : $("input[name='emotionalStatusDefensive']:checked").val()),
+                        ($("input[name='emotionalStatusControlling']:checked").val()=== "" ? dataEdit[row[i]][35] : $("input[name='emotionalStatusControlling']:checked").val()),
+                        ($("select[name='financialStatus']").val()                  === "" ? dataEdit[row[i]][36] : $("select[name='financialStatus']").val()),
+                        (linkGenogram                                               === "" ? dataEdit[row[i]][37] : linkGenogram),
+                        ($("input[name='emotionalAssess1']:checked").val()          === "" ? dataEdit[row[i]][38] : $("input[name='emotionalAssess1']:checked").val()),
+                        ($("input[name='emotionalAssess2']:checked").val()          === "" ? dataEdit[row[i]][39] : $("input[name='emotionalAssess2']:checked").val()),
+                        ($("input[name='emotionalAssess3']:checked").val()          === "" ? dataEdit[row[i]][40] : $("input[name='emotionalAssess3']:checked").val()),
+                        ($("input[name='emotionalAssess4']:checked").val()          === "" ? dataEdit[row[i]][41] : $("input[name='emotionalAssess4']:checked").val()),
+                        ($("input[name='emotionalAssess5']:checked").val()          === "" ? dataEdit[row[i]][42] : $("input[name='emotionalAssess5']:checked").val()),
+                        ($("input[name='emotionalAssess6']:checked").val()          === "" ? dataEdit[row[i]][43] : $("input[name='emotionalAssess6']:checked").val()),
+                        ($("input[name='emotionalAssess7']:checked").val()          === "" ? dataEdit[row[i]][44] : $("input[name='emotionalAssess7']:checked").val()),
+                        ($("input[name='emotionalAssess8']:checked").val()          === "" ? dataEdit[row[i]][45] : $("input[name='emotionalAssess8']:checked").val()),
+                        ($("input[name='emotionalAssess9']:checked").val()          === "" ? dataEdit[row[i]][46] : $("input[name='emotionalAssess9']:checked").val()),
+                        ($("input[name='emotionalAssess10']:checked").val()         === "" ? dataEdit[row[i]][47] : $("input[name='emotionalAssess10']:checked").val()),
+                        ($("input[name='generalAppearance']").val()                 === "" ? dataEdit[row[i]][48] : $("input[name='generalAppearance']").val()),
+                        ($("input[name='speech']").val()                            === "" ? dataEdit[row[i]][49] : $("input[name='speech']").val()),
+                        ($("input[name='hearing']").val()                           === "" ? dataEdit[row[i]][50] : $("input[name='hearing']").val()),
+                        ($("input[name='hydration']").val()                         === "" ? dataEdit[row[i]][51] : $("input[name='hydration']").val()),
+                        ($("select[name='ecog']").val()                             === "" ? dataEdit[row[i]][52] : $("select[name='ecog']").val()),
+                        ($("input[name='cachexia']:checked").val()                  === "" ? dataEdit[row[i]][53] : $("input[name='cachexia']:checked").val()),
+                        ($("input[name='pallor']:checked").val()                    === "" ? dataEdit[row[i]][54] : $("input[name='pallor']:checked").val()),
+                        ($("input[name='jaundice']:checked").val()                  === "" ? dataEdit[row[i]][55] : $("input[name='jaundice']:checked").val()),
+                        ($("input[name='cyanosis']:checked").val()                  === "" ? dataEdit[row[i]][56] : $("input[name='cyanosis']:checked").val()),
+                        ($("input[name='bp']").val()                                === "" ? dataEdit[row[i]][57] : $("input[name='bp']").val()),
+                        ($("input[name='pulse']").val()                             === "" ? dataEdit[row[i]][58] : $("input[name='pulse']").val()),
+                        ($("input[name='pulseMin']").val()                          === "" ? dataEdit[row[i]][59] : $("input[name='pulseMin']").val()),
+                        ($("input[name='respiratory']").val()                       === "" ? dataEdit[row[i]][60] : $("input[name='respiratory']").val()),
+                        ($("input[name='spO2roomAirPercent']").val()                === "" ? dataEdit[row[i]][61] : $("input[name='spO2roomAirPercent']").val()),
+                        ($("input[name='spO2L%']").val()                            === "" ? dataEdit[row[i]][62] : $("input[name='spO2L%']").val()),
+                        ($("input[name='spO2L']").val()                             === "" ? dataEdit[row[i]][63] : $("input[name='spO2L']").val()),
+                        ($("input[name='glucose']").val()                           === "" ? dataEdit[row[i]][64] : $("input[name='glucose']").val()),
+                        ($("input[name='glucoseMMOL']").val()                       === "" ? dataEdit[row[i]][65] : $("input[name='glucoseMMOL']").val()),
+                        ($("input[name='temperature']").val()                       === "" ? dataEdit[row[i]][66] : $("input[name='temperature']").val()),
+                        ($("input[name='oralCavity']").val()                        === "" ? dataEdit[row[i]][67] : $("input[name='oralCavity']").val()),
+                        ($("input[name='lymphoedema']").val()                       === "" ? dataEdit[row[i]][68] : $("input[name='lymphoedema']").val()),
+                        ($("input[name='pressureSores']").val()                     === "" ? dataEdit[row[i]][69] : $("input[name='pressureSores']").val()),
+                        ($("input[name='chestWall']").val()                         === "" ? dataEdit[row[i]][70] : $("input[name='chestWall']").val()),
+                        ($("select[name='breathSound']").val()                      === "" ? dataEdit[row[i]][71] : $("select[name='breathSound']").val()),
+                        ($("input[name='crepitationDetail']").val()                 === "" ? dataEdit[row[i]][72] : $("input[name='crepitationDetail']").val()),
+                        ($("input[name='rt']").val()                                === "" ? dataEdit[row[i]][73] : $("input[name='rt']").val()),
+                        ($("input[name='lt']").val()                                === "" ? dataEdit[row[i]][74] : $("input[name='lt']").val()),
+                        ($("input[name='rtAir']").val()                             === "" ? dataEdit[row[i]][75] : $("input[name='rtAir']").val()),
+                        ($("input[name='ltAir']").val()                             === "" ? dataEdit[row[i]][76] : $("input[name='ltAir']").val()),
+                        ($("input[name='heartSounds']").val()                       === "" ? dataEdit[row[i]][77] : $("input[name='heartSounds']").val()),
+                        ($("input[name='jvp']").val()                               === "" ? dataEdit[row[i]][78] : $("input[name='jvp']").val()),
+                        (changeLink('khcNo', 'Lungs')                               === undefined ? dataEdit[row[i]][79] : changeLink('khcNo', 'Lungs')),
+                        ($("input[name='abdominalWall']").val()                     === "" ? dataEdit[row[i]][80] : $("input[name='abdominalWall']").val()),
+                        ($("input[name='ascites']").val()                           === "" ? dataEdit[row[i]][81] : $("input[name='ascites']").val()),
+                        ($("input[name='hepatomegaly']").val()                      === "" ? dataEdit[row[i]][82] : $("input[name='hepatomegaly']").val()),
+                        ($("input[name='splenomegaly']").val()                      === "" ? dataEdit[row[i]][83] : $("input[name='splenomegaly']").val()),
+                        ($("input[name='bowelSounds']").val()                       === "" ? dataEdit[row[i]][84] : $("input[name='bowelSounds']").val()),
+                        ($("input[name='perRectum']").val()                         === "" ? dataEdit[row[i]][85] : $("input[name='perRectum']").val()),
+                        ($("input[name='perVagina']").val()                         === "" ? dataEdit[row[i]][86] : $("input[name='perVagina']").val()),
+                        (changeLink('khcNo', 'LowerBody')                           === undefined ? dataEdit[row[i]][87] : changeLink('khcNo', 'LowerBody')),
+                        ($("input[name='rightUL']").val()                           === "" ? dataEdit[row[i]][88] : $("input[name='rightUL']").val()),
+                        ($("input[name='leftUL']").val()                            === "" ? dataEdit[row[i]][89] : $("input[name='leftUL']").val()),
+                        ($("input[name='rightLL']").val()                           === "" ? dataEdit[row[i]][90] : $("input[name='rightLL']").val()),
+                        ($("input[name='leftLL']").val()                            === "" ? dataEdit[row[i]][91] : $("input[name='leftLL']").val()),
+                        ($("input[name='muscleWasting']").val()                     === "" ? dataEdit[row[i]][92] : $("input[name='muscleWasting']").val()),
+                        ($("input[name='bodyTenderness']").val()                    === "" ? dataEdit[row[i]][93] : $("input[name='bodyTenderness']").val()),
+                        ($("select[name='conciousness']").val()                     === "" ? dataEdit[row[i]][94] : $("select[name='conciousness']").val()),
+                        ($("input[name='time']:checked").val()                      === "" ? dataEdit[row[i]][95] : $("input[name='time']:checked").val()),
+                        ($("input[name='place']:checked").val()                     === "" ? dataEdit[row[i]][96] : $("input[name='place']:checked").val()),
+                        ($("input[name='people']:checked").val()                    === "" ? dataEdit[row[i]][97] : $("input[name='people']:checked").val()),
+                        ($("input[name='voice']:checked").val()                     === "" ? dataEdit[row[i]][98] : $("input[name='voice']:checked").val()),
+                        ($("input[name='pain']:checked").val()                      === "" ? dataEdit[row[i]][99] : $("input[name='pain']:checked").val()),
+                        ($("input[name='unresponsiveness']:checked").val()          === "" ? dataEdit[row[i]][100] : $("input[name='unresponsiveness']:checked").val()),
+                        ($("input[name='sensoryLoss']").val()                       === "" ? dataEdit[row[i]][101] : $("input[name='sensoryLoss']").val()),
+                        (changeLink('khcNo', 'FullBody')                            === undefined ? dataEdit[row[i]][102] : changeLink('khcNo', 'FullBody')),
+                        ($("input[name='smell']").val()                             === "" ? dataEdit[row[i]][103] : $("input[name='smell']").val()),
+                        ($("input[name='vision']").val()                            === "" ? dataEdit[row[i]][104] : $("input[name='vision']").val()),
+                        ($("input[name='lightDetection']").val()                    === "" ? dataEdit[row[i]][105] : $("input[name='lightDetection']").val()),
+                        ($("input[name='eyeMovement']").val()                       === "" ? dataEdit[row[i]][106] : $("input[name='eyeMovement']").val()),
+                        ($("input[name='raiseEyelid']").val()                       === "" ? dataEdit[row[i]][107] : $("input[name='raiseEyelid']").val()),
+                        ($("input[name='eyeMovement2']").val()                      === "" ? dataEdit[row[i]][108] : $("input[name='eyeMovement2']").val()),
+                        ($("input[name='facialSensation']").val()                   === "" ? dataEdit[row[i]][109] : $("input[name='facialSensation']").val()),
+                        ($("input[name='eyeMovement3']").val()                      === "" ? dataEdit[row[i]][110] : $("input[name='eyeMovement3']").val()),
+                        ($("input[name='facialExpression']").val()                  === "" ? dataEdit[row[i]][111] : $("input[name='facialExpression']").val()),
+                        ($("input[name='taste']").val()                             === "" ? dataEdit[row[i]][112] : $("input[name='taste']").val()),
+                        ($("input[name='productionTears']").val()                   === "" ? dataEdit[row[i]][113] : $("input[name='productionTears']").val()),
+                        ($("input[name='hearingBalance']").val()                    === "" ? dataEdit[row[i]][114] : $("input[name='hearingBalance']").val()),
+                        ($("input[name='swallowing']").val()                        === "" ? dataEdit[row[i]][115] : $("input[name='swallowing']").val()),
+                        ($("input[name='gagReflex']").val()                         === "" ? dataEdit[row[i]][116] : $("input[name='gagReflex']").val()),
+                        ($("input[name='speechNerve']").val()                       === "" ? dataEdit[row[i]][117] : $("input[name='speechNerve']").val()),
+                        ($("input[name='shrugging']").val()                         === "" ? dataEdit[row[i]][118] : $("input[name='shrugging']").val()),
+                        ($("input[name='tongueMovement']").val()                    === "" ? dataEdit[row[i]][119] : $("input[name='tongueMovement']").val()),
+                        ($("textarea[name='extNotes']").val()                       === "" ? dataEdit[row[i]][120] : $("textarea[name='extNotes']").val()),
+                    ]
+                ];
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesMedicalAssessment,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "patientContinuationRecord": {
+                var valuesPatientContinuationSheet = [
+                    [
+                        generateTime(),
+                        ($("input[name='patientName']").val() === "" ? dataEdit[row[i]][1] : $("input[name='patientName']").val()),
+                        ($("input[name='date']").val() === "" ? dataEdit[row[i]][2] : $("input[name='date']").val()),
+                        ($("input[name='assessedBy']").val() === "" ? dataEdit[row[i]][3] : $("input[name='assessedBy']").val()),
+                        ($("input[name='pain']:checked").val() === "" ? dataEdit[row[i]][4] : $("input[name='pain']:checked").val()),
+                        ($("input[name='sitePain1']").val() === "" ? dataEdit[row[i]][5] : $("input[name='sitePain1']").val()),
+                        ($("input[name='sitePain2']").val() === "" ? dataEdit[row[i]][6] : $("input[name='sitePain2']").val()),
+                        ($("input[name='sitePain3']").val() === "" ? dataEdit[row[i]][7] : $("input[name='sitePain3']").val()),
+                        ($("input[name='duration1']").val() === "" ? dataEdit[row[i]][8] : $("input[name='duration1']").val()),
+                        ($("select[name='durationDayWeekMonth1']").val() === "" ? dataEdit[row[i]][9] : $("select[name='durationDayWeekMonth1']").val()),
+                        ($("input[name='duration2']").val() === "" ? dataEdit[row[i]][10] : $("input[name='duration2']").val()),
+                        ($("select[name='durationDayWeekMonth2']").val() === "" ? dataEdit[row[i]][11] : $("select[name='durationDayWeekMonth2']").val()),
+                        ($("input[name='duration3']").val() === "" ? dataEdit[row[i]][12] : $("input[name='duration3']").val()),
+                        ($("select[name='durationDayWeekMonth3']").val() === "" ? dataEdit[row[i]][13] : $("select[name='durationDayWeekMonth3']").val()),
+                        ($("input[name='radiationPain']:checked").val() === "" ? dataEdit[row[i]][14] : $("input[name='radiationPain']:checked").val()),
+                        ($("input[name='placeOfPain']").val() === "" ? dataEdit[row[i]][15] : $("input[name='placeOfPain']").val()),
+                        ($("input[name='painInterval']:checked").val() === "" ? dataEdit[row[i]][16] : $("input[name='painInterval']:checked").val()),
+                        ($("input[name='painThrobbing']:checked").val() === "" ? dataEdit[row[i]][17] : $("input[name='painThrobbing']:checked").val()),
+                        ($("input[name='painPricking']:checked").val() === "" ? dataEdit[row[i]][18] : $("input[name='painPricking']:checked").val()),
+                        ($("input[name='painSlicing']:checked").val() === "" ? dataEdit[row[i]][19] : $("input[name='painSlicing']:checked").val()),
+                        ($("input[name='painAching']:checked").val() === "" ? dataEdit[row[i]][20] : $("input[name='painAching']:checked").val()),
+                        ($("input[name='painShooting']:checked").val() === "" ? dataEdit[row[i]][21] : $("input[name='painShooting']:checked").val()),
+                        ($("input[name='painPulling']:checked").val() === "" ? dataEdit[row[i]][22] : $("input[name='painPulling']:checked").val()),
+                        ($("input[name='painBurning']:checked").val() === "" ? dataEdit[row[i]][23] : $("input[name='painBurning']:checked").val()),
+                        ($("input[name='painShock']:checked").val() === "" ? dataEdit[row[i]][24] : $("input[name='painShock']:checked").val()),
+                        ($("input[name='painDull']:checked").val() === "" ? dataEdit[row[i]][25] : $("input[name='painDull']:checked").val()),
+                        ($("input[name='painN/A']:checked").val() === "" ? dataEdit[row[i]][26] : $("input[name='painN/A']:checked").val()),
+                        ($("input[name='natureOfPainOthers']").val() === "" ? dataEdit[row[i]][27] : $("input[name='natureOfPainOthers']").val()),
+                        ($("input[name='painAggravatedBy']").val() === "" ? dataEdit[row[i]][28] : $("input[name='painAggravatedBy']").val()),
+                        ($("input[name='numericalScale']").val() === "" ? dataEdit[row[i]][29] : $("input[name='numericalScale']").val()),
+                        ($("select[name='verbalScore']").val() === "" ? dataEdit[row[i]][30] : $("select[name='verbalScore']").val()),
+                        ($("input[name='painRelievedByMassaging']:checked").val() === "" ? dataEdit[row[i]][31] : $("input[name='painRelievedByMassaging']:checked").val()),
+                        ($("input[name='painRelievedByRepositioning']:checked").val() === "" ? dataEdit[row[i]][32] : $("input[name='painRelievedByRepositioning']:checked").val()),
+                        ($("input[name='painRelievedByMedication']:checked").val() === "" ? dataEdit[row[i]][33] : $("input[name='painRelievedByMedication']:checked").val()),
+                        ($("input[name='backgroundPainMedication']").val() === "" ? dataEdit[row[i]][34] : $("input[name='backgroundPainMedication']").val()),
+                        ($("input[name='breakthroughMedication']").val() === "" ? dataEdit[row[i]][35] : $("input[name='breakthroughMedication']").val()),
+                        ($("input[name='painRelievedAfterValue']").val() === "" ? dataEdit[row[i]][36] : $("input[name='painRelievedAfterValue']").val()),
+                        ($("select[name='painRelievedAfterMinHr']").val() === "" ? dataEdit[row[i]][37] : $("select[name='painRelievedAfterMinHr']").val()),
+                        ($("input[name='numericalScaleAfter']").val() === "" ? dataEdit[row[i]][38] : $("input[name='numericalScaleAfter']").val()),
+                        ($("select[name='verbalScoreAfter']").val() === "" ? dataEdit[row[i]][39] : $("select[name='verbalScoreAfter']").val()),
+                        ($("input[name='shortnessBreath']:checked").val() === "" ? dataEdit[row[i]][40] : $("input[name='shortnessBreath']:checked").val()),
+                        ($("input[name='durationShortnessBreath']").val() === "" ? dataEdit[row[i]][41] : $("input[name='durationShortnessBreath']").val()),
+                        ($("select[name='durationShortnessBreathDayWeekMonth']").val() === "" ? dataEdit[row[i]][42] : $("select[name='durationShortnessBreathDayWeekMonth']").val()),
+                        ($("input[name='shortnessBreathAt']:checked").val() === "" ? dataEdit[row[i]][43] : $("input[name='shortnessBreathAt']:checked").val()),
+                        ($("input[name='whatExertion']").val() === "" ? dataEdit[row[i]][44] : $("input[name='whatExertion']").val()),
+                        ($("input[name='shortnessBreathRelievedByResting']:checked").val() === "" ? dataEdit[row[i]][45] : $("input[name='shortnessBreathRelievedByResting']:checked").val()),
+                        ($("input[name='durationResting']").val() === "" ? dataEdit[row[i]][46] : $("input[name='durationResting']").val()),
+                        ($("select[name='durationRestingDayWeekMonth']").val() === "" ? dataEdit[row[i]][47] : $("select[name='durationRestingDayWeekMonth']").val()),
+                        ($("input[name='shortnessBreathRelievedByOxygen']:checked").val() === "" ? dataEdit[row[i]][48] : $("input[name='shortnessBreathRelievedByOxygen']:checked").val()),
+                        ($("input[name='oxygenLevel']").val() === "" ? dataEdit[row[i]][49] : $("input[name='oxygenLevel']").val()),
+                        ($("input[name='shortnessBreathRelievedByMedication']:checked").val() === "" ? dataEdit[row[i]][50] : $("input[name='shortnessBreathRelievedByMedication']:checked").val()),
+                        ($("input[name='medicationsWithin']").val() === "" ? dataEdit[row[i]][51] : $("input[name='medicationsWithin']").val()),
+                        ($("select[name='medicationsWithinMinHrs']").val() === "" ? dataEdit[row[i]][52] : $("select[name='medicationsWithinMinHrs']").val()),
+                        ($("input[name='medicationsDosageFrequency']").val() === "" ? dataEdit[row[i]][53] : $("input[name='medicationsDosageFrequency']").val()),       
+                        ($("input[name='cough']:checked").val() === "" ? dataEdit[row[i]][54] : $("input[name='cough']:checked").val()),
+                        ($("input[name='durationCough']").val() === "" ? dataEdit[row[i]][55] : $("input[name='durationCough']").val()),
+                        ($("select[name='durationCoughDuration']").val() === "" ? dataEdit[row[i]][56] : $("select[name='durationCoughDuration']").val()),
+                        ($("input[name='productivity']:checked").val() === "" ? dataEdit[row[i]][57] : $("input[name='productivity']:checked").val()),
+                        ($("input[name='sputum']:checked").val() === "" ? dataEdit[row[i]][58] : $("input[name='sputum']:checked").val()),
+                        ($("input[name='sputumOtr']").val() === "" ? dataEdit[row[i]][59] : $("input[name='sputumOtr']").val()),
+                        ($("input[name='expectoration']:checked").val() === "" ? dataEdit[row[i]][60] : $("input[name='expectoration']:checked").val()),
+                        ($("select[name='coughConsistency']").val() === "" ? dataEdit[row[i]][61] : $("select[name='coughConsistency']").val()),
+                        ($("input[name='coughMedication']").val() === "" ? dataEdit[row[i]][62] : $("input[name='coughMedication']").val()),
+                        ($("input[name='appetite']:checked").val() === "" ? dataEdit[row[i]][63] : $("input[name='appetite']:checked").val()),
+                        ($("input[name='durationAppetite']").val() === "" ? dataEdit[row[i]][64] : $("input[name='durationAppetite']").val()),
+                        ($("select[name='durationAppetiteDayWeekMonth']").val() === "" ? dataEdit[row[i]][65] : $("select[name='durationAppetiteDayWeekMonth']").val()),
+                        ($("input[name='oral']:checked").val() === "" ? dataEdit[row[i]][66] : $("input[name='oral']:checked").val()),
+                        ($("input[name='oralInput']").val() === "" ? dataEdit[row[i]][67] : $("input[name='oralInput']").val()),
+                        ($("input[name='ngTube']:checked").val() === "" ? dataEdit[row[i]][68] : $("input[name='ngTube']:checked").val()),
+                        ($("input[name='ngScoops']").val() === "" ? dataEdit[row[i]][69] : $("input[name='ngScoops']").val()),
+                        ($("input[name='ngWater']").val() === "" ? dataEdit[row[i]][70] : $("input[name='ngWater']").val()),
+                        ($("input[name='ngFrequency']").val() === "" ? dataEdit[row[i]][71] : $("input[name='ngFrequency']").val()),
+                        ($("input[name='ngAspiration']").val() === "" ? dataEdit[row[i]][72] : $("input[name='ngAspiration']").val()),
+                        ($("input[name='ngFormula']").val() === "" ? dataEdit[row[i]][73] : $("input[name='ngFormula']").val()),
+                        ($("input[name='pegTube']:checked").val() === "" ? dataEdit[row[i]][74] : $("input[name='pegTube']:checked").val()),
+                        ($("input[name='pegScoops']").val() === "" ? dataEdit[row[i]][75] : $("input[name='pegScoops']").val()),
+                        ($("input[name='pegWater']").val() === "" ? dataEdit[row[i]][76] : $("input[name='pegWater']").val()),
+                        ($("input[name='pegFrequency']").val() === "" ? dataEdit[row[i]][77] : $("input[name='pegFrequency']").val()),
+                        ($("input[name='pegFormula']").val() === "" ? dataEdit[row[i]][78] : $("input[name='pegFormula']").val()),
+                        ($("input[name='dysphagia']:checked").val() === "" ? dataEdit[row[i]][79] : $("input[name='dysphagia']:checked").val()),
+                        ($("input[name='dysphagiaType']:checked").val() === "" ? dataEdit[row[i]][80] : $("input[name='dysphagiaType']:checked").val()),
+                        ($("input[name='swallow']:checked").val() === "" ? dataEdit[row[i]][81] : $("input[name='swallow']:checked").val()),
+                        ($("input[name='nauseaVomit']:checked").val() === "" ? dataEdit[row[i]][82] : $("input[name='nauseaVomit']:checked").val()),
+                        ($("input[name='durationNV']").val() === "" ? dataEdit[row[i]][83] : $("input[name='durationNV']").val()),
+                        ($("select[name='durationNVDayWeekMonth']").val() === "" ? dataEdit[row[i]][84] : $("select[name='durationNVDayWeekMonth']").val()),
+                        ($("input[name='nauseaOrVomiting']:checked").val() === "" ? dataEdit[row[i]][85] : $("input[name='nauseaOrVomiting']:checked").val()),
+                        ($("input[name='causeOfNV']:checked").val() === "" ? dataEdit[row[i]][86] : $("input[name='causeOfNV']:checked").val()),
+                        ($("input[name='hrsOfFood']").val() === "" ? dataEdit[row[i]][87] : $("input[name='hrsOfFood']").val()),
+                        ($("input[name='timeOfNV']:checked").val() === "" ? dataEdit[row[i]][88] : $("input[name='timeOfNV']:checked").val()),
+                        ($("input[name='nvFrequency']").val() === "" ? dataEdit[row[i]][89] : $("input[name='nvFrequency']").val()),
+                        ($("input[name='giddiness']:checked").val() === "" ? dataEdit[row[i]][90] : $("input[name='giddiness']:checked").val()),
+                        ($("input[name='vomitConsistency']:checked").val() === "" ? dataEdit[row[i]][91] : $("input[name='vomitConsistency']:checked").val()),
+                        ($("input[name='vomitConsistencyOtr']").val() === "" ? dataEdit[row[i]][92] : $("input[name='vomitConsistencyOtr']").val()),
+                        ($("input[name='bmAnus']:checked").val() === "" ? dataEdit[row[i]][93] : $("input[name='bmAnus']:checked").val()),
+                        ($("input[name='bmColostomy']:checked").val() === "" ? dataEdit[row[i]][94] : $("input[name='bmColostomy']:checked").val()),
+                        ($("input[name='bmIleostomy']:checked").val() === "" ? dataEdit[row[i]][95] : $("input[name='bmIleostomy']:checked").val()),
+                        ($("input[name='bmFrequency']").val() === "" ? dataEdit[row[i]][96] : $("input[name='bmFrequency']").val()),
+                        ($("select[name='durationBMFrequncy']").val() === "" ? dataEdit[row[i]][97] : $("select[name='durationBMFrequncy']").val()),
+                        ($("input[name='bmNBO']").val() === "" ? dataEdit[row[i]][98] : $("input[name='bmNBO']").val()),
+                        ($("input[name='stoolConsistency']:checked").val() === "" ? dataEdit[row[i]][99] : $("input[name='stoolConsistency']:checked").val()),
+                        ($("input[name='stoolNature']:checked").val() === "" ? dataEdit[row[i]][100] : $("input[name='stoolNature']:checked").val()),
+                        ($("input[name='freshBloodStainDetail']:checked").val() === "" ? dataEdit[row[i]][101] : $("input[name='freshBloodStainDetail']:checked").val()),
+                        ($("input[name='waterStoolDay']").val() === "" ? dataEdit[row[i]][102] : $("input[name='waterStoolDay']").val()),
+                        ($("input[name='bmIncontinence']:checked").val() === "" ? dataEdit[row[i]][103] : $("input[name='bmIncontinence']:checked").val()),
+                        ($("input[name='urineNormal']:checked").val() === "" ? dataEdit[row[i]][104] : $("input[name='urineNormal']:checked").val()),
+                        ($("input[name='urineCBD']:checked").val() === "" ? dataEdit[row[i]][105] : $("input[name='urineCBD']:checked").val()),
+                        ($("input[name='urineSPC']:checked").val() === "" ? dataEdit[row[i]][106] : $("input[name='urineSPC']:checked").val()),
+                        ($("input[name='urineNep']:checked").val() === "" ? dataEdit[row[i]][107] : $("input[name='urineNep']:checked").val()),
+                        ($("input[name='nephrostomyRL']:checked").val() === "" ? dataEdit[row[i]][108] : $("input[name='nephrostomyRL']:checked").val()),
+                        ($("input[name='urineColour']:checked").val() === "" ? dataEdit[row[i]][109] : $("input[name='urineColour']:checked").val()),
+                        ($("input[name='urineColourSta']").val() === "" ? dataEdit[row[i]][110] : $("input[name='urineColourSta']").val()),
+                        ($("input[name='urineNature']:checked").val() === "" ? dataEdit[row[i]][111] : $("input[name='urineNature']:checked").val()),
+                        ($("input[name='dysuria']:checked").val() === "" ? dataEdit[row[i]][112] : $("input[name='dysuria']:checked").val()),
+                        ($("input[name='dysuria/7']").val() === "" ? dataEdit[row[i]][113] : $("input[name='dysuria/7']").val()),
+                        ($("input[name='dysuria/52']").val() === "" ? dataEdit[row[i]][114] : $("input[name='dysuria/52']").val()),
+                        ($("input[name='dysuria/12']").val() === "" ? dataEdit[row[i]][115] : $("input[name='dysuria/12']").val()), 
+                        ($("input[name='delayInitiation']:checked").val() === "" ? dataEdit[row[i]][116] : $("input[name='delayInitiation']:checked").val()),
+                        ($("input[name='urineRetention']:checked").val() === "" ? dataEdit[row[i]][117] : $("input[name='urineRetention']:checked").val()),
+                        ($("input[name='urineIncontinence']:checked").val() === "" ? dataEdit[row[i]][118] : $("input[name='urineIncontinence']:checked").val()),
+                        ($("input[name='sleepPattern']:checked").val() === "" ? dataEdit[row[i]][119] : $("input[name='sleepPattern']:checked").val()),
+                        ($("input[name='sleepHrs']").val() === "" ? dataEdit[row[i]][120] : $("input[name='sleepHrs']").val()),
+                        ($("input[name='sleepAlt']").val() === "" ? dataEdit[row[i]][121] : $("input[name='sleepAlt']").val()),
+                        ($("input[name='sleepMedication']").val() === "" ? dataEdit[row[i]][122] : $("input[name='sleepMedication']").val()),
+                        ($("textarea[name='otrPhychological']").val() === "" ? dataEdit[row[i]][123] : $("textarea[name='otrPhychological']").val()),
+                        ($("input[name='examPatientName']").val() === "" ? dataEdit[row[i]][124] : $("input[name='examPatientName']").val()),
+                        ($("input[name='examKhcNo']").val() === "" ? dataEdit[row[i]][125] : $("input[name='examKhcNo']").val()),
+                        ($("input[name='examDate']").val() === "" ? dataEdit[row[i]][126] : $("input[name='examDate']").val()),
+                        ($("input[name='examAssessedBy']").val() === "" ? dataEdit[row[i]][127] :$("input[name='examAssessedBy']").val()),
+                        ($("select[name='examECOG']").val() === "" ? dataEdit[row[i]][128] : $("select[name='examECOG']").val()),
+                        ($("input[name='alert']:checked").val() === "" ? dataEdit[row[i]][129] : $("input[name='alert']:checked").val()),
+                        ($("input[name='drowsy']:checked").val() === "" ? dataEdit[row[i]][130] : $("input[name='drowsy']:checked").val()),
+                        ($("select[name='arousal']").val() === "" ? dataEdit[row[i]][131] : $("select[name='arousal']").val()),
+                        ($("input[name='confused']:checked").val() === "" ? dataEdit[row[i]][132] : $("input[name='confused']:checked").val()),
+                        ($("input[name='confusedTxt']").val() === "" ? dataEdit[row[i]][133] : $("input[name='confusedTxt']").val()),
+                        ($("input[name='conscious']:checked").val() === "" ? dataEdit[row[i]][134] : $("input[name='conscious']:checked").val()),
+                        ($("input[name='unconscious']:checked").val() === "" ? dataEdit[row[i]][135] : $("input[name='unconscious']:checked").val()),
+                        ($("input[name='semi']:checked").val() === "" ? dataEdit[row[i]][136] : $("input[name='semi']:checked").val()),
+                        ($("input[name='pallor']:checked").val() === "" ? dataEdit[row[i]][137] : $("input[name='pallor']:checked").val()),
+                        ($("input[name='jaundice']:checked").val() === "" ? dataEdit[row[i]][138] : $("input[name='jaundice']:checked").val()),
+                        ($("input[name='cyanosis']:checked").val() === "" ? dataEdit[row[i]][139] : $("input[name='cyanosis']:checked").val()),
+                        ($("input[name='hydration']:checked").val() === "" ? dataEdit[row[i]][140] : $("input[name='hydration']:checked").val()),
+                        ($("input[name='clubbing']:checked").val() === "" ? dataEdit[row[i]][141] : $("input[name='clubbing']:checked").val()),
+                        ($("input[name='lymphedema']:checked").val() === "" ? dataEdit[row[i]][142] : $("input[name='lymphedema']:checked").val()),
+                        ($("select[name='pitting1']").val() === "" ? dataEdit[row[i]][143] : $("select[name='pitting1']").val()),
+                        ($("input[name='pittingState1']").val() === "" ? dataEdit[row[i]][144] : $("input[name='pittingState1']").val()),             
+                        ($("select[name='pitting2']").val() === "" ? dataEdit[row[i]][145] : $("select[name='pitting2']").val()),
+                        ($("input[name='pittingState2']").val() === "" ? dataEdit[row[i]][146] : $("input[name='pittingState2']").val()),
+                        ($("input[name='pressureSore']:checked").val() === "" ? dataEdit[row[i]][147] : $("input[name='pressureSore']:checked").val()),
+                        ($("select[name='soreGrade1']").val() === "" ? dataEdit[row[i]][148] : $("select[name='soreGrade1']").val()),
+                        ($("input[name='soreGradeState1']").val() === "" ? dataEdit[row[i]][149] : $("input[name='soreGradeState1']").val()),
+                        ($("select[name='soreGrade2']").val() === "" ? dataEdit[row[i]][150] : $("select[name='soreGrade2']").val()),
+                        ($("input[name='soreGradeState2']").val() === "" ? dataEdit[row[i]][151] : $("input[name='soreGradeState2']").val()),
+                        ($("input[name='ocClean']:checked").val() === "" ? dataEdit[row[i]][152] : $("input[name='ocClean']:checked").val()),
+                        ($("input[name='ocDry']:checked").val() === "" ? dataEdit[row[i]][153] : $("input[name='ocDry']:checked").val()),
+                        ($("input[name='ocDirty']:checked").val() === "" ? dataEdit[row[i]][154] : $("input[name='ocDirty']:checked").val()),
+                        ($("input[name='ocFungalInfection']:checked").val() === "" ? dataEdit[row[i]][155] : $("input[name='ocFungalInfection']:checked").val()),
+                        ($("input[name='ocOther']:checked").val() === "" ? dataEdit[row[i]][156] : $("input[name='ocOther']:checked").val()),
+                        ($("input[name='ocOtherTxt']").val() === "" ? dataEdit[row[i]][157] : $("input[name='ocOtherTxt']").val()),
+                        ($("input[name='skinPetechiae']:checked").val() === "" ? dataEdit[row[i]][158] : $("input[name='skinPetechiae']:checked").val()),
+                        ($("input[name='skinEcchymosis']:checked").val() === "" ? dataEdit[row[i]][159] : $("input[name='skinEcchymosis']:checked").val()),
+                        ($("input[name='skinScar']:checked").val() === "" ? dataEdit[row[i]][160] : $("input[name='skinScar']:checked").val()),
+                        ($("input[name='skinRash']:checked").val() === "" ? dataEdit[row[i]][161] : $("input[name='skinRash']:checked").val()),
+                        ($("input[name='skinOthers']:checked").val() === "" ? dataEdit[row[i]][162] : $("input[name='skinOthers']:checked").val()),
+                        ($("input[name='skinOtr']").val() === "" ? dataEdit[row[i]][163] : $("input[name='skinOtr']").val()),
+                        ($("input[name='bp']").val() === "" ? dataEdit[row[i]][164] : $("input[name='bp']").val()),
+                        ($("select[name='brState']").val() === "" ? dataEdit[row[i]][165] : $("select[name='brState']").val()),
+                        ($("input[name='pulse']").val() === "" ? dataEdit[row[i]][166] : $("input[name='pulse']").val()),
+                        ($("input[name='pulseMin']").val() === "" ? dataEdit[row[i]][167] : $("input[name='pulseMin']").val()),
+                        ($("select[name='prState']").val() === "" ? dataEdit[row[i]][168] : $("select[name='prState']").val()),
+                        ($("input[name='spO2roomAirPercent']").val() === "" ? dataEdit[row[i]][169] : $("input[name='spO2roomAirPercent']").val()),
+                        ($("input[name='spO2L%']").val() === "" ? dataEdit[row[i]][170] : $("input[name='spO2L%']").val()),
+                        ($("input[name='spO2L']").val() === "" ? dataEdit[row[i]][171] : $("input[name='spO2L']").val()),
+                        ($("input[name='respiratory']").val() === "" ? dataEdit[row[i]][172] : $("input[name='respiratory']").val()),
+                        ($("select[name='rrState']").val() === "" ? dataEdit[row[i]][173] : $("select[name='rrState']").val()),
+                        ($("input[name='temperature']").val() === "" ? dataEdit[row[i]][174] : $("input[name='temperature']").val()),
+                        ($("select[name='tempState']").val() === "" ? dataEdit[row[i]][175] : $("select[name='tempState']").val()),
+                        ($("input[name='glucose']").val() === "" ? dataEdit[row[i]][176] : $("input[name='glucose']").val()),
+                        ($("input[name='glucoseMMOL']").val() === "" ? dataEdit[row[i]][177] : $("input[name='glucoseMMOL']").val()),
+                        ($("input[name='chestWall']").val() === "" ? dataEdit[row[i]][178] : $("input[name='chestWall']").val()),
+                        ($("select[name='rlCon']").val() === "" ? dataEdit[row[i]][179] : $("select[name='rlCon']").val()),
+                        ($("input[name='rlConTxt']").val() === "" ? dataEdit[row[i]][180] : $("input[name='rlConTxt']").val()),
+                        ($("input[name='rlSound']").val() === "" ? dataEdit[row[i]][181] : $("input[name='rlSound']").val()),
+                        ($("input[name='rlFineCrep']").val() === "" ? dataEdit[row[i]][182] : $("input[name='rlFineCrep']").val()),
+                        ($("input[name='rlCoarseCrep']").val() === "" ? dataEdit[row[i]][183] : $("input[name='rlCoarseCrep']").val()),
+                        ($("input[name='rlAir']:checked").val() === "" ? dataEdit[row[i]][184] : $("input[name='rlAir']:checked").val()),
+                        ($("input[name='rlAirDecreasedTxt']").val() === "" ? dataEdit[row[i]][185] : $("input[name='rlAirDecreasedTxt']").val()),
+                        ($("select[name='llCon']").val() === "" ? dataEdit[row[i]][186] : $("select[name='llCon']").val()),
+                        ($("input[name='llConTxt']").val() === "" ? dataEdit[row[i]][187] : $("input[name='llConTxt']").val()),
+                        ($("input[name='llSound']").val() === "" ? dataEdit[row[i]][188] : $("input[name='llSound']").val()),
+                        ($("input[name='llFineCrep']").val() === "" ? dataEdit[row[i]][189] : $("input[name='llFineCrep']").val()),
+                        ($("input[name='llCoarseCrep']").val() === "" ? dataEdit[row[i]][190] : $("input[name='llCoarseCrep']").val()),
+                        ($("input[name='llAir']:checked").val() === "" ? dataEdit[row[i]][191] : $("input[name='llAir']:checked").val()),
+                        ($("input[name='llAirDecreasedTxt']").val() === "" ? dataEdit[row[i]][192] : $("input[name='llAirDecreasedTxt']").val()),
+                        (changeLink('khcNo', 'Lungs') === undefined ? dataEdit[row[i]][193] : changeLink('khcNo', 'Lungs')),
+                        ($("input[name='heartSound']:checked").val() === "" ? dataEdit[row[i]][194] : $("input[name='heartSound']:checked").val()),
+                        ($("input[name='heartMurmurTxt']").val() === "" ? dataEdit[row[i]][195] : $("input[name='heartMurmurTxt']").val()),
+                        ($("input[name='abdominalWall']:checked").val() === "" ? dataEdit[row[i]][196] : $("input[name='abdominalWall']:checked").val()),
+                        ($("input[name='abdomWallLoc']").val() === "" ? dataEdit[row[i]][197] : $("input[name='abdomWallLoc']").val()),
+                        ($("input[name='abdomen']:checked").val() === "" ? dataEdit[row[i]][198] : $("input[name='abdomen']:checked").val()),
+                        ($("input[name='abdoTenderTxt']").val() === "" ? dataEdit[row[i]][199] : $("input[name='abdoTenderTxt']").val()),
+                        ($("input[name='abdomenLoc']").val() === "" ? dataEdit[row[i]][200] : $("input[name='abdomenLoc']").val()),
+                        ($("select[name='massTenderness']").val() === "" ? dataEdit[row[i]][201] : $("select[name='massTenderness']").val()),
+                        ($("select[name='massMobility']").val() === "" ? dataEdit[row[i]][202] : $("select[name='massMobility']").val()),
+                        ($("select[name='massState']").val() === "" ? dataEdit[row[i]][203] : $("select[name='massState']").val()),
+                        ($("input[name='massStateQuad']").val() === "" ? dataEdit[row[i]][204] : $("input[name='massStateQuad']").val()),
+                        ($("input[name='massStateSize']").val() === "" ? dataEdit[row[i]][205] : $("input[name='massStateSize']").val()),
+                        ($("input[name='shiftDull']:checked").val() === "" ? dataEdit[row[i]][206] : $("input[name='shiftDull']:checked").val()),
+                        ($("input[name='hepatomegaly']:checked").val() === "" ? dataEdit[row[i]][207] : $("input[name='hepatomegaly']:checked").val()),
+                        ($("input[name='hepNegativeTxt']").val() === "" ? dataEdit[row[i]][208] : $("input[name='hepNegativeTxt']").val()),
+                        ($("input[name='splenomegaly']:checked").val() === "" ? dataEdit[row[i]][209] : $("input[name='splenomegaly']:checked").val()),
+                        ($("input[name='splNegativeTxt']").val() === "" ? dataEdit[row[i]][210] : $("input[name='splNegativeTxt']").val()),
+                        ($("select[name='bowelSound']").val() === "" ? dataEdit[row[i]][211] : $("select[name='bowelSound']").val()),
+                        ($("select[name='perRectum']").val() === "" ? dataEdit[row[i]][212] : $("select[name='perRectum']").val()),
+                        (changeLink('khcNo', 'LowerBody') === undefined ? dataEdit[row[i]][213] : changeLink('khcNo', 'LowerBody')),
+                        ($("input[name='gastroOtr']").val() === "" ? dataEdit[row[i]][214] : $("input[name='gastroOtr']").val()),
+                        ($("input[name='muscleRightUL']").val() === "" ? dataEdit[row[i]][215] : $("input[name='muscleRightUL']").val()),
+                        ($("input[name='muscleLeftUL']").val() === "" ? dataEdit[row[i]][216] : $("input[name='muscleLeftUL']").val()),
+                        ($("input[name='muscleRightLL']").val() === "" ? dataEdit[row[i]][217] : $("input[name='muscleRightLL']").val()),
+                        ($("input[name='muscleLeftLL']").val() === "" ? dataEdit[row[i]][218] : $("input[name='muscleLeftLL']").val()),
+                        ($("input[name='senseRightUL']:checked").val() === "" ? dataEdit[row[i]][219] : $("input[name='senseRightUL']:checked").val()),
+                        ($("input[name='senseleftUL']:checked").val() === "" ? dataEdit[row[i]][220] : $("input[name='senseleftUL']:checked").val()),
+                        ($("input[name='senserightLL']:checked").val() === "" ? dataEdit[row[i]][221] : $("input[name='senserightLL']:checked").val()),
+                        ($("input[name='senseleftLL']:checked").val() === "" ? dataEdit[row[i]][222] : $("input[name='senseleftLL']:checked").val()),
+                        ($("textarea[name='otrManage']").val() === "" ? dataEdit[row[i]][223] : $("textarea[name='otrManage']").val()),
+                    ]
+                ]
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesPatientContinuationSheet,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "extraNotesForm": {
+                var valuesExtraNotes = [
+                    [
+                        generateTime(),
+                        document.getElementsByName("patientName")[0].innerHTML,
+                        document.getElementsByName("patientNameSearch")[0].innerHTML,
+                        ($("textarea[name='extraNotes']").val() === "" ? dataEdit[row[i]][3] : $("textarea[name='extraNotes']").val()),
+                    ]
+                ]
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesExtraNotes,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "medicationForm": {
+                var valuesMedication = [
+                    [
+                        generateTime(),
+                        document.getElementsByName("patientName")[0].innerHTML,
+                        document.getElementsByName("patientNameSearch")[0].innerHTML,
+                        ($("input[name='date']").val()        === "" ? dataEdit[row[i]][3] : $("input[name='date']").val()),
+                        ($("input[name='medication']").val()  === "" ? dataEdit[row[i]][4] : $("input[name='medication']").val()),
+                        ($("input[name='dosage']").val()      === "" ? dataEdit[row[i]][5] : $("input[name='dosage']").val()),
+                        ($("input[name='frequency']").val()   === "" ? dataEdit[row[i]][6] : $("input[name='frequency']").val()),
+                        ($("input[name='dateStarted']").val() === "" ? dataEdit[row[i]][7] : $("input[name='dateStarted']").val()),
+                        ($("input[name='dateCeased']").val()  === "" ? dataEdit[row[i]][8] : $("input[name='dateCeased']").val()),
+                        ($("input[name='hospital']").val()    === "" ? dataEdit[row[i]][9] : $("input[name='hospital']").val())
+                    ]
+                ]
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesMedication,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "medicationEquipmentForm": {
+                var valuesMedicationEquipment = [
+                    [
+                        generateTime(),
+                        document.getElementsByName("patientName")[0].innerHTML,
+                        document.getElementsByName("patientNameSearch")[0].innerHTML,
+                        ($("input[name='date']").val()               === "" ? dataEdit[row[i]][3] : $("input[name='date']").val()),
+                        ($("input[name='medicationName']").val()     === "" ? dataEdit[row[i]][4] : $("input[name='medicationName']").val()),
+                        ($("input[name='medicationQuantity']").val() === "" ? dataEdit[row[i]][5] : $("input[name='medicationQuantity']").val()),
+                        ($("input[name='nursingItemName']").val()    === "" ? dataEdit[row[i]][6] : $("input[name='nursingItemName']").val()),
+                        ($("input[name='nursingItemNo']").val()      === "" ? dataEdit[row[i]][7] : $("input[name='nursingItemNo']").val())
+                    ]
+                ]
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesMedicationEquipment
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "homeVisitForm": {
+                var valuesHomeVisit = [
+                    [
+                        generateTime(),
+                        document.getElementsByName("patientName")[0].innerHTML,
+                        document.getElementsByName("patientNameSearch")[0].innerHTML,
+                        ($("input[name='no']").val()        === "" ? dataEdit[row[i]][3] : $("input[name='no']").val()),
+                        ($("input[name='date']").val()      === "" ? dataEdit[row[i]][4] : $("input[name='date']").val()),
+                        ($("input[name='visitedBy']").val() === "" ? dataEdit[row[i]][5] : $("input[name='visitedBy']").val()),
+                        ($("input[name='place']").val()     === "" ? dataEdit[row[i]][6] : $("input[name='place']").val())
+                    ]
+                ]
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesHomeVisit
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "endOfLifeForm": {
+                var valuesEndOfLife = [
+                    [
+                        generateTime(),
+                        document.getElementsByName("patientName")[0].innerHTML,
+                        document.getElementsByName("patientNameSearch")[0].innerHTML,
+                        ($("input[name='date']").val()                    === "" ? dataEdit[row[i]][3] : $("input[name='date']").val()),
+                        ($("input[name='lifeSustainingTreatment']").val() === "" ? dataEdit[row[i]][4] : $("input[name='lifeSustainingTreatment']").val()),
+                        ($("input[name='cpr']").val()                     === "" ? dataEdit[row[i]][5] : $("input[name='cpr']").val()),
+                        ($("input[name='intubation']").val()              === "" ? dataEdit[row[i]][6] : $("input[name='intubation']").val()),
+                        ($("input[name='artificialHydration']").val()     === "" ? dataEdit[row[i]][7] : $("input[name='artificialHydration']").val()),
+                        ($("input[name='antibiotics']").val()             === "" ? dataEdit[row[i]][8] : $("input[name='antibiotics']").val()),
+                        ($("input[name='dialysis']").val()                === "" ? dataEdit[row[i]][9] : $("input[name='dialysis']").val()),
+                        ($("input[name='proxyDecision']").val()           === "" ? dataEdit[row[i]][10] : $("input[name='proxyDecision']").val()),
+                        ($("input[name='placeOfCare']").val()             === "" ? dataEdit[row[i]][11] : $("input[name='placeOfCare']").val()),
+                        ($("input[name='typeOfFuneral']").val()           === "" ? dataEdit[row[i]][12] : $("input[name='typeOfFuneral']").val()),
+                        ($("input[name='specialWishes']").val()           === "" ? dataEdit[row[i]][13] : $("input[name='specialWishes']").val())
+                    ]
+                ]
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesEndOfLife,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+        }
+    }
+    
+    if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        if (!edited){
+            var request = gapi.client.sheets.spreadsheets.values.batchUpdate(params, batchUpdateBody);
+            request.then(function(response) {
+                console.log(response.result);
+                spinner.setAttribute('style', 'display: none;');
+                appendPre("Record(s) edited. Refresh the page to see the result.");
+                edited = true;
+            }, function(reason) {
+                console.log(reason);
+                spinner.setAttribute('style', 'display: none;');
+                appendPre('error: ' + reason.result.error.message);
+            });
+        }
+        else {
+            spinner.setAttribute('style', 'display: none;');
+            appendPre("Please select another record(s) to edit.");
+        }
+
+    }
+}
     var form = document.getElementById('formID').innerText;
 
     var spinner = document.getElementById('loadingSpinnerBottom');
