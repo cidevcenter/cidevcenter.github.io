@@ -199,7 +199,7 @@ function deleteStuff(formID, array) {
     for(var i = 0; i < array.length; i++){
         console.log(i);
         
-        var khcNo = data[i][2];
+        var khcNo = data[i][3];
         
         var string = "name contains '" + khcNo + "'";
 
