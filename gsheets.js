@@ -11,7 +11,7 @@ var SCOPES = "https://www.googleapis.com/auth/drive";
 
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
-var spreadsheetId = '1wEa0JVm0NQMPePxh8DLBgaUV1hVz4RMM6q0GaWRu05Q';
+var spreadsheetId = '1idjwPSNjA-HGAHuEAwijMJAN7XvvwON10mJlokYkW2k';
 var folderID = '1gS2LXwlGZCpzIVIFJXwnIBm82KkIy7Wr';
 var fileDetail;
 var linkGenogram = '', linkLung = '', linkLowerBody = '', linkFullBody = '';
@@ -200,8 +200,13 @@ function deleteStuff(formID, array) {
         console.log(i);
         
         var khcNo = data[i][3];
+
+        if (khcNo == '' || khcNo == undefined) {
+            console.log("Breaking to prevent accidental deletion of all Drive files...");
+            return;
+        }
         
-        var string = "name contains '" + khcNo + "'";
+        var string = "name contains '" + khcNo + "' and mimeType = 'application/vnd.google-apps.folder'";
 
         console.log(string);
 
@@ -215,7 +220,7 @@ function deleteStuff(formID, array) {
                 console.log("Cannot find files. Breaking..");
             } 
             else {
-                for(var j = 0; j < res.result.files.length; j++) {
+                /*for(var j = 0; j < res.result.files.length; j++) {
                     gapi.client.drive.files.delete({
                         'fileId': res.result.files[j].id
                     }).then(function(res) {
@@ -223,7 +228,7 @@ function deleteStuff(formID, array) {
                     }, function(err) {
                         console.log(err);
                     })
-                }
+                }*/
             }
             
         }, function(err) {
