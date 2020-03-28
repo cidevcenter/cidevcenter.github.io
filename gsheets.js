@@ -11,7 +11,7 @@ var SCOPES = "https://www.googleapis.com/auth/drive";
 
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
-var spreadsheetId = '1idjwPSNjA-HGAHuEAwijMJAN7XvvwON10mJlokYkW2k';
+var spreadsheetId = '1wEa0JVm0NQMPePxh8DLBgaUV1hVz4RMM6q0GaWRu05Q';
 var folderID = '1gS2LXwlGZCpzIVIFJXwnIBm82KkIy7Wr';
 var fileDetail;
 var linkGenogram = '', linkLung = '', linkLowerBody = '', linkFullBody = '';
