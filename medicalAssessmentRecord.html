@@ -660,7 +660,7 @@
             <div id="lungDiagram" class="picBox">
                 <img src="img/Lungs.png" alt="Lungs Image" class="picBox" width="200" height="200">
                 <input type="button" id="lungBtn" class="picBox" value="Show Image"
-                onclick="var link = changeLink('khcNo', 'Lungs'); if (link !== undefined) { window.open(link, '_blank'); }">
+                onclick="btnClick1 = true; var link = changeLink('khcNo', 'Lungs', continuationID); if (link !== undefined) { window.open(link, '_blank');}">
             </div>
 
             <!--Lung popups-->
@@ -717,7 +717,7 @@
             <div id="lowerBodyDiagram" class="picBox">
                 <img src="img/LowerBody.png" alt="Lower Body Image" class="picBox" width="200" height="200">
                 <input type="button" id="lowerBodyBtn" class="picBox" value="Show Image"
-                onclick="var link = changeLink('khcNo', 'LowerBody'); if (link !== undefined) { window.open(link, '_blank'); }">
+                onclick="btnClick2 = true; var link = changeLink('khcNo', 'LowerBody', continuationID); if (link !== undefined) { window.open(link, '_blank');}">
             </div>
 
             <!--Lower Body popups-->
@@ -882,7 +882,7 @@
             <div id="nerveDiagram" class="picBox">
                 <img src="img/FullBody.png" alt="Nerve Image" class="picBox" width="200" height="200">
                 <input type="button" id="fullBodyBtn" class="picBox" value="Show Image"
-                onclick="var link = changeLink('khcNo', 'FullBody'); if (link !== undefined) { window.open(link, '_blank'); }">
+                onclick="btnClick3 = true; var link = changeLink('khcNo', 'FullBody', continuationID); if (link !== undefined) { window.open(link, '_blank');}">
             </div>
 
             <!--Full Body popups-->

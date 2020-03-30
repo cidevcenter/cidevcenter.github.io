@@ -1,11 +1,13 @@
 //Handles the multi-step form for referral form, 0 = first
 var currentTab = 0;
 var formID = document.getElementById("formID").innerText;
+var btnClick1 = false;
+var btnClick2 = false;
+var btnClick3 = false;
+var btnClick4 = false;
 
 //this
-if(formID != 'mainMenu') {
-    showTab(currentTab);
-}
+showTab(currentTab);
 
 function showTab(n) {
     var x = document.getElementsByClassName("tab");
@@ -49,7 +51,11 @@ function showTab(n) {
             }
         }
         
-    } else {
+    } else if (formID == 'medicalAssessmentRecord' || formID == 'patientContinuationRecord') {
+        document.getElementById("nextBtn").value = "Next";
+        document.getElementById("nextBtn").setAttribute("onclick", "nextPrev(1); continuationID = dataEdit[parseInt(toArray()[0])][1];");
+    }
+    else {
         document.getElementById("nextBtn").value = "Next";
         document.getElementById("nextBtn").setAttribute("onclick", "nextPrev(1)");
     }
@@ -167,20 +173,23 @@ function showPopUp(popUpId, buttonId, index) {
     }
 }
 
-function changeLink(id, picNo) {
+function changeLink(id, picNo, continuationID) {
     var patientID = document.getElementsByName(id)[0].value;
 
     var slashLocation = patientID.indexOf("/");
 
-    if(slashLocation == -1) {
+    if(slashLocation == -1 && (btnClick1 == true || btnClick2 == true || btnClick3 == true)) {
         alert("Invalid KHC No.");
         return;
     }
-    else {
+    else if (btnClick1 == true || btnClick2 == true || btnClick3 == true) {
         var newPatientID = patientID.substring(0, slashLocation) + "%2F" + patientID.substring(slashLocation + 1, patientID.length);
     }
+    else {
+        return;
+    }
 
-    var link = "https://hospice-e4abb.web.app/#/home?id=" + newPatientID + "&img=" + picNo;
+    var link = "https://hospice-e4abb.web.app/#/home?id=" + newPatientID + "&img=" + picNo + "&form=" + continuationID;
     return link;
 }
 

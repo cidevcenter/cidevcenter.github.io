@@ -1351,7 +1351,7 @@
             <div id="lungDiagram" class="picBox">
                 <img src="img/Lungs.png" alt="Lungs Image" class="picBox" width="200" height="200">
                 <input type="button" id="lungBtn" class="picBox" value="Show Image"
-                onclick="var link = changeLink('khcNo', 'Lungs'); if (link !== undefined) { window.open(link, '_blank'); }">
+                onclick="var link = changeLink('khcNo', 'Lungs', continuationID); if (link !== undefined) { window.open(link, '_blank'); }">
             </div>
 
             <!--Lung popups-->
@@ -1543,7 +1543,7 @@
             <div id="lowerBodyDiagram" class="picBox">
                 <img src="img/LowerBody.png" alt="Lower Body Image" class="picBox" width="200" height="200">
                 <input type="button" id="lungBtn" class="picBox" value="Show Image"
-                onclick="var link = changeLink('khcNo', 'LowerBody'); if (link !== undefined) { window.open(link, '_blank'); }">
+                onclick="var link = changeLink('khcNo', 'LowerBody', continuationID); if (link !== undefined) { window.open(link, '_blank'); }">
             </div>
 
             <!--Lower Body popups-->
@@ -1685,6 +1685,20 @@
     <script type="text/javascript" src="gsheets.js"></script>
     <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+
+    <script>
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        searchSheet('Patient Continuation Sheet');
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
     </script>
 
 </body>
