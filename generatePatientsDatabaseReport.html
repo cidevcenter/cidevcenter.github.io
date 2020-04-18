@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Generated Patients Report</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="formID" style="display: none;">generatePatientsDatabaseReport</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+        <a href="patientsSearch.html" id="backLink" class="goBackBtn">Go Back</a>
+    </div>
+    <section>
+        <h1>Generated Patient Database Reports</h1>
+    </section>
+    
+    
+    <div id="mainbox" style="width: 95%;">
+        
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
+
+        <div id="error" style="display: none;">
+            <h2>No results found.</h1>
+        </div>
+        
+        <div class="tab">
+            <div id="table">
+                <table id="searchTable">
+                </table>
+            </div>
+            <div id="pageText">
+            </div>
+            <div id="buttonsTable">
+            </div>
+            <div id="rowCount" style="white-space: pre-wrap; display: none;">
+            </div>
+        </div>
+
+        <div class="tab">
+            <div id="khcNo" class="inputBox">
+                <label>KHC No</label><br><br>
+                <input type="text" name="khcNo">
+            </div>
+
+            <div id="patientName" class="inputBox">
+                <label>Patient's Name</label><br><br>
+                <input type="text" name="patientName">
+            </div>
+
+            <div class="inputBox">
+                <label>Category</label><br><br>
+                <select id="category" name="category">
+                    <option value="">--Select Category--</option>
+                </select>
+            </div>
+
+            <div id="dateReferred" class="inputBox">
+                <label>Date Referred</label><br><br>
+                <input type="text" name="dateReferred" placeholder="DD/MM/YYYY">
+            </div>
+
+            <div class="inputBox">
+                <label>Ethnic Group</label><br><br>
+                <select id="ethnicGroup" name="ethnicGroup">
+                    <option value="">--Select Ethnic Groups--</option>
+                </select>
+            </div>
+
+            <div id="nric" class="inputBox">
+                <label>NRIC</label><br><br>
+                <input type="text" name="nric">
+            </div>
+
+            <div id="dob" class="inputBox">
+                <label>Date of Birth</label><br><br>
+                <input type="text" name="dob" placeholder="DD/MM/YYYY">
+            </div>
+
+            <div id="sex" class="inputBox">
+                <label>Sex</label><br><br>
+                <select name="sex">
+                    <option value="">--Select Sex--</option>
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                </select>
+            </div>
+
+            <div id="age" class="inputBox">
+                <label>Age</label><br><br>
+                <input type="number" name="age" min="0" max="200" value="0">
+            </div>
+
+            <div class="inputBox">
+                <label>Area</label><br><br>
+                <select id="area" name="area">
+                    <option value="">--Select Area--</option>
+                </select>
+            </div>
+
+            <div id="address" class="areaBox">
+                <label>Address</label><br><br>
+                <textarea name="address" id="addressBox" class="areaBNReq" rows="4" cols="50"></textarea>
+            </div>
+
+            <div id="contactNo" class="areaBox">
+                <label>Contact No</label><br><br>
+                <textarea name="contactNo" id="contactBox" class="areaBNReq" rows="4" cols="50"></textarea>
+            </div>
+        </div>
+
+        <div class="tab">
+            <div class="inputBox">
+                <label>Referred From</label><br><br>
+                <select id="referredFrom" name="referredFrom">
+                    <option value="">--Select Method--</option>
+                </select>
+            </div>
+
+            <div class="inputBox">
+                <label>Referred Hospital</label><br><br>
+                <select id="referredHospital" name="referredHospital">
+                    <option value="">--Select Hospital--</option>
+                </select>
+            </div>
+
+            <div class="inputBox">
+                <label>Referred NGO</label><br><br>
+                <select id="referredNGO" name="referredNGO">
+                    <option value="">--Select NGO--</option>
+                </select>
+            </div>
+
+            <div class="inputBox">
+                <label>Type Disease</label><br><br>
+                <select id="typeDisease" name="typeDisease">
+                    <option value="">--Select Disease--</option>
+                </select>
+            </div>
+
+            <div class="inputBox">
+                <label>Primary</label><br><br>
+                <select id="primary" name="primary">
+                    <option value="">--Select Primary--</option>
+                </select>
+            </div>
+
+            <div id="diagnosis" class="areaBox">
+                <label>Diagnosis</label><br><br>
+                <textarea name="diagnosis" id="diagnosisBox" class="areaBNReq" rows="4" cols="50"></textarea>
+            </div>
+
+            <div class="inputBox">
+                <label>Dr Nurse In Charge</label><br><br>
+                <select id="drNurseInCharge" name="drNurseInCharge">
+                    <option value="">--Select Dr/Nurse--</option>
+                </select>
+            </div>
+
+            <div id="volunteerInCharge" class="inputBox">
+                <label>Volunteer In Charge</label><br><br>
+                <input type="text" name="volunteerInCharge">
+            </div>
+
+            <div id="dateFirstVisit" class="inputBox">
+                <label>Date Of 1st Visit</label><br><br>
+                <input type="text" name="dateFirstVisit" placeholder="DD-MMM-YY (01-Jan-05)">
+            </div>
+
+            <div id="discharged" class="inputBox" style="min-height: 0;">
+                <label class="container">RIP/Discharged
+                    <input type="checkbox" name="discharged" value="TRUE">
+                    <span class="checkBox"></span><br>
+                </label>
+            </div>
+
+            <div class="inputBox">
+                <label>How Discharged</label><br><br>
+                <select id="howDischarged" name="howDischarged">
+                    <option value="">--Select Method--</option>
+                </select>
+            </div>
+
+            <div id="dateRIP" class="inputBox">
+                <label>Date RIP</label><br><br>
+                <input type="text" name="dateRIP" placeholder="DD-MMM-YY (01-Jan-05)">
+            </div>
+
+            <div id="dateDischarged" class="inputBox">
+                <label>Date Discharged</label><br><br>
+                <input type="text" name="dateDischarged" placeholder="DD-MMM-YY (01-Jan-05)">
+            </div>
+
+            <div class="inputBox">
+                <label>Place RIP</label><br><br>
+                <select id="placeRIP" name="placeRIP">
+                    <option value="">--Select Place--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="tab">
+            <div id="durationCareDays" class="inputBox">
+                <label>Duration of Care Days</label><br><br>
+                <input type="text" name="durationCareDays">
+            </div>
+
+            <div id="totalNoVisits" class="inputBox">
+                <label>Total No. Of Visits</label><br><br>
+                <div id="home" class="inputBox">
+                    <label>Home</label><br><br>
+                    <div id="homeVisitDoctorNo" class="inputBox">
+                        <label>Doctor</label><br><br>
+                        <input type="text" name="homeVisitDoctorNo">
+                    </div>
+
+                    <div id="homeVisitNurseNo" class="inputBox">
+                        <label>Nurse</label><br><br>
+                        <input type="text" name="homeVisitNurseNo">
+                    </div>
+
+                    <div id="homeVisitVolunteerNo" class="inputBox">
+                        <label>Volunteer</label><br><br>
+                        <input type="text" name="homeVisitVolunteerNo">
+                    </div>
+                </div>
+                <div id="hospital" class="inputBox">
+                    <label>Hospital</label><br><br>
+                    <div id="hospitalVisitDoctorNo" class="inputBox">
+                        <label>Doctor</label><br><br>
+                        <input type="text" name="hospitalVisitDoctorNo">
+                    </div>
+
+                    <div id="hospitalVisitNurseNo" class="inputBox">
+                        <label>Nurse</label><br><br>
+                        <input type="text" name="hospitalVisitNurseNo">
+                    </div>
+
+                    <div id="hospitalVisitVolunteerNo" class="inputBox">
+                        <label>Volunteer</label><br><br>
+                        <input type="text" name="hospitalVisitVolunteerNo">
+                    </div>
+                </div>
+            </div>
+
+            <div id="remarks" class="areaBox">
+                <label>Remarks</label><br><br>
+                <textarea name="remarks" id="remarksBox" class="areaBNReq" rows="4" cols="50"></textarea>
+            </div>
+
+        </div>
+
+        <div id="buttons" style="display: none;">
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <a href="printPatient.html" class="navBtn print" onclick="changePrint()" target="_blank">Print</a>
+                    <a href="patientsHomeVisitRecord.html?sheets=Visits&searchField=KHC&condition===&value=&mode=&andOr=and&extraSheets=&oriHeader=&externalHeader=&f1=KHC&f2=Date Visit&f3=Type Visit&f4=Visit By&f5=Num Doctor&f6=Num Nurse&f7=Place Visit&f8=Hours Spent&f9=Comments" class="navBtn changeLinkKHC" onclick="changeLinkKHC();">Home Visit Record</a>
+                    <a href="patientsBorrowEquipment.html" class="navBtn changeBorrow" onclick="changeBorrow();">Borrow Equipment</a>
+                    <a href="patientsListReturnEquipment.html?sheets=Borrowers Record&searchField=KHC&condition===&value=&mode=&andOr=and&extraSheets=Patients&oriHeader=KHC&externalHeader=Name&field1=KHC&field2=Name&field3=Item Code&field4=Date Borrowed&field5=Date Returned" id="equipList" class="navBtn changeLinkKHC" onclick="changeLinkKHC()">List/Return Equipment</a>
+                    <input type="button" value="Delete" onclick="deleteRecord(95652397, toArray())">
+                    <input type="button" id="prevBtn" class="navBtn" value="Prev" onclick="nextPrev(-1)">
+                    <input type="button" id="nextBtn" class="navBtn" value="Next" onclick="nextPrev(1)">
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+            
+        </div>
+
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+        
+    </div>
+
+
+    <div class="loadingSpinner" style="display: none;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="patientNameHidden" name="patientName" style="display: none;"></div>
+
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script type="text/javascript" src="reports.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload() ">
+    </script>
+
+    <script>
+        var paused = false;
+        var sheets, query = [], query2 = [], fields = [], extraSearch, andOr, extraSheets, oriHeader, externalHeader;
+        var conditionCount;
+        //Search for the variables on the URL
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            sheets = urlParams.get('sheets');
+            var searchField = urlParams.get('searchField');
+            var condition = urlParams.get('condition');
+            var value = urlParams.get('value');
+            var mode = urlParams.get('mode');
+            andOr = urlParams.get('andOr');
+            extraSheets = urlParams.get('extraSheets');
+            oriHeader = urlParams.get('oriHeader');
+            externalHeader = urlParams.get('externalHeader').split(',');
+
+            extraSearch = {
+                oriHeader: oriHeader,
+                externalHeader: externalHeader
+            }
+
+            query = [{
+                searchField: searchField,
+                condition: condition,
+                value: value,
+                mode: mode
+            }]
+
+            if(urlParams.has('searchField2') || urlParams.has('condition2') || urlParams.has('value2') || urlParams.has('mode2')) {
+                query2 = {
+                    searchField: urlParams.get('searchField2'),
+                    condition: urlParams.get('condition2'),
+                    value: urlParams.get('value2'),
+                    mode: urlParams.get('mode2')
+                }
+                query.push(query2);
+                conditionCount = 2;
+            } else {
+                conditionCount = 1;
+            }
+
+            var i = 0, array = [];
+            for(const [key, data] of urlParams.entries()) {
+                console.log(`${key} = ${data}`)
+                i++;
+
+                if(conditionCount == 1) {
+                    if (i > 9) {
+                        fields.push(data);
+                    }
+                } else if (conditionCount == 2) {
+                    if (i > 13) {
+                        fields.push(data);
+                    }
+                }
+                
+            }
+            console.log(fields);
+            //document.getElementById("patientNameSearch").innerHTML = myParam;
+            //document.getElementById("patientNameHidden").innerHTML = myParam2;
+        });
+
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        generateReport(sheets, query, fields, andOr, extraSearch, extraSheets);
+                        generateSelectList("Category", "category");
+                        generateSelectList("Race", "ethnicGroup");
+                        generateSelectList("Area", "area");
+                        generateSelectList("Referred From", "referredFrom");
+                        generateSelectList("Hospital", "referredHospital");
+                        generateSelectList("Other NGO", "referredNGO");
+                        generateSelectList("Type Disease", "typeDisease");
+                        generateSelectList("Cancer", "primary");
+                        generateSelectList("Nurse", "drNurseInCharge");
+                        generateSelectList("How Discharged", "howDischarged");
+                        generateSelectList("Place of Death", "placeRIP");
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
+
+        function changeLinkKHC() {
+            var links = document.getElementsByClassName('changeLinkKHC');
+            var khc = dataEdit[toArray()[0]][1];
+
+            for(var i = 0; i < links.length; i++) {
+                var string = links[i].href;
+                var newString = string.replace(/value=[\w]{0,}&/, `value=${khc}&`);
+                links[i].setAttribute('href', newString);
+            }
+        }
+
+        function changeBorrow() {
+            var links = document.getElementsByClassName('changeBorrow');
+            var khc = dataEdit[toArray()[0]][1];
+            var name = dataEdit[toArray()[0]][2];
+
+            var string = links[0].href;
+            var newString = string + `?khc=${khc}&name=${name}`;
+            links[0].setAttribute('href', newString);
+        }
+
+        function changePrint() {
+            var links = document.getElementsByClassName('print');
+            var khc = dataEdit[toArray()[0]][1];
+
+            var string = links[0].href;
+            var newString = string + `?khc=${khc}`;
+            links[0].setAttribute('href', newString);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Equipment Report</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+</head>
+
+<body>
+    <div id="formID" style="display: none;">equipmentReport</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+    <section><h1>Generate and Print Equipment Reports</h1></section>
+    <div id="mainbox">
+        <a href="equipmentRegister.html" id="backLink" class="goBackBtn">Go Back</a><br>
+        
+        <div id="dataFilter" class="inputBox">
+            <label>Year: </label>
+            <input type="number" id="dataYear" min="2005" max="2020" value="2013" onchange="changeYearMonthInLink()">
+            <label>Month: </label>
+            <input type="number" id="dataMonth" min="1" max="12" value="1" onchange="changeYearMonthInLink()">
+            <label>Equipment List: </label>
+            <select id="equipmentList" class="selectSmaller" onchange="changeEquipmentCodeInLink()">
+                <option value="AC">AC</option>
+                <option value="BC">BC</option>
+                <option value="BD">BD</option>
+                <option value="BN">BN</option>
+                <option value="BP">BP</option>
+                <option value="BR">BR</option>
+                <option value="CC">CC</option>
+                <option value="CR">CR</option>
+                <option value="CT">CT</option>
+                <option value="DRTC">DRTC</option>
+                <option value="DS">DS</option>
+                <option value="FA">FA</option>
+                <option value="GM">GM</option>
+                <option value="HC">HC</option>
+                <option value="HM">HM</option>
+                <option value="HWB">HWB</option>
+                <option value="IRL">IRL</option>
+                <option value="KH">KH</option>
+                <option value="MR">MR</option>
+                <option value="NM">NM</option>
+                <option value="OC">OC</option>
+                <option value="OT">OT</option>
+                <option value="PO">PO</option>
+                <option value="RL">RL</option>
+                <option value="RM">RM</option>
+                <option value="SC">SC</option>
+                <option value="SD">SD</option>
+                <option value="SP">SP</option>
+                <option value="SS">SS</option>
+                <option value="ST">ST</option>
+                <option value="TM">TM</option>
+                <option value="UR">UR</option>
+                <option value="WC">WC</option>
+                <option value="WCU">WCU</option>
+                <option value="WF">WF</option>
+                <option value="WS">WS</option>
+                <option value="WSC">WSC</option>
+            </select>
+        </div>
+        <div id="equipmentCategory" class="inputBox">
+        <!--generateEquipmentReport.html?sheets=Patients&searchField=Category&condition===&value=A&mode=&field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred From&field7=Date Referred&field8=Discharged&field9=Area-->
+        <a href="generateEquipmentReport.html?sheets=Equipment List&searchField=Equipment Code&condition=&value=&mode=&andOr=&extraSheets=&oriHeader=&externalHeader=&field1=Equipment Code&field2=Equipment Name&field3=Total Number Stock&field4=Number Loan Out&field5=Number Available&field6=Total Out&field7=Total In" class="linkBoxSel">1. Equipment Summary Report Today</a><br>
+        <a href="generateEquipmentReport.html?sheets=Equip_Out_Month_Summary&searchField=Year%20Borrowed&condition===&value=2013&mode=&searchField2=Month%20Borrowed&condition2===&value2=1&mode2=&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Equipment%20Code&field2=Equipment%20Name&field3=Number&field4=Year%20Borrowed&field5=Month%20Borrowed" class="linkBoxSel changeDate">2. Monthly Equipment Borrowed List</a><br>
+        <a href="generateEquipmentReport.html?sheets=Equip_In_Month_Summary&searchField=Year%20Returned&condition===&value=2013&mode=&searchField2=Month%20Returned&condition2===&value2=1&mode2=&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Equipment%20Code&field2=Equipment%20Name&field3=Number&field4=Year%20Returned&field5=Month%20Returned" class="linkBoxSel changeDate">3. Monthly Equipment Return List</a><br>
+        <a href="generateEquipmentReport.html?sheets=Equipment Register&searchField=Equipment Code&condition=&value=&mode=&andOr=&extraSheets=Equipment List&oriHeader=Equipment Code&externalHeader=Equipment Name&field1=Equipment Code&field2=Item Code&field3=Equipment Name&field4=Date&field5=Available&field6=Donated by Purchased from&field7=Address Invoice No&field8=Type&field9=Brand&field10=Machine name&field11=Company&field12=Remarks" class="linkBoxSel">5. Equipment Register Complete List</a><br>
+        <a href="generateEquipmentReport.html?sheets=Equipment Register&searchField=Equipment Code&condition===&value=AC&mode=&andOr=&extraSheets=Equipment List&oriHeader=Equipment Code&externalHeader=Equipment Name&field1=Equipment Code&field2=Item Code&field3=Equipment Name&field4=Date&field5=Available&field6=Donated by Purchased from&field7=Address Invoice No&field8=Type&field9=Brand&field10=Machine name&field11=Company&field12=Remarks" class="linkBoxSel changeItemCode">6. Equipment Register Report For Selected Equipment</a><br>
+        <a href="generateEquipmentReport.html?sheets=Borrowers_Record&searchField=Item Code&condition=contains&value=AC&mode=&andOr=&extraSheets=r&oriHeader=&externalHeader=&field1=Item Code&field2=KHC&field3=Date Borrowed&field4=Date Returned" class="linkBoxSel changeItemCode">7. Borrower's List For Selected Equipment</a><br>
+        </div>   
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>

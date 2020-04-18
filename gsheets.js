@@ -12,6 +12,7 @@ var SCOPES = "https://www.googleapis.com/auth/drive";
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 var spreadsheetId = '1wEa0JVm0NQMPePxh8DLBgaUV1hVz4RMM6q0GaWRu05Q';
+var accessSpreadsheetId = '1MuJcM_shq9Hfj00nraXLvE2MV4610Zx7mlpJrsX_BAU';
 var folderID = '1KLZ6NzFh60oYAtY8dImWTkzaWVyyuygH';
 var fileDetail;
 var linkGenogram = '', linkLung = '', linkLowerBody = '', linkFullBody = '';
@@ -68,20 +69,21 @@ function initClient() {
 
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
-        if (document.getElementById("formID").innerText == 'mainMenu') {
+        if (document.getElementById("formID").innerText == 'mainMenu' || document.getElementById("formID").innerText == 'patientRecordsAndEquipmentRegister') {
             document.getElementById('warning').style.display = 'none';
             document.getElementById('links').style.display = 'block';
         }
         authorizeButton.style.display = 'none'; //none
         signoutButton.style.display = 'block';
     } else {
-        if (document.getElementById("formID").innerText == 'mainMenu') {
+        if (document.getElementById("formID").innerText == 'mainMenu' || document.getElementById("formID").innerText == 'patientRecordsAndEquipmentRegister') {
             document.getElementById('warning').style.display = 'block';
             document.getElementById('links').style.display = 'none';
         }
         authorizeButton.style.display = 'block';
         signoutButton.style.display = 'none'; //none
     }
+    hideLoadIcon();
 }
 
 function handleAuthClick(event) {
@@ -243,11 +245,12 @@ function deleteStuff(formID, array) {
 }
 
 //Searches the sheet for the record
-function searchSheet(range) {
+function searchSheet(range, sheet) {
     data = [];
     indexNo = [];
+    var spreadsheetID = ((sheet == 'accessSheet' ? accessSpreadsheetId : spreadsheetId));
     var formID = document.getElementById("formID").innerText;
-    if (formID != 'searchForm' && formID != 'patientContinuationSheet' && formID != 'medicalAssessmentForm') {
+    if ((formID != 'searchForm' && formID != 'patientContinuationSheet' && formID != 'medicalAssessmentForm') && sheet != 'accessSheet') {
         document.getElementById('pageText').innerText = '';
     }
 
@@ -255,7 +258,7 @@ function searchSheet(range) {
     if(formID == 'searchForm' || formID == 'medicalAssessmentRecord' || formID == 'referralRecord' || formID == 'patientContinuationRecord'){
         var input = document.getElementById("patientNameSearch").value;
     }
-    else if(formID == 'patientContinuationSheet' || formID == 'medicalAssessmentForm') {
+    else if(formID == 'patientContinuationSheet' || formID == 'medicalAssessmentForm' || sheet == 'accessSheet') {
         var input = '';
     }
     else{
@@ -287,13 +290,16 @@ function searchSheet(range) {
         return;
     } else {
         gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: spreadsheetId,
+            spreadsheetId: spreadsheetID,
             range: range,
         }).then(function (response) {
             headerGenerated = false;
             var range = response.result;
             var count = 0;
             header = range.values[0];
+            if(sheet == 'accessSheet'){
+                header.splice(0, 0, ' ');
+            }
 
             elementN = range.values.length;
             
@@ -304,7 +310,10 @@ function searchSheet(range) {
                 for (i = 1; i < elementN; i++) {
                     var row = range.values[i];
                     //Shows all records
-                    if ((formID == 'medicalAssessmentRecord' || formID == 'referralRecord' || formID == 'patientContinuationRecord' || formID == 'patientContinuationSheet' || formID == 'medicalAssessmentForm') && input === "") {
+                    if ((sheet == 'accessSheet' && input == '') || ((formID == 'medicalAssessmentRecord' || formID == 'referralRecord' || formID == 'patientContinuationRecord' || formID == 'patientContinuationSheet' || formID == 'medicalAssessmentForm') && input === "")) {
+                        if(sheet == 'accessSheet') {
+                            row.splice(0, 0, ' ');
+                        }
                         data.push(row);
                         dataEdit.push(row);
                         maxPageCount = Math.ceil(elementN / pageElementN) - 1;
@@ -313,9 +322,9 @@ function searchSheet(range) {
                         indexNo.push(parseInt(i-1));
                     }
                     // Searches against which row, we control how we want user to search here
-                    else if (input === row[2] || (input === row[3] && formID == 'referralRecord') || (input === row[3] && formID == 'medicalAssessmentRecord') || ((input === row[127] || input === row[3]) && formID == 'patientContinuationRecord')) {
-                        khcno = row[2];
-                        name = row[3];
+                    else if (input === row[2] || (input === row[3] && formID == 'searchForm') || (input === row[3] && formID == 'referralRecord') || (input === row[3] && formID == 'medicalAssessmentRecord') || ((input === row[127] || input === row[3]) && formID == 'patientContinuationRecord')) {
+                        khcno = row[3];
+                        name = row[4];
                         //Show searched records
                         if (formID == 'extraNotesForm' || formID == 'medicationForm' || formID == 'medicationEquipmentForm' || formID == 'homeVisitForm' ||
                             formID == 'endOfLifeForm' || formID == 'referralRecord' || formID == 'medicalAssessmentRecord' || formID == 'patientContinuationRecord') {
@@ -353,6 +362,7 @@ function searchSheet(range) {
                 }
                 else {
                     alert('No record(s) found.');
+                    document.getElementsByClassName('loadingSpinner')[0].setAttribute('style', 'display: none;');
 
                     if (formID == 'searchForm') {
                         document.getElementById("extraNotes").setAttribute("href", "extraNotes.html");
@@ -496,7 +506,7 @@ function generateTableHead(table, header) {
     //Header
     for (var key in header) {
         var th = document.createElement("th");
-        if (key == 0) {
+        if (key == 0 && formID != 'generatePatientsReport' && formID != 'generateEquipmentReport') {
             var text = document.createTextNode(" ");
         } else {
             var text = document.createTextNode(header[key]);
@@ -510,19 +520,22 @@ function generateTableHead(table, header) {
 function generateTable(table, data, count) {
     var formID = document.getElementById("formID").innerText;
     var row = table.insertRow();
-    var link = "https://hospice-e4abb.web.app"
+    var link = "https://hospice-e4abb.web.app";
+    var link2 = "https://hospice-family-tree.firebaseapp.com";
     for (var i = 0; i < data.length; i++) {
         var cell = row.insertCell();
         var text = document.createTextNode(data[i]);
         cell.appendChild(text);
 
         //Shows checkbox in the first column
-        if(i == 0) {
+        if(i == 0 && formID != 'generatePatientsReport' && formID != 'generateEquipmentReport') {
             var id = 'checkbox' + count;
 
             if (formID == 'extraNotesForm' || formID == 'medicationForm' || formID == 'medicationEquipmentForm' || formID == 'homeVisitForm' ||
                 formID == 'endOfLifeForm') {
                 var string2 = "showStuffTable(\'" + id + "\',\'" + 'edit' + "\');showStuffTable(\'" + id + "\',\'" + 'delete' + "\')";
+            } else if (formID == 'patientsHomeVisitRecord' || formID == 'patientsBorrowEquipment') {
+                var string2 = '';
             } else {
                 var string2 = "showStuffTable(\'" + id + "\',\'" + 'buttons' + "\')";
             }
@@ -534,7 +547,7 @@ function generateTable(table, data, count) {
         } 
 
         //Shows links as actual link
-        if (data[i].includes(link)) {
+        if (data[i].includes(link) || data[i].includes(link2)) {
             var string = "<a href='" + data[i] + "' target='_blank'>" + data[i] + "</a>";
             cell.innerHTML = string;
         }
@@ -672,7 +685,7 @@ function appendForm(formID) {
                     $("input[name='emotionalStatusDefensive']:checked").val(),
                     $("input[name='emotionalStatusControlling']:checked").val(),
                     $("select[name='financialStatus']").val(),
-                    linkGenogram,
+                    (changeLinkGenogram('khcNo', continuationID) === undefined ? '' : changeLinkGenogram('khcNo', continuationID)),
                     $("input[name='emotionalAssess1']:checked").val(),
                     $("input[name='emotionalAssess2']:checked").val(),
                     $("input[name='emotionalAssess3']:checked").val(),
@@ -1105,6 +1118,111 @@ function appendForm(formID) {
             rangeForm = "Patient Continuation Sheet";
             break;
         }
+        case "patientsDatabase": {
+            var valuesPatientsDatabase = [
+                [
+                    $("input[name='patientName']").val(),
+                    $("input[name='khcNo']").val(),
+                    "06",  //HAHYR
+                    "1",  //HAHNO
+                    $("select[name='category']").val(),
+                    $("input[name='dateReferred']").val(),
+                    $("select[name='ethnicGroup']").val(),
+                    $("input[name='nric']").val(),
+                    $("input[name='dob']").val(),
+                    $("select[name='sex']").val(),
+                    $("input[name='age']").val(),
+                    $("select[name='area']").val(),
+                    $("textarea[name='address']").val(),
+                    $("textarea[name='contactNo']").val(),
+                    $("select[name='referredFrom']").val(),
+                    $("select[name='referredHospital']").val(),
+                    $("select[name='referredNGO']").val(),
+                    $("select[name='typeDisease']").val(),
+                    $("select[name='primary']").val(),
+                    $("textarea[name='diagnosis']").val(),
+                    $("select[name='drNurseInCharge']").val(),
+                    $("input[name='volunteerInCharge']").val(),
+                    $("input[name='dateFirstVisit']").val(),
+                    ($("input[name='discharged']:checked").val() ? "TRUE" : "FALSE"),
+                    $("input[name='dateRIP']").val(),
+                    $("select[name='howDischarged']").val(),
+                    $("input[name='dateDischarged']").val(),
+                    $("select[name='placeRIP']").val(),
+                    $("input[name='durationCareDays']").val(),
+                    $("input[name='homeVisitDoctorNo']").val(),
+                    $("input[name='homeVisitNurseNo']").val(),
+                    $("input[name='homeVisitVolunteerNo']").val(),
+                    $("input[name='hospitalVisitDoctorNo']").val(),
+                    $("input[name='hospitalVisitNurseNo']").val(),
+                    $("input[name='hospitalVisitVolunteerNo']").val(),
+                    $("textarea[name='remarks']").val(),
+                ]
+            ]
+
+            var body = {
+                values: valuesPatientsDatabase
+            };
+            rangeForm = "Patients";
+            break;
+        }
+        //Borrows equipment
+        case "patientsBorrowEquipment": {
+            var date = new Date();
+            var valuesPatientsDatabase = [
+                [
+                    $("select[id='itemCodeSelect']").val(),
+                    khc,
+                    `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
+                    '',
+                ]
+            ]
+
+            var body = {
+                values: valuesPatientsDatabase
+            };
+            rangeForm = "Borrowers Record";
+            break;
+        }
+        case "patientsHomeVisitRecord": {
+            var valuesPatientsHomeVisit = [
+                [
+                    $("input[name='khc']").val(),
+                    $("input[name='date']").val(),
+                    $("select[id='visitBy']").val(),
+                    $("input[name='numDoctor']").val(),
+                    $("input[name='numNurse']").val(),
+                    '', //Num Volunteer
+                    $("select[id='typeVisit']").val(),
+                    $("select[id='place']").val(),
+                    '', //Visitor Name
+                    $("input[name='hoursSpent']").val(),
+                    $("textarea[name='comments']").val(),
+                ]
+            ]
+
+            var body = {
+                values: valuesPatientsHomeVisit
+            };
+            rangeForm = "Visits";
+            break;
+        }
+        case "addBorrower": {
+            var valuesAddBorrower = [
+                [
+                    $("input[name='borrowedItemCode']").val(),
+                    $("input[name='khc']").val(),
+                    $("input[name='dateBorrowed']").val(),
+                    $("input[name='dateReturned']").val(),
+                ]
+            ]
+                
+            var body = {
+                values: valuesAddBorrower
+            };
+            rangeForm = "Borrowers Record";
+            break;
+        }
 
     }
 
@@ -1112,12 +1230,13 @@ function appendForm(formID) {
         if(!submitted){
             submitted = true;
             gapi.client.sheets.spreadsheets.values.append({
-                spreadsheetId: spreadsheetId,
-                range: rangeForm,
+                spreadsheetId: ((formID == "patientsDatabase" || formID == "patientsBorrowEquipment" || formID == 'patientsHomeVisitRecord' || formID == "addBorrower") ? accessSpreadsheetId : spreadsheetId),
+                range: `'${rangeForm}'!A:A`,
                 valueInputOption: "RAW",
                 resource: body
             }).then((response) => {
                 var result = response.result;
+                console.log(result);
                 console.log(`${result.updates.updatedCells} cells appended.`);
                 spinner.setAttribute('style', 'display: none;');
                 appendPre("Entry submitted.");
@@ -1137,6 +1256,7 @@ function appendForm(formID) {
 
 //Checks the input for validations before submitting
 function checkRequired() {
+    var spinner = document.getElementsByClassName('loadingSpinner')[0];
     var fields = $(".itemRequired").find("select, input, textarea").serializeArray();
     var valid = true;
     var validRegEx = true;
@@ -1153,12 +1273,88 @@ function checkRequired() {
 
             if (!validRegEx) {
                 appendPre(field.name + " does not match requested format.");
+                spinner.setAttribute('style', 'display: none;');
             }
         }
     })
 
     if(errorList.length > 0) {
+        console.log(errorList);
+        for(var i = 0; i < errorList.length; i++) {
+            switch (errorList[i]) {
+                case "patientName": {
+                    errorList[i] = " Patient's Name";
+                    break;
+                }
+                case "ic": {
+                    errorList[i] = " NRIC";
+                    break;
+                }
+                case "rn": {
+                    errorList[i] = " RN";
+                    break;
+                }
+                case "homeTelephoneNo": {
+                    errorList[i] = " Patient's Home Telephone No";
+                    break;
+                }
+                case "handphoneNo": {
+                    errorList[i] = " H/P No";
+                    break;
+                }
+                case "contactPerson": {
+                    errorList[i] = " Person To Contact";
+                    break;
+                }
+                case "relationship": {
+                    errorList[i] = " Relationship";
+                    break;
+                }
+                case "telephoneNo": {
+                    errorList[i] = " Telephone No";
+                    break;
+                }
+                case "languageSpoken": {
+                    errorList[i] = " Languages Spoken";
+                    break;
+                }
+                case "diagnosisDate": {
+                    errorList[i] = " Date of Diagnosis";
+                    break;
+                }
+                case "currentMedication": {
+                    errorList[i] = " Current Medication";
+                    break;
+                }
+                case "referringDoctor": {
+                    errorList[i] = " Referring Doctor";
+                    break;
+                }
+                case "speciality": {
+                    errorList[i] = " Speciality";
+                    break;
+                }
+                case "hospital": {
+                    errorList[i] = " Hospital / Clinic";
+                    break;
+                }
+                case "officePhoneNo": {
+                    errorList[i] = " Office Phone No";
+                    break;
+                }
+                case "faxNo": {
+                    errorList[i] = " Fax No";
+                    break;
+                }
+                case "date": {
+                    errorList[i] = " Date";
+                    break;
+                }
+            }
+        }
+
         alert(errorList + " is required.");
+        spinner.setAttribute('style', 'display: none;');
     }
 
     if(valid == false || validRegEx == false) {
@@ -1174,16 +1370,19 @@ function deleteRecord(formID, array) {
         alert("Please authorize before deleting record(s).");
         return;
     } else {
-        var spinner = document.getElementById('loadingSpinnerBottom');
+        var spinner = document.getElementsByClassName('loadingSpinner')[0];
+        var formId = document.getElementById('formID').innerHTML;
 
         if(spinner){
             spinner.setAttribute('style', 'display: block;');
         }
 
-        deleteStuff(formID, array);
+        if (formId != 'generatePatientsDatabaseReport' && formId != 'patientsHomeVisitRecord' && formId != 'patientsBorrowEquipment' && formId != 'patientsListReturnEquipment') {
+            deleteStuff(formID, array);
+        }
 
         var params = {
-            spreadsheetId: spreadsheetId,
+            spreadsheetId: ((formId == 'generatePatientsDatabaseReport' || formId == 'patientsListReturnEquipment' || formId == 'patientsBorrowEquipment' || formId == 'patientsHomeVisitRecord') ? accessSpreadsheetId : spreadsheetId),
         }
     
         var batchUpdateValuesRequestBody = {
@@ -1208,7 +1407,7 @@ function deleteRecord(formID, array) {
                 array[j]--;
             }
         }
-        if(!deleted) {
+        if(!deleted && array.length >=1 ) {
             gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateValuesRequestBody).then(function(response) {
                 console.log(response.result);
                 spinner.setAttribute('style', 'display: none;');
@@ -1219,9 +1418,14 @@ function deleteRecord(formID, array) {
                 spinner.setAttribute('style', 'display: none;');
                 appendPre("Error:" + error.result.error.message);
             })
-        } else {
+        } else if (array.length == 0) {
             spinner.setAttribute('style', 'display: none;');
-            appendPre("Please select another record(s) to delete.")
+            appendPre("Please choose a record to delete.");
+        }
+        
+        else {
+            spinner.setAttribute('style', 'display: none;');
+            appendPre("Please select another record(s) to delete.");
         }
 
     }
@@ -1231,15 +1435,17 @@ function deleteRecord(formID, array) {
 function editRecord(formID, row) {
     var form = document.getElementById('formID').innerText;
 
-    var spinner = document.getElementById('loadingSpinnerBottom');
+    var spinner = document.getElementsByClassName('loadingSpinner')[0];
 
     if(spinner){
         spinner.setAttribute('style', 'display: block;');
     }
 
     var params = {
-        spreadsheetId: spreadsheetId, 
+        spreadsheetId: ((form == 'generatePatientsDatabaseReport' || form == 'patientsListReturnEquipment' || form == 'patientsHomeVisitRecord' || form == 'equipmentRecord' || form == 'addBorrower' || form == 'equipmentBorrowers') ? accessSpreadsheetId : spreadsheetId), 
     };
+
+    console.log(params.spreadsheetId);
 
     var batchUpdateBody = {
         valueInputOption: 'RAW',
@@ -1248,7 +1454,7 @@ function editRecord(formID, row) {
 
     for (var i = 0; i < row.length; i++) {
         continuationID = dataEdit[row[i]][1];
-        console.log(changeLink('khcNo', 'Lungs', continuationID));
+        //console.log(changeLink('khcNo', 'Lungs', continuationID));
         switch (form) {
             case "referralRecord": {
                 var valuesReferral = [
@@ -1335,7 +1541,7 @@ function editRecord(formID, row) {
                         ($("input[name='emotionalStatusDefensive']:checked").val()  === "" ? dataEdit[row[i]][35] : $("input[name='emotionalStatusDefensive']:checked").val()),
                         ($("input[name='emotionalStatusControlling']:checked").val()=== "" ? dataEdit[row[i]][36] : $("input[name='emotionalStatusControlling']:checked").val()),
                         ($("select[name='financialStatus']").val()                  === "" ? dataEdit[row[i]][37] : $("select[name='financialStatus']").val()),
-                        (linkGenogram                                               === "" ? dataEdit[row[i]][38] : linkGenogram),
+                        (changeLinkGenogram('khcNo', continuationID)                === "" ? dataEdit[row[i]][38] : changeLinkGenogram('khcNo', continuationID)),
                         ($("input[name='emotionalAssess1']:checked").val()          === "" ? dataEdit[row[i]][39] : $("input[name='emotionalAssess1']:checked").val()),
                         ($("input[name='emotionalAssess2']:checked").val()          === "" ? dataEdit[row[i]][40] : $("input[name='emotionalAssess2']:checked").val()),
                         ($("input[name='emotionalAssess3']:checked").val()          === "" ? dataEdit[row[i]][41] : $("input[name='emotionalAssess3']:checked").val()),
@@ -1783,6 +1989,164 @@ function editRecord(formID, row) {
 
                 break;
             }
+            case "generatePatientsDatabaseReport": {
+                var valuesPatientsDatabase = [
+                    [
+                        ($("input[name='patientName']").val() === "" ? dataEdit[row[i]][2] : $("input[name='patientName']").val()),
+                        ($("input[name='khcNo']").val() === "" ? dataEdit[row[i]][1] : $("input[name='khcNo']").val()),
+                        "06",  //HAHYR
+                        "1",  //HAHNO
+                        ($("select[name='category']").val() === "" ? dataEdit[row[i]][3] : $("select[name='category']").val()),
+                        ($("input[name='dateReferred']").val() === "" ? dataEdit[row[i]][4] : $("input[name='dateReferred']").val()),
+                        ($("select[name='ethnicGroup']").val() === "" ? dataEdit[row[i]][5] : $("select[name='ethnicGroup']").val()),
+                        ($("input[name='nric']").val() === "" ? dataEdit[row[i]][6] : $("input[name='nric']").val()),
+                        ($("input[name='dob']").val() === "" ? dataEdit[row[i]][7] : $("input[name='dob']").val()),
+                        ($("select[name='sex']").val() === "" ? dataEdit[row[i]][8] : $("select[name='sex']").val()),
+                        ($("input[name='age']").val() === "" ? dataEdit[row[i]][9] : $("input[name='age']").val()),
+                        ($("select[name='area']").val() === "" ? dataEdit[row[i]][10] : $("select[name='area']").val()),
+                        ($("textarea[name='address']").val() === "" ? dataEdit[row[i]][11] : $("textarea[name='address']").val()),
+                        ($("textarea[name='contactNo']").val() === "" ? dataEdit[row[i]][12] : $("textarea[name='contactNo']").val()),
+                        ($("select[name='referredFrom']").val() === "" ? dataEdit[row[i]][13] : $("select[name='referredFrom']").val()),
+                        ($("select[name='referredHospital']").val() === "" ? dataEdit[row[i]][14] : $("select[name='referredHospital']").val()),
+                        ($("select[name='referredNGO']").val() === "" ? dataEdit[row[i]][15] : $("select[name='referredNGO']").val()),
+                        ($("select[name='typeDisease']").val() === "" ? dataEdit[row[i]][16] : $("select[name='typeDisease']").val()),
+                        ($("select[name='primary']").val() === "" ? dataEdit[row[i]][17] : $("select[name='primary']").val()),
+                        ($("textarea[name='diagnosis']").val() === "" ? dataEdit[row[i]][18] : $("textarea[name='diagnosis']").val()),
+                        ($("select[name='drNurseInCharge']").val() === "" ? dataEdit[row[i]][19] : $("select[name='drNurseInCharge']").val()),
+                        ($("input[name='volunteerInCharge']").val() === "" ? dataEdit[row[i]][20] : $("input[name='volunteerInCharge']").val()),
+                        ($("input[name='dateFirstVisit']").val() === "" ? dataEdit[row[i]][21] : $("input[name='dateFirstVisit']").val()),
+                        ($("input[name='discharged']:checked").val() ? "TRUE" : "FALSE"),
+                        ($("input[name='dateRIP']").val() === "" ? dataEdit[row[i]][23] : $("input[name='dateRIP']").val()),
+                        ($("select[name='howDischarged']").val() === "" ? dataEdit[row[i]][24] : $("select[name='howDischarged']").val()),
+                        ($("input[name='dateDischarged']").val() === "" ? dataEdit[row[i]][25] : $("input[name='dateDischarged']").val()),
+                        ($("select[name='placeRIP']").val() === "" ? dataEdit[row[i]][26] : $("select[name='placeRIP']").val()),
+                        ($("input[name='durationCareDays']").val() === "" ? dataEdit[row[i]][27] : $("input[name='durationCareDays']").val()),
+                        ($("input[name='homeVisitDoctorNo']").val() === "" ? dataEdit[row[i]][28] : $("input[name='homeVisitDoctorNo']").val()),
+                        ($("input[name='homeVisitNurseNo']").val() === "" ? dataEdit[row[i]][29] : $("input[name='homeVisitNurseNo']").val()),
+                        ($("input[name='homeVisitVolunteerNo']").val() === "" ? dataEdit[row[i]][30] : $("input[name='homeVisitVolunteerNo']").val()),
+                        ($("input[name='hospitalVisitDoctorNo']").val() === "" ? dataEdit[row[i]][31] : $("input[name='hospitalVisitDoctorNo']").val()),
+                        ($("input[name='hospitalVisitNurseNo']").val() === "" ? dataEdit[row[i]][32] : $("input[name='hospitalVisitNurseNo']").val()),
+                        ($("input[name='hospitalVisitVolunteerNo']").val() === "" ? dataEdit[row[i]][33] : $("input[name='hospitalVisitVolunteerNo']").val()),
+                        ($("textarea[name='remarks']").val() === "" ? dataEdit[row[i]][34] : $("textarea[name='remarks']").val()),
+                    ]
+                ]
+    
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesPatientsDatabase,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "patientsListReturnEquipment": {
+                var borrowDate = dataEdit[row[i]][4];
+                var returnDate = ($("input[name='dateReturned']").val() === "" ? dataEdit[row[i]][5] : $("input[name='dateReturned']").val());
+                var valuesPatients = [
+                    [
+                        dataEdit[row[i]][3],
+                        dataEdit[row[i]][1],
+                        borrowDate,
+                        returnDate,
+                        1,
+                        parseInt(new Date(borrowDate).getMonth()) + 1,
+                        parseInt(new Date(borrowDate).getFullYear()),
+                        parseInt(new Date(returnDate).getMonth()) + 1,
+                        parseInt(new Date(returnDate).getFullYear()),
+                    ]
+                ]
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesPatients,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case 'patientsHomeVisitRecord': {
+                var valuesPatientsHomeVisit = [
+                    [
+                        ($("input[name='khc']").val() === '' ? dataEdit[toArray()[0]][1] : $("input[name='khc']").val()),
+                        ($("input[name='date']").val() === '' ? dataEdit[toArray()[0]][2] : $("input[name='date']").val()),
+                        ($("select[id='visitBy']").val() === '' ? dataEdit[toArray()[0]][4] : $("select[id='visitBy']").val()),
+                        ($("input[name='numDoctor']").val() === '' ? dataEdit[toArray()[0]][5] : $("input[name='numDoctor']").val()),
+                        ($("input[name='numNurse']").val() === '' ? dataEdit[toArray()[0]][6] : $("input[name='numNurse']").val()),
+                        '', //Num Volunteer
+                        ($("select[id='typeVisit']").val() === '' ? dataEdit[toArray()[0]][3] : $("select[id='typeVisit']").val()),
+                        ($("select[id='place']").val() === '' ? dataEdit[toArray()[0]][7] : $("select[id='place']").val()),
+                        '', //Visitor Name
+                        ($("input[name='hoursSpent']").val() === '' ? dataEdit[toArray()[0]][8] : $("input[name='hoursSpent']").val()),
+                        ($("textarea[name='comments']").val() === '' ? dataEdit[toArray()[0]][9] : $("textarea[name='comments']").val()),
+                    ]
+                ]
+
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesPatientsHomeVisit,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "equipmentRecord": {
+                var valuesEquipmentRecord = [
+                    [
+                        ($("input[name='itemCode']").val() === '' ? dataEdit[toArray()[i]][1] : $("input[name='itemCode']").val()),
+                        ($("input[name='equipmentCode']").val() === '' ? dataEdit[toArray()[i]][2] : $("input[name='equipmentCode']").val()),
+                        ($("input[name='date']").val() === '' ? dataEdit[toArray()[i]][3] : $("input[name='date']").val()),
+                        ($("input[name='available']").val() === '' ? dataEdit[toArray()[i]][4] : $("input[name='available']").val()),
+                        '', //Ref No
+                        ($("input[name='donatePurchase']").val() === '' ? dataEdit[toArray()[i]][6] : $("input[name='donatePurchase']").val()),
+                        ($("input[name='addressInvoice']").val() === '' ? dataEdit[toArray()[i]][7] : $("input[name='addressInvoice']").val()),
+                        ($("input[name='itemType']").val() === '' ? dataEdit[toArray()[i]][8] : $("input[name='itemType']").val()),
+                        ($("input[name='brand']").val() === '' ? dataEdit[toArray()[i]][9] : $("input[name='brand']").val()),
+                        ($("input[name='machineName']").val() === '' ? dataEdit[toArray()[i]][10] : $("input[name='machineName']").val()),
+                        ($("input[name='company']").val() === '' ? dataEdit[toArray()[i]][11] : $("input[name='company']").val()),
+                        ($("input[name='remarks']").val() === '' ? dataEdit[toArray()[i]][12] : $("input[name='remarks']").val()),
+                        ($("input[name='takenBy']").val() === '' ? dataEdit[toArray()[i]][13] : $("input[name='takenBy']").val()),
+                        '', //HAH
+                        '', //Date Borrowed
+                        '', //Date Returned
+                        '', //N?
+                    ]
+                ];
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesEquipmentRecord,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
+            case "equipmentBorrowers": {
+                var borrowDate = ($("input[name='dateBorrowed']").val() === '' ? dataEdit[toArray()[i]][3] : $("input[name='dateBorrowed']").val());
+                var returnDate = ($("input[name='dateReturned']").val() === '' ? dataEdit[toArray()[i]][4] : $("input[name='dateReturned']").val());
+                var valuesEquipmentBorrowers = [
+                    [
+                        ($("input[name='borrowedItemCode']").val() === '' ? dataEdit[toArray()[i]][0] : $("input[name='borrowedItemCode']").val()),
+                        ($("input[name='khc']").val() === '' ? dataEdit[toArray()[i]][1] : $("input[name='khc']").val()),
+                        borrowDate,
+                        returnDate,
+                        '', //Item Code N
+                        parseInt(new Date(borrowDate).getMonth()) + 1,
+                        parseInt(new Date(borrowDate).getFullYear()),
+                        parseInt(new Date(returnDate).getMonth()) + 1,
+                        parseInt(new Date(returnDate).getFullYear()),
+                    ]
+                ];
+                var body = {
+                    range: "'" + formID + "'!" + parseInt(parseInt(row[i]) + 2) + ":" + parseInt(parseInt(row[i]) + 2),
+                    values: valuesEquipmentBorrowers,
+                };
+
+                batchUpdateBody.data.push(body);
+
+                break;
+            }
         }
     }
     
@@ -1805,5 +2169,95 @@ function editRecord(formID, row) {
             appendPre("Please select another record(s) to edit.");
         }
 
+    }
+}
+
+function generateSelectList(sheet, selectID, rowCol) {
+    var formID = document.getElementById("formID").innerText;
+    var spinner = document.getElementsByClassName('loadingSpinner')[0];
+
+    if(spinner){
+        spinner.setAttribute('style', 'display: block;');
+    }
+
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: accessSpreadsheetId,
+        range: sheet,
+        majorDimension: "COLUMNS",
+    }).then(function (response) {
+        var range = response.result;
+        //header = range.values[0];
+        if(rowCol == undefined) {
+            rowCol = 0;
+        }
+        list = range.values[rowCol];
+
+        elementN = list.length;
+        
+        if (elementN > 0) {
+            //i = 1 because we skip the header
+            for (i = 1; i < elementN; i++) {
+                var row = list[i];
+                $(`#${selectID}`).append(new Option(row, row))
+            }
+
+            document.getElementsByClassName('loadingSpinner')[0].setAttribute('style', 'display: none;');
+        } else {
+            alert('Not initialized.');
+            spinner.setAttribute('style', 'display: none;');
+        }
+    }, function (response) {
+        alert('Error: ' + response.result.error.message);
+        spinner.setAttribute('style', 'display: none;');
+    });
+}
+
+function printStuff(khc) {
+    var spinner = document.getElementsByClassName('loadingSpinner')[0];
+    var dataResult = [];
+
+    if(spinner){
+        spinner.setAttribute('style', 'display: block;');
+    }
+
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        console.log(gapi.client.sheets);
+        console.log(gapi.auth2.getAuthInstance().isSignedIn.get());
+        alert("Please authorize before searching record(s).");
+        document.getElementsByClassName('loadingSpinner')[0].setAttribute('style', 'display: none;');
+        return;
+    } else {
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: accessSpreadsheetId,
+            range: "Patients",
+        }).then(function (response) {
+            var dataPatient = response.result.values;
+            var inputs = document.getElementsByTagName('input');
+            
+            for (const i in dataPatient) {
+                if (khc === dataPatient[i][1]) {
+                    dataResult.push(dataPatient[i]);
+                    break;
+                }
+            }
+
+            //Sets the input field to the data needed to be print
+            inputs[0].value = dataResult[0][1]; //KHC
+            inputs[1].value = dataResult[0][0]; //Name
+            for (var i = 2; i < 21; i++) {
+                inputs[i].value = dataResult[0][i+2];
+            }
+            if (dataResult[0][23] == 'TRUE') {
+                inputs[21].checked = true;
+            }
+            for (var i = 22; i < 33; i++) {
+                inputs[i].value = dataResult[0][i+3];
+            }
+            
+            spinner.setAttribute('style', 'display: none;');
+        }, function(error) {
+            console.log(error);
+            spinner.setAttribute('style', 'display: none;');
+        })
     }
 }

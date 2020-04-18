@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patients Database</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+</head>
+
+<body onload="hideLoadIcon()">
+    <div id="formID" style="display: none;">patientsDatabaseRecord</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <a href="patientRecordsAndEquipmentRegister.html" id="backLink" class="goBackBtn">Go Back</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>    <!--<a href="patientRecordsAndEquipmentRegister.html" id="backLink" class="goBackBtn">Go Back</a><br>-->
+       
+    
+    
+    <div id="mainbox">
+        
+        <div id="scrollButtonsDiv">
+            <h2>Kasih Hospice Patient Records</h2>
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
+
+            <div class="tab">
+                <div id="patientName" class="inputBox">
+                    <label>Enter patient KHC No</label><br><br>
+                    <input type="text" id="patientNameSearch">
+                    <button onclick="searchSheet('Patient Continuation Sheet')"
+                        style="background-color: transparent; border: transparent;padding: 0;"><i
+                            class="material-icons">search</i></button>
+                </div>
+                <div id="table">
+                    <table id="searchTable">
+    
+                    </table>
+                </div>
+                <div id="pageText">
+                </div>
+                <div id="buttonsTable">
+                </div>
+                <div id="rowCount" style="white-space: pre-wrap; display: none;">
+                </div>
+            </div>
+            <div class="tab">
+                <div id="khcNo" class="inputBox">
+                    <label>KHC No</label><br><br>
+                    <input type="text" name="khcNo">
+                </div>
+
+                <div id="patientName" class="inputBox">
+                    <label>Patient's Name</label><br><br>
+                    <input type="text" name="patientName">
+                </div>
+
+                <div id="category" class="inputBox">
+                    <label>Category</label><br><br>
+                    <select name="category">
+                        <option value="">--Select Category--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+
+                <div id="dateReferred" class="inputBox">
+                    <label>Date Referred</label><br><br>
+                    <input type="text" name="dateReferred">
+                </div>
+
+                <div id="ethnicGroup" class="inputBox">
+                    <label>Ethnic Group</label><br><br>
+                    <select name="ethnicGroup">
+                        <option value="">--Select Category--</option>
+                        <option value="C">C</option>
+                        <option value="I">I</option>
+                        <option value="M">M</option>
+                        <option value="O">O</option>
+                    </select>
+                </div>
+
+                <div id="nric" class="inputBox">
+                    <label>NRIC</label><br><br>
+                    <input type="text" name="nric">
+                </div>
+
+                <div id="dob" class="inputBox">
+                    <label>Date of Birth</label><br><br>
+                    <input type="text" name="dob">
+                </div>
+
+                <div id="sex" class="inputBox">
+                    <label>Sex</label><br><br>
+                    <select name="sex">
+                        <option value="">--Select Category--</option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                </div>
+
+                <div id="age" class="inputBox">
+                    <label>Age</label><br><br>
+                    <input type="number" name="age" min="0" max="200" value="0">
+                </div>
+
+                <div id="area" class="inputBox">
+                    <label>Area</label><br><br>
+                    <select name="area">
+                        <option value="">--Select Area--</option>
+                        <option>Bdr D's</option>
+                        <option>K</option>
+                        <option>KD</option>
+                        <option>KL</option>
+                        <option>Kundang</option>
+                        <option>O</option>
+                        <option>Others</option>
+                        <option>PJ</option>
+                        <option>Rawang</option>
+                        <option>S</option>
+                        <option>SA</option>
+                        <option>SB</option>
+                        <option>SJ</option>
+                    </select>
+                </div>
+
+                <div id="address" class="areaBox">
+                    <label>Address</label><br><br>
+                    <textarea name="address" id="addressBox" class="areaBNReq" rows="4" cols="50"></textarea>
+                </div>
+
+                <div id="contactNo" class="areaBox">
+                    <label>Contact No</label><br><br>
+                    <textarea name="contactNo" id="contactBox" class="areaBNReq" rows="4" cols="50"></textarea>
+                </div>
+            </div>
+
+            <div class="tab">
+                <div id="referredFrom" class="inputBox">
+                    <label>Referred From</label><br><br>
+                    <select name="referredFrom">
+                        <option value="">--Select Method--</option>
+                        <option>1. Self</option>
+                        <option>2. Clinic/Hospital</option>
+                        <option>3. Other NGO</option>
+                    </select>
+                </div>
+
+                <div id="referredHospital" class="inputBox">
+                    <label>Referred Hospital</label><br><br>
+                    <select name="referredHospital">
+                        <option value="">--Select Hospital--</option>
+                        <option>AMPANG GEN. HOSP.</option>
+                        <option>AMPANG PUTERI HOSP.</option>
+                        <option>ASSUNTA HOSP.</option>
+                        <option>BEACON HOSPITAL</option>
+                        <option>DAMANSARA SP. HOSP.</option>
+                        <option>GLENEAGLES HOSP.</option>
+                        <option>HOSP. KUALA LUMPUR</option>
+                        <option>HOSP. UKM</option>
+                        <option>Institute Kanser Neg</option>
+                        <option>IPR</option>
+                        <option>OTHERS</option>
+                        <option>PANTAI MED. CENTRES</option>
+                        <option>PRIVATE CLINICS</option>
+                        <option>PUSRAWI HOSP.</option>
+                        <option>PUTRAJAYA HOSPITAL</option>
+                        <option>SELAYANG HOSP.</option>
+                        <option>SENTOSA HOSP.</option>
+                        <option>SERDANG HOSP.</option>
+                        <option>SG. BULOH HOSP.</option>
+                        <option>SUBANG JAYA MED. CEN</option>
+                        <option>SUNWAY MED. CEN</option>
+                        <option>TAWAKAL HOSP</option>
+                        <option>TONG SHIN MED. CEN.</option>
+                        <option>UM SPECIALIST CEN.</option>
+                        <option>UMMC (PPUM)</option>
+                    </select>
+                </div>
+
+                <div id="referredNGO" class="inputBox">
+                    <label>Referred NGO</label><br><br>
+                    <select name="referredNGO">
+                        <option value="">--Select NGO--</option>
+                        <option>1. Hospis Malaysia</option>
+                        <option>2. Hospis Klang</option>
+                    </select>
+                </div>
+
+                <div id="typeDisease" class="inputBox">
+                    <label>Type Disease</label><br><br>
+                    <select name="typeDisease">
+                        <option value="">--Select Disease--</option>
+                        <option>1. Cancer</option>
+                        <option>2. End Stage Renal</option>
+                        <option>3. Non Cancer</option>
+                    </select>
+                </div>
+
+                <div id="primary" class="inputBox">
+                    <label>Primary</label><br><br>
+                    <select name="primary">
+                        <option value="">--Select Primary--</option>
+                        <option>Anal</option>
+                        <option>Basal cell</option>
+                        <option>Bile Duct</option>
+                        <option>Bladder</option>
+                        <option>Bone</option>
+                        <option>Brain</option>
+                        <option>Breast</option>
+                        <option>Cervical</option>
+                        <option>Colorectal</option>
+                        <option>Endometrium</option>
+                        <option>ESRF</option>
+                        <option>Gall Bladder</option>
+                        <option>Inguinal</option>
+                        <option>Kidney</option>
+                        <option>Larynx</option>
+                        <option>Leukemia</option>
+                        <option>Liver</option>
+                        <option>Lung</option>
+                        <option>Nasopharyngeal</option>
+                        <option>Neuroendocrine</option>
+                        <option>Oesophagus</option>
+                        <option>Oral</option>
+                        <option>Other Disease</option>
+                        <option>Others</option>
+                        <option>Ovarian</option>
+                        <option>Pancreas</option>
+                        <option>Penile</option>
+                        <option>Prostate</option>
+                        <option>Rectum</option>
+                        <option>Stomach</option>
+                        <option>Thyroid</option>
+                        <option>Ureter</option>
+                    </select>
+                </div>
+
+                <div id="diagnosis" class="areaBox">
+                    <label>Diagnosis</label><br><br>
+                    <textarea name="diagnosis" id="diagnosisBox" class="areaBNReq" rows="4" cols="50"></textarea>
+                </div>
+
+                <div id="drNurseInCharge" class="inputBox">
+                    <label>Dr Nurse In Charge</label><br><br>
+                    <select name="drNurseInCharge">
+                        <option value="">--Select Dr/Nurse--</option>
+                        <option>Cheah Hong Chai / Dr Loh</option>
+                        <option>Cheah Hong Chai / Tai Yun</option>
+                        <option>DR</option>
+                        <option>Dr Loh Ee Chin</option>
+                        <option>Dr Loh Ee Chin / Cheah Hong Chai</option>
+                        <option>Dr Loh / Tai Yun</option>
+                        <option>Dr Vanitha / Cheah Hong Chai</option>
+                        <option>Dr Vanitha / Cheah Hong Chai / Nr. Ong</option>
+                        <option>Dr. Juliet</option>
+                        <option>Dr. Vanitha</option>
+                        <option>Iza</option>
+                        <option>Khor</option>
+                        <option>M/O</option>
+                        <option>Marsila / Sharon</option>
+                        <option>Medical Student</option>
+                        <option>Mr Fund Teck Hong</option>
+                        <option>Ong Swee Ee</option>
+                        <option>SN Angel Tan</option>
+                        <option>SN Gayathri</option>
+                        <option>SN Jennifer</option>
+                        <option>SN Marsila</option>
+                        <option>SN Nurul Izza</option>
+                        <option>SN Ruzanah</option>
+                        <option>SN Sharon Dabi</option>
+                        <option>SN Sunita</option>
+                        <option>SN Tai Kwee Yee</option>
+                        <option>SN Tai Yun</option>
+                        <option>SN Tan Yong Yi</option>
+                        <option>SN Yeoh</option>
+                        <option>Tai Yun / Dr Loh Ee Chin</option>
+                        <option>Trainee</option>
+                        <option>Trainee Nurse</option>
+                    </select>
+                </div>
+
+                <div id="volunteerInCharge" class="inputBox">
+                    <label>Volunteer In Charge</label><br><br>
+                    <input type="text" name="volunteerInCharge">
+                </div>
+
+                <div id="dateFirstVisit" class="inputBox">
+                    <label>Date Of 1st Visit</label><br><br>
+                    <input type="text" name="dateFirstVisit">
+                </div>
+
+                <div id="discharged" class="inputBox" style="min-height: 0;">
+                    <label class="container">RIP/Discharged
+                        <input type="checkbox" name="discharged" value="Yes">
+                        <span class="checkBox"></span><br>
+                    </label>
+                </div>
+
+                <div id="howDischarged" class="inputBox">
+                    <label>How Discharged</label><br><br>
+                    <select name="howDischarged">
+                        <option value="">--Select Method--</option>
+                        <option>1. RIP</option>
+                        <option>2. Discharged By KH</option>
+                    </select>
+                </div>
+
+                <div id="dateRIPDischarged" class="inputBox">
+                    <label>Date RIP/Discharged</label><br><br>
+                    <input type="text" name="dateRIPDischarged">
+                </div>
+
+                <div id="placeRIP" class="inputBox">
+                    <label>Place RIP</label><br><br>
+                    <select name="placeRIP">
+                        <option value="">--Select Place--</option>
+                        <option>Home</option>
+                        <option>Hospital</option>
+                        <option>In transit</option>
+                        <option>Nursing Home</option>
+                        <option>Others</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="tab">
+                <div id="durationCareDays" class="inputBox">
+                    <label>Duration of Care Days</label><br><br>
+                    <input type="text" name="durationCareDays">
+                </div>
+
+                <div id="totalNoVisits" class="inputBox">
+                    <label>Total No. Of Visits</label><br><br>
+                    <div id="home" class="inputBox">
+                        <label>Home</label><br><br>
+                        <div id="homeVisitDoctorNo" class="inputBox">
+                            <label>Doctor</label><br><br>
+                            <input type="text" name="homeVisitDoctorNo">
+                        </div>
+
+                        <div id="homeVisitNurseNo" class="inputBox">
+                            <label>Nurse</label><br><br>
+                            <input type="text" name="homeVisitNurseNo">
+                        </div>
+
+                        <div id="homeVisitVolunteerNo" class="inputBox">
+                            <label>Volunteer</label><br><br>
+                            <input type="text" name="homeVisitVolunteerNo">
+                        </div>
+                    </div>
+                    <div id="hospital" class="inputBox">
+                        <label>Hospital</label><br><br>
+                        <div id="hospitalVisitDoctorNo" class="inputBox">
+                            <label>Doctor</label><br><br>
+                            <input type="text" name="hospitalVisitDoctorNo">
+                        </div>
+
+                        <div id="hospitalVisitNurseNo" class="inputBox">
+                            <label>Nurse</label><br><br>
+                            <input type="text" name="hospitalVisitNurseNo">
+                        </div>
+
+                        <div id="hospitalVisitVolunteerNo" class="inputBox">
+                            <label>Volunteer</label><br><br>
+                            <input type="text" name="hospitalVisitVolunteerNo">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="remarks" class="areaBox">
+                    <label>Remarks</label><br><br>
+                    <textarea name="remarks" id="remarksBox" class="areaBNReq" rows="4" cols="50"></textarea>
+                </div>
+
+            </div>
+
+            <div id="buttons" style="display: none;">
+                <div style="overflow:auto;">
+                    <div style="float:right;">
+                        <input type="button" value="Delete" onclick="">
+                        <input type="button" id="prevBtn" class="navBtn" value="Prev" onclick="nextPrev(-1)">
+                        <input type="button" id="nextBtn" class="navBtn" value="Next" onclick="nextPrev(1)">
+                    </div>
+                </div>
+    
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+            </div>
+
+            <div id="content">
+                <pre id="content" style="white-space: pre-wrap;"></pre>
+            </div>
+
+            
+
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+
+<script>
+    document.addEventListener('readystatechange', event => {
+        if (event.target.readyState === "complete") {
+
+            var repeat = setInterval(function () {
+                if (checkSheetLoaded()) {
+                    searchSheet('Patients', 'accessSheet');
+                    clearInterval(repeat);
+                }
+            }, 200)
+        }
+    });
+</script>
+</body>
+
+</html>

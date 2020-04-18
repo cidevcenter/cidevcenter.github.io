@@ -1,13 +1,15 @@
 //Handles the multi-step form for referral form, 0 = first
 var currentTab = 0;
 var formID = document.getElementById("formID").innerText;
+var btnClick0 = false;
 var btnClick1 = false;
 var btnClick2 = false;
 var btnClick3 = false;
-var btnClick4 = false;
 
 //this
-showTab(currentTab);
+if(formID != 'mainMenu' || formID != 'searchForm' || formID != 'searchResult') {
+    showTab(currentTab);
+}
 
 function showTab(n) {
     var x = document.getElementsByClassName("tab");
@@ -34,6 +36,15 @@ function showTab(n) {
                 document.getElementById("nextBtn").setAttribute("onclick", "appendForm('patientContinuationSheet')");
                 break;
             }
+            case 'patientsDatabase': {
+                document.getElementById("nextBtn").setAttribute("onclick", "appendForm('patientsDatabase')");
+                break;
+            }
+            case 'generatePatientsDatabaseReport': {
+                document.getElementById("nextBtn").value = "Edit";
+                document.getElementById("nextBtn").setAttribute("onclick", "editRecord('Patients', toArray())");
+                break;
+            }
             case 'referralRecord': {
                 document.getElementById("nextBtn").value = "Edit";
                 document.getElementById("nextBtn").setAttribute("onclick", "editRecord('Referral Form', toArray())");
@@ -47,6 +58,37 @@ function showTab(n) {
             case 'patientContinuationRecord': {
                 document.getElementById("nextBtn").value = "Edit";
                 document.getElementById("nextBtn").setAttribute("onclick", "editRecord('Patient Continuation Sheet', toArray())");
+                break;
+            }
+            case "patientsListReturnEquipment": {
+                document.getElementById("nextBtn").value = "Edit";
+                document.getElementById("nextBtn").setAttribute("onclick", "editRecord('Borrowers Record', toArray())");
+                break;
+            }
+            case 'patientsHomeVisitRecord': {
+                if (toArray().length >= 1) {
+                    document.getElementById("nextBtn").value = "Edit";
+                    document.getElementById("nextBtn").setAttribute("onclick", "editRecord('Visits', toArray())");
+                } else {
+                    document.getElementById("nextBtn").value = "Submit";
+                    document.getElementById("nextBtn").setAttribute("onclick", "appendForm('patientsHomeVisitRecord')");
+                }
+                
+                break;
+            }
+            case 'equipmentRecord':{
+                document.getElementById("nextBtn").value = "Edit";
+                document.getElementById("nextBtn").setAttribute("onclick", "editRecord('Equipment Register', toArray())");
+                break;
+            }
+            case 'addBorrower':{
+                document.getElementById("nextBtn").value = "Submit";
+                document.getElementById("nextBtn").setAttribute("onclick", "appendForm('addBorrower')");
+                break;
+            }
+            case 'equipmentBorrowers':{
+                document.getElementById("nextBtn").value = "Edit";
+                document.getElementById("nextBtn").setAttribute("onclick", "editRecord('Borrowers Record', toArray())");
                 break;
             }
         }
@@ -193,6 +235,26 @@ function changeLink(id, picNo, continuationID) {
     return link;
 }
 
+function changeLinkGenogram(id, continuationID) {
+    var patientID = document.getElementsByName(id)[0].value;
+
+    var slashLocation = patientID.indexOf("/");
+
+    if(slashLocation == -1 && (btnClick0 == true)) {
+        alert("Invalid KHC No.");
+        return;
+    }
+    else if (btnClick0 == true) {
+        var newPatientID = patientID.substring(0, slashLocation) + "%2F" + patientID.substring(slashLocation + 1, patientID.length);
+    }
+    else {
+        return;
+    }
+
+    var link = "https://hospice-family-tree.firebaseapp.com/#/home?id=" + newPatientID + "&form=" + continuationID;
+    return link;
+}
+
 function showRow() {
     document.getElementById("rowCount").innerText = "";
     for(var i = 0; i < document.getElementsByName("row").length; i++){
@@ -266,5 +328,102 @@ function showScrollButtons() {
             btn.className = "scrollButtonHide";
             toggle.className = "scrollButtonToggleHide";
         }, 10);
+    }
+}
+
+function hideLoadIcon() {
+    var spinner = document.getElementsByClassName('loadingSpinner')[0];
+
+    if(spinner) {
+        spinner.setAttribute('style', 'display: none;');
+    }
+    else {
+        return;
+    }
+}
+
+function changeDateInLink() {
+    var links = document.getElementsByClassName('changeDate');
+    var year = document.getElementById('dataYear').value;
+    var month = document.getElementById('dataMonth').value;
+
+    for (var index = 0; index < links.length; index++) {
+        var string = links[index].href;
+        var newString = string.replace(/[\d]{4}\/[\d]{1,2}/, `${year}/${month}`);
+        links[index].setAttribute('href', newString);
+    }
+}
+
+function changeYearMonthInLink() {
+    var links = document.getElementsByClassName('changeDate');
+    var year = document.getElementById('dataYear').value;
+    var month = document.getElementById('dataMonth').value;
+
+    for (var index = 0; index < links.length; index++) {
+        var string = links[index].href;
+        var newString = string.replace(/value=[\d]{4}/, `value=${year}`);
+        string = newString;
+        var newString2 = string.replace(/value2=[\d]{1,2}/, `value2=${month}`);
+        links[index].setAttribute('href', newString2);
+    }
+}
+
+function changeEquipmentCodeInLink() {
+    var links = document.getElementsByClassName('changeItemCode');
+    var itemCode = document.getElementById('equipmentList').value;
+
+    for (var index = 0; index < links.length; index++) {
+        var string = links[index].href;
+        var newString = string.replace(/value=[\D]{2}/, `value=${itemCode}`);
+        string = newString;
+        console.log(newString);
+        links[index].setAttribute('href', newString);
+    }
+}
+
+function changeItemCodeInLink() {
+    var links = document.getElementsByClassName('changeItemCode');
+    var itemCode = document.getElementById('itemCodeSelect').value;
+
+    for (var index = 0; index < links.length; index++) {
+        var string = links[index].href;
+        var newString = string.replace(/value=[\w]{5,6}/, `value=${itemCode}`);
+        string = newString;
+        links[index].setAttribute('href', newString);
+    }
+}
+
+function changeSearchLink() { 
+    var links = document.getElementsByClassName('changeLink');
+    var radioBoxes = document.getElementsByName('searchBy');
+    var choice;
+    var input = document.getElementById('searchFieldInput').value;
+
+    for (const i in radioBoxes) {
+        if (radioBoxes[i].checked) {
+            choice = radioBoxes[i].value;
+            break;
+        }
+    }
+
+    for (var i = 0; i < links.length; i++) {
+        var string = links[i].href;
+        var newString = string.replace(/searchField=[\w]{0,}&/, `searchField=${choice}&`);
+        var newString2 = newString.replace(/value=[\w]{0,}&/, `value=${input}&`)
+        string = newString2;
+        links[i].setAttribute('href', newString2);
+    }
+
+}
+
+function changeItemCodeInButton() {
+    var links = document.getElementsByClassName('changeItemCode');
+    var itemCode = document.getElementById('itemCodeSelect').value;
+
+    for (var index = 0; index < links.length; index++) {
+        var string = links[index].getAttribute('onclick');
+        var newString = string.replace(/'value': '[\w]{0,}',/, `'value': '${itemCode}',`);
+        string = newString;
+        links[index].setAttribute('onclick', newString);
     }
 }

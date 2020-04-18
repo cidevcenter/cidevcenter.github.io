@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patients Report</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+</head>
+
+<body>
+    <div id="formID" style="display: none;">patientsReport</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+    <section><h1>Generate Patient Reports</h1></section>
+    <div id="mainbox">
+        <a href="patientsRecords.html" id="backLink" class="goBackBtn">Go Back</a><br>
+        
+        <div id="dataFilter" class="inputBox" style="min-height: 0;">
+            <label>Year: </label>
+            <input type="number" id="dataYear" min="2005" max="2020" value="2005" onchange="changeDateInLink()">
+            <label>Month: </label>
+            <input type="number" id="dataMonth" min="1" max="12" value="1" onchange="changeDateInLink()">
+        </div>
+
+        <div id="patientCategory" class="inputBox">
+            <label>1. Patients by Category</label><br><br>
+            <div id="patientCategoryA" class="inputBox">
+                <label>1.1 Patients With Nursing Care (Category A)</label><br><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=A&mode=&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred From&field7=Date Referred&field8=Discharged&field9=Area" class="linkBoxSel">A. All patients</a><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=A&mode=&searchField2=Date%20Referred&condition2=in&value2=2005/1&mode2=month&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred%20From&field7=Date%20Referred&field8=Discharged&field9=Area" class="linkBoxSel changeDate">B. For Selected Month</a><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=A&mode=&searchField2=Date%20Referred&condition2=<&value2=2005/1&mode2=month&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred%20From&field7=Date%20Referred&field8=Discharged&field9=Area" class="linkBoxSel changeDate">C. Before Selected Month</a><br>
+            </div>
+
+            <div id="patientCategoryB" class="inputBox">
+                <label>1.2 Patients Borrowing Equipment (Category B)</label><br><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=B&mode=&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred From&field7=Date Referred&field8=Discharged&field9=Area" class="linkBoxSel">A. All patients</a><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=B&mode=&searchField2=Date%20Referred&condition2=in&value2=2005/1&mode2=month&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred%20From&field7=Date%20Referred&field8=Discharged&field9=Area" class="linkBoxSel changeDate">B. For Selected Month</a><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=B&mode=&searchField2=Date%20Referred&condition2=<&value2=2005/1&mode2=month&andOr=and&&extraSheets=&oriHeader=&externalHeader=field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred%20From&field7=Date%20Referred&field8=Discharged&field9=Area" class="linkBoxSel changeDate">C. Before Selected Month</a><br>
+            </div>
+
+            <div id="patientCategoryC" class="inputBox">
+                <label>1.3 Out of Area Referrals (Category C)</label><br><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=C&mode=&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred From&field7=Date Referred&field8=Discharged&field9=Area" class="linkBoxSel">A. All patients</a><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=C&mode=&searchField2=Date%20Referred&condition2=in&value2=2005/1&mode2=month&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred%20From&field7=Date%20Referred&field8=Discharged&field9=Area" class="linkBoxSel changeDate">B. For Selected Month</a><br>
+                <a href="generatePatientsReport.html?sheets=Patients&searchField=Category&condition===&value=C&mode=&searchField2=Date%20Referred&condition2=<&value2=2005/1&mode2=month&&andOr=and&extraSheets=&oriHeader=&externalHeader=field1=KHC&field2=Name&field3=Sex&field4=Age&field5=Diagnosis&field6=Referred%20From&field7=Date%20Referred&field8=Discharged&field9=Area" class="linkBoxSel changeDate">C. Before Selected Month</a><br>
+            </div>
+            
+        </div>
+
+        <div id="statisticalReports" class="inputBox">
+            <label>2. Statistical Reports</label><br><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Date Referred&condition=in&value=2005/1&mode=year count&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Year&field2=Month&field3=Number of Patients" class="linkBoxSel changeDate">Referrals</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Ethnic Group&condition=&value=&mode=ethnics count&searchField2=Date Referred&condition2=in&value2=2005/1&mode2=year&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Year&field2=Ethnic Group&field3=No. of Patients" class="linkBoxSel changeDate">Ethnic Group (Year)</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Ethnic Group&condition=&value=&mode=ethnics count&searchField2=Date Referred&condition2=in&value2=2005/1&mode2=month&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Year&field2=Ethnic Group&field3=No. of Patients" class="linkBoxSel changeDate">Ethnic Group (Month)</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Date RIP&condition=in&valu=e2005/1=&mode=month duration&searchField2=Date Discharged&condition2=in&value2=2005/1&mode2=month duration&andOr=or&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Discharged&field4=Date Referred&field5=Date RIP&field6=Date Discharged&field7=Duration of Care" class="linkBoxSel changeDate">Duration Care Days (for Month)</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Date RIP&condition=in&value=2005/1=&mode=month duration cumulative&searchField2=Date Discharged&condition2=in&value2=2005/1&mode2=month duration cumulative&andOr=or&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Discharged&field4=Date Referred&field5=Date RIP&field6=Date Discharged&field7=Duration of Care" class="linkBoxSel changeDate">Duration Care Days (Cumulative)</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Date RIP&condition=in&value=2013/01&mode=year count&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Year&field2=Month&field3=Number of Patients" class="linkBoxSel changeDate">Death</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Type Disease&condition=&value=&mode=disease count&searchField2=Date%20Referred&condition2=in&value2=2005/1&mode2=year&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Year&field2=Type Disease&field3=No. of Patients" class="linkBoxSel changeDate">Type Disease</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Date RIP&condition=after&value=2005/1&mode=month&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Category&field2=KHC&field3=Name&field4=Date Referred&field5=Discharged&field6=Date RIP" class="linkBoxSel changeDate">Patients Carried Forward</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Date Referred&condition=in&value=2005/1&mode=month&andOr=&extraSheets=&oriHeader=&externalHeader=&field1=Category&field2=KHC&field3=Name&field4=Date Referred&field5=Discharged&field6=Date RIP" class="linkBoxSel changeDate">New Admissions</a><br>
+            <a href="generatePatientsReport.html?sheets=Patients&searchField=Discharged&condition===&value=TRUE=&mode=&searchField2=Date RIPd&condition2=in&value2=2005/1&mode2=month&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=Category&field2=KHC&field3=Name&field4=Date Referred&field5=Discharged&field6=Date RIP&field7=How Discharged" class="linkBoxSel changeDate">Pataients Who Died/Discharged</a><br>
+        </div>
+
+        <div id="visits" class="inputBox">
+            <label>3. Visits</label><br><br>
+            <a href="generatePatientsReport.html?sheets=Visits&searchField=Date Visit&condition=in&value=2005/1&mode=month&andOr=and&extraSheets=Patients&oriHeader=KHC&externalHeader=Name&field1=Type Visit&field2=Date Visit&field3=KHC&field4=Name&field5=Visit By&field6=Num Doctor&field7=Num Nurse&field8=Place Visit" class="linkBoxSel changeDate">Visits For Selected Month</a><br>
+            <a href="generatePatientsReport.html?sheets=Visits&searchField=Date Visit&condition=in&value=2005/1&mode=year&andOr=and&extraSheets=Patients&oriHeader=KHC&externalHeader=Name&field1=Type Visit&field2=Date Visit&field3=KHC&field4=Name&field5=Visit By&field6=Num Doctor&field7=Num Nurse&field8=Place Visit" class="linkBoxSel changeDate">Visits For Selected Year</a><br>
+        </div>
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>

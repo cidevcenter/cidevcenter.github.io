@@ -1,0 +1,334 @@
+body {
+    padding-left: 20px;
+}
+
+h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(92, 131, 180);
+    display: inline;
+    font-size: 12px;
+}
+
+input {
+    border: 1px solid rgb(192, 80, 77);
+    height: 1.2em;
+    margin-left: 20px;
+    padding-left: 5px;
+}
+
+hr {
+    border: white;
+    margin: 8px;
+}
+
+#mainBox {
+    padding-left: 20px;
+}
+
+@keyframes loadingAnimation 
+{
+    0% { transform: translate(-50%,-50%) rotate(0deg); }
+    100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+.loadingAnimation div 
+{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 15px solid #249e34;
+    border-top-color: transparent;
+    border-radius: 50%;
+}
+  
+.loadingAnimation div 
+{
+    animation: loadingAnimation 1s linear infinite;
+    top: 40px;
+    left: 40px
+}
+
+.loadingBackground
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+}
+
+.defaultLoad
+{
+    position: fixed;
+    top: calc(50% - 40px);
+    left: calc(50% - 40px);
+}
+  
+.loadingSpinner 
+{
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+  
+.loadingAnimation 
+{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+    margin: auto;
+}
+  
+.loadingAnimation div 
+{ 
+    box-sizing: content-box; 
+}
+
+.row {
+    display: inline;
+}
+
+/*First div in the row*/
+.firstCol {
+    display: inline-block;
+}
+
+.container {
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.container:hover input~.checkmark {
+    background-color: white;
+}
+
+.container input:checked~.checkmark {
+    background-color: white;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container input:checked~.checkmark:after {
+    display: block;
+}
+
+.container .checkmark:after {
+    left: 3px;
+    top: 0px;
+    width: 5px;
+    height: 10px;
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#khcDiv input {
+    margin-right: 70px;
+    width: 100px;
+}
+
+#nameDiv input {
+    margin-right: 75px;
+    width: 290px;
+}
+
+#categoryDiv input {
+    margin-right: 70px;
+    width: 80px;
+}
+
+#dateRefferedDiv input {
+    margin-left: 25px;
+    margin-right: 60px;
+    width: 140px;
+}
+
+#ethnicGroupDiv input {
+    margin-right: 70px;
+    width: 130px;
+}
+
+#nricDiv input {
+    margin-right: 20px;
+    width: 180px;
+}
+
+#dobDiv input {
+    margin-right: 20px;
+    width: 140px;
+}
+
+#sexDiv input {
+    margin-right: 30px;
+    width: 50px;
+}
+
+#ageDiv input {
+    margin-right: 25px;
+    width: 50px;
+}
+
+#areaDiv input {
+    width: 70px;
+}
+
+#addressDiv input {
+    width: 840px;
+}
+
+#contactNoDiv input {
+    margin-left: 40px;
+    width: 810px;
+}
+
+#referredFromDiv input {
+    margin-left: 21px;
+    margin-right: 70px;
+    width: 170px;
+}
+
+#referredHospitalDiv input {
+    width: 220px;
+}
+
+#referredNGODiv input {
+    margin-left: 24px;
+    width: 170px;
+}
+
+#typeDiseaseDiv input {
+    margin-left: 10px;
+    margin-right: 75px;
+    width: 180px;
+}
+
+#primaryDiv input {
+    margin-left: 40px;
+    width: 280px;
+}
+
+#diagnosisDiv input {
+    margin-left: 47px;
+    width: 810px;
+}
+
+#drNurseInChargeDiv input {
+    margin-right: 50px;
+    width: 210px;
+}
+
+#volunteerInChargeDiv input {
+    width: 190px;
+}
+
+#date1stVisitDiv input {
+    margin-left: 29px;
+    margin-right: 65px;
+    width: 170px;
+}
+
+#dischargedDiv label {
+    margin-right: 30px;
+    margin-left: 10px;
+}
+
+#howDischargedDiv input {
+    width: 160px;
+}
+
+#dateDischargedDiv input {
+    margin-left: 9px;
+    margin-right: 90px;
+    width: 170px;
+}
+
+#durationOfCareDaysDiv input {
+    width: 100px;
+}
+
+#homeDoctorVisitsDiv input, #homeNurseVisitsDiv input, #homeVolunteerVisitsDiv input  {
+    margin-left: 35px;
+    margin-right: 60px;
+    width: 70px;
+}
+
+#hospitalDoctorVisitsDiv input {
+    margin-right: 60px;
+    width: 70px;
+}
+
+#hospitalNurseVisitsDiv input {
+    margin-left: 22px;
+    margin-right: 60px;
+    width: 70px;
+}
+
+#hospitalVolunteerVisitsDiv input {
+    margin-left: 21px;
+    margin-right: 60px;
+    width: 70px;
+}
+
+#remarksDiv input {
+    margin-left: 53px;
+    width: 810px;
+}
+
+footer {
+    display: none;
+}
+
+@media print {
+    .printHide {
+        display: none;
+    }
+
+    footer {
+        display: block;
+        position: absolute;
+        bottom: 20px;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Print Preview</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="print.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div id="formID" style="display: none;">printPatient</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <section>
+        <h1>Patients Record</h1>
+    </section>
+
+    <div id="mainBox">
+        <div id="khcDiv" class="firstCol">
+            <h4>KHC</h4>
+            <input type="text" id="khc" readonly>
+        </div>
+
+        <div id="nameDiv" class="row">
+            <h4>Name</h4>
+            <input type="text" id="name" readonly>
+        </div>
+
+        <div id="categoryDiv" class="row">
+            <h4>Category</h4>
+            <input type="text" id="category" readonly>
+        </div>
+        <hr>
+
+        <div id="dateRefferedDiv" class="firstCol">
+            <h4>Date Referred</h4>
+            <input type="text" id="dateReferred" readonly>
+        </div>
+
+        <div id="ethnicGroupDiv" class="row">
+            <h4>Ethnic Group</h4>
+            <input type="text" id="ethnicGroupDiv" readonly>
+        </div>
+        <hr>
+
+        <div id="nricDiv" class="firstCol">
+            <h4>NRIC</h4>
+            <input type="text" id="nric" readonly>
+        </div>
+
+        <div id="dobDiv" class="row">
+            <h4>Date of Birth</h4>
+            <input type="text" id="dob" readonly>
+        </div>
+
+        <div id="sexDiv" class="row">
+            <h4>Sex</h4>
+            <input type="text" id="sex" readonly>
+        </div>
+
+        <div id="ageDiv" class="row">
+            <h4>Age</h4>
+            <input type="text" id="age" readonly>
+        </div>
+
+        <div id="areaDiv" class="row">
+            <h4>Area</h4>
+            <input type="text" id="area" readonly>
+        </div>
+        <hr>
+
+        <div id="addressDiv" class="firstCol">
+            <h4>Address</h4>
+            <input type="text" id="address" readonly>
+        </div>
+        <hr>
+
+        <div id="contactNoDiv" class="firstCol">
+            <h4>Contact No</h4>
+            <input type="text" id="contactNo" readonly>
+        </div>
+        <hr>
+
+        <div id="referredFromDiv" class="firstCol">
+            <h4>Referred From</h4>
+            <input type="text" id="referredFrom" readonly>
+        </div>
+
+        <div id="referredHospitalDiv" class="row">
+            <h4>Referred Hospital</h4>
+            <input type="text" id="referredHospital" readonly>
+        </div>
+        <hr>
+
+        <div id="referredNGODiv" class="firstCol">
+            <h4>Referred NGO</h4>
+            <input type="text" id="referredNGO" readonly>
+        </div>
+        <hr>
+
+        <div id="typeDiseaseDiv" class="firstCol">
+            <h4>Type Disease</h4>
+            <input type="text" id="typeDisease" readonly>
+        </div>
+
+        <div id="primaryDiv" class="row">
+            <h4>Primary</h4>
+            <input type="text" id="primary" readonly>
+        </div>
+        <hr>
+
+        <div id="diagnosisDiv" class="firstCol">
+            <h4>Diagnosis</h4>
+            <input type="text" id="diagnosis" readonly>
+        </div>
+        <hr>
+
+        <div id="drNurseInChargeDiv" class="firstCol">
+            <h4>Dr./Nurse In Charge</h4>
+            <input type="text" id="drNurseInCharge" readonly>
+        </div>
+
+        <div id="volunteerInChargeDiv" class="row">
+            <h4>Volunteer In Charge</h4>
+            <input type="text" id="volunteerInCharge" readonly>
+        </div>
+        <hr>
+
+        <div id="date1stVisitDiv" class="firstCol">
+            <h4>Date 1st Visit</h4>
+            <input type="text" id="date1stVisit" readonly>
+        </div>
+
+        <div id="dischargedDiv" class="row">
+            <h4>Discharged</h4>
+            <label class="container">
+                <input type="checkbox" id="discharged" readonly>
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+        <div id="howDischargedDiv" class="row">
+            <h4>How Discharged</h4>
+            <input type="text" id="howDischarged" readonly>
+        </div>
+        <hr>
+
+        <div id="dateDischargedDiv" class="firstCol">
+            <h4>Date Discharged</h4>
+            <input type="text" id="dateDischarged" readonly>
+        </div>
+
+        <div id="placeRIPDiv" class="row">
+            <h4>Place RIP</h4>
+            <input type="text" id="placeRIP" readonly>
+        </div>
+        <hr>
+
+        <div id="durationOfCareDaysDiv" class="firstCol">
+            <h4>Duration of Care Days</h4>
+            <input type="text" id="durationOfCareDays" readonly>
+        </div>
+        <hr>
+
+        <div id="homeDoctorVisitsDiv" class="firstCol">
+            <h4>Home Doctor Visits</h4>
+            <input type="text" id="homeDoctorVisits" readonly>
+        </div>
+
+        <div id="homeNurseVisitsDiv" class="row">
+            <h4>Home Nurse Visits</h4>
+            <input type="text" id="homeNurseVisits" readonly>
+        </div>
+
+        <div id="homeVolunteerVisitsDiv" class="row">
+            <h4>Home Volunteer Visits</h4>
+            <input type="text" id="homeVolunteerVisits" readonly>
+        </div>
+        <hr>
+
+        <div id="hospitalDoctorVisitsDiv" class="firstCol">
+            <h4>Hospital Doctor Visits</h4>
+            <input type="text" id="hospitalDoctorVisits" readonly>
+        </div>
+
+        <div id="hospitalNurseVisitsDiv" class="row">
+            <h4>Hospital Nurse Visits</h4>
+            <input type="text" id="hospitalNurseVisits" readonly>
+        </div>
+
+        <div id="hospitalVolunteerVisitsDiv" class="row">
+            <h4>Hospital Volunteer Visits</h4>
+            <input type="text" id="hospitalVolunteerVisits" readonly>
+        </div>
+        <hr>
+
+        <div id="remarksDiv" class="row">
+            <h4>Remarks</h4>
+            <input type="text" id="remarks" readonly>
+        </div>
+        <hr>
+    </div>
+
+    <button class="printHide" onclick="window.print()">Print</button>
+
+    <footer>
+        <div id="printDate"></div>
+    </footer>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    <script src="reports.js"></script>
+
+    <script>
+        var khc;
+
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            khc = urlParams.get('khc');
+
+            var printDate = document.getElementById('printDate');
+            var date = new Date();
+
+            var day, month;
+
+            switch (date.getDay()) {
+                case 0: {
+                    day = "Sunday";
+                    break;
+                }
+                case 1: {
+                    day = "Monday";
+                    break;
+                }
+                case 2: {
+                    day = "Tuesday";
+                    break;
+                }
+                case 3: {
+                    day = "Wednesday";
+                    break;
+                }
+                case 4: {
+                    day = "Thursday";
+                    break;
+                }
+                case 5: {
+                    day = "Friday";
+                    break;
+                }
+                case 6: {
+                    day = "Saturday";
+                    break;
+                }
+            }
+
+            switch (date.getMonth() + 1) {
+                case 1: {
+                    month = "January";
+                    break;
+                }
+                case 2: {
+                    month = "February";
+                    break;
+                }
+                case 3: {
+                    month = "March";
+                    break;
+                }
+                case 4: {
+                    month = "April";
+                    break;
+                }
+                case 5: {
+                    month = "May";
+                    break;
+                }
+                case 6: {
+                    month = "June";
+                    break;
+                }
+                case 7: {
+                    month = "July";
+                    break;
+                }
+                case 8: {
+                    month = "August";
+                    break;
+                }
+                case 9: {
+                    month = "September";
+                    break;
+                }
+                case 10: {
+                    month = "October";
+                    break;
+                }
+                case 11: {
+                    month = "November";
+                    break;
+                }
+                case 12: {
+                    month = "December";
+                    break;
+                }
+            }
+            var dateString =
+            `${day}, ${date.getDate()} ${month}, ${date.getFullYear()}`;
+
+            printDate.innerText = dateString;
+        })
+
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        printStuff(khc);
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
+    </script>
+</body>
+
+</html>

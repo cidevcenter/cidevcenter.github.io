@@ -10,7 +10,7 @@
     
 </head>
 
-<body>
+<body onload="hideLoadIcon()">
     <div id="formID" style="display: none;">referralForm</div>
     <!--Add buttons to initiate auth sequence and sign out-->
     <div id="topnav">
@@ -243,12 +243,16 @@
                 <span class="step"></span>
                 <span class="step"></span>
             </div>
-            <div class="loadingSpinner" style="display: none;">
-                <div class="loadingAnimation">
-                    <div></div>
-                </div>
-            </div>
+            
         </form>
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
     </div>
     
     <script src="source.js"></script>

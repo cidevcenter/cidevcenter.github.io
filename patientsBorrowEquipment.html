@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Patients Borrow Equipment</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="formID" style="display: none;">patientsBorrowEquipment</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+        <button onclick="window.history.back()" id="backLink" class="goBackBtn">Go Back</button>
+    </div>
+    <section>
+        <h1>Borrow Equipment For This Patient</h1>
+    </section>
+    
+    
+    <div id="mainbox" style="width: 95%;">
+        
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
+
+        <div id="itemCodeReg" class="inputBox">
+            <label>Go to Item Code</label><br><br>
+            <select id="itemCodeSelect" class="selectSmaller" onchange="changeItemCodeInButton()">
+            
+            </select>
+            <input type="button" class="changeItemCode" onclick="document.getElementById('error').setAttribute('style', 'display: none');
+            removeTable();
+            resetTable();
+            generateReport('Borrowers Record', [{
+                'searchField': 'Item Code',
+                'condition': '==',
+                'value': 'AC002',
+                'mode': ''
+            }], ['Item Code', 'KHC', 'Name', 'Date Borrowed', 'Date Returned'], 'and', {
+                'oriHeader': 'KHC',
+                'externalHeader': ['Name']}, 'Patients');
+            document.getElementById('buttons').setAttribute('style', 'display: block;')" value="Search">
+        
+        <div id="error" style="display: none;">
+            <h2>No results found.</h1>
+        </div>
+
+        <div class="tab">
+            <div id="table">
+                <table id="searchTable">
+                </table>
+            </div>
+            <div id="pageText">
+            </div>
+            <div id="buttonsTable">
+            </div>
+            <div id="rowCount" style="white-space: pre-wrap; display: none;">
+            </div>
+
+            
+        </div>
+
+        <div class="tab">
+            <div id="dateReturned" class="inputBox">
+                <label>Date Returned</label><br><br>
+                <input type="text" name="dateReturned" placeholder="MM/DD/YYYY">
+            </div>
+        </div>
+
+        <div id="buttons" style="display: none;">
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <input type="button" id="borrowEquipment" class="navBtn" value="Borrow This Equipment" onclick="appendForm('patientsBorrowEquipment')">
+                    <input type="button" value="Delete" onclick="deleteRecord(1494913214, toArray())">
+                    <!--<input type="button" id="prevBtn" class="navBtn" value="Prev" onclick="nextPrev(-1)">
+                    <input type="button" id="nextBtn" class="navBtn" value="Next" onclick="nextPrev(1)">-->
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <div class="loadingSpinner" style="display: none;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="patientNameHidden" name="patientName" style="display: none;"></div>
+
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script type="text/javascript" src="reports.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload() ">
+    </script>
+
+    <script>
+        var paused = false;
+        var khc, name;
+        //Search for the variables on the URL
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            khc = urlParams.get('khc');
+            name = urlParams.get('name');
+        });
+
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        generateSelectList("Equipment Register", "itemCodeSelect");
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Records</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+</head>
+
+<body>
+    <div id="formID" style="display: none;">patientsRecords</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <a href="patientRecordsAndEquipmentRegister.html" id="backLink" class="goBackBtn">Go Back</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+    <section><h1>Patient Records</h1></section>
+    <div id="mainbox">
+	    <div id="warning" style="display: none;">
+            <p>Please authorize before accessing.</p>
+        </div>
+        <div id="links" style="margin-top: 0;">
+            <a href="patientsDatabase.html" class="linkBoxSel">Add Patients Records</a><br>
+            <a href="patientsSearch.html" class="linkBoxSel">Search Patient Records (To View/Edit Home Visit Records, Equipment Borrows List, Print Records)</a><br>
+            <a href="generatePatientsDatabaseReport.html?sheets=Patients&searchField=KHC&condition=&value=&mode=&andOr=and&extraSheets=&oriHeader=&externalHeader=&f1=KHC&f2=Name&f3=Category&f4=Date%20Referred&f5=Ethnic%20Group&f6=NRIC&f7=Date%20of%20Birth&f8=Sex&f9=Age&f10=Area&f11=Address&f12=Contact%20No&f13=Referred%20From&f14=Hospital&f15=Referred%20NGO&f16=Type%20Disease&f17=Cancer&f16=Diagnosis&f17=Nurse&f18=Volunteer%20In%20Charge&f19=Date%201st%20Visit&f20=Discharged&f21=Date%20RIP&f22=How%20Discharged&f23=Date%20Discharged&f24=Place%20RIP&f25=Duration%20Of%20Care&f26=Home%20Doctor%20Visits&f27=Home%20Nurse%20Visits&f28=Home%20Volunteer%20Visits&f29=Hospital%20Doctor%20Visits&f30=Hospital%20Nurse%20Visits&f31=Hospital%20Volunteer%20Visits&f32=Remarks" class="linkBoxSel">Display All Patient Records</a><br>
+            <a href="patientsReportMenu.html" class="linkBoxSel">Display Patient Reports</a><br>
+            <div id="content">
+                <pre id="content" style="white-space: pre-wrap;"></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>

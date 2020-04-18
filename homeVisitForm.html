@@ -35,11 +35,6 @@
             <div id="patientName" class="inputBox">
                 <label>Patient: </label><label id="patientNameSearch" name="patientNameSearch"></label>
                 <a href="searchResult.html" id="backLink" class="goBackBtn">Go Back</a><br>
-                <div class="loadingSpinner">
-                    <div class="loadingAnimation">
-                        <div></div>
-                    </div>
-                </div>
                 <div id="table">
                     <table id="searchTable">
                     </table>
@@ -81,12 +76,6 @@
                     <input type="button" value="Submit" onclick="appendForm('homeVisitForm')">
                 </div>
             </div>
-
-            <div class="loadingSpinner" id="loadingSpinnerBottom" style="display: none;">
-                <div class="loadingAnimation">
-                    <div></div>
-                </div>
-            </div>
             
             <div id="content">
                 <pre id="content" style="white-space: pre-wrap;"></pre>
@@ -95,6 +84,14 @@
     </div>
 
     <div id="patientNameHidden" name="patientName" style="display: none;"></div>
+
+    <div class="loadingSpinner" style="display: none;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="gsheets.js"></script>
     <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"

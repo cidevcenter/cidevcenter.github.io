@@ -40,11 +40,6 @@
                     style="background-color: transparent; border: transparent;padding: 0;"><i
                         class="material-icons">search</i></button>
             </div>
-            <div class="loadingSpinner">
-                <div class="loadingAnimation">
-                    <div></div>
-                </div>
-            </div>
             <div id="table">
                 <table id="searchTable">
 
@@ -56,6 +51,7 @@
             </div>
             <div id="rowCount" style="white-space: pre-wrap; display: none;">
             </div>
+            
         </div>
 
         <!--Patient Detail-->
@@ -260,7 +256,7 @@
                 <div id="genoGram" class="inputBox">
                     <label>Genogram</label><br><br>
                     <input type="button" id="genoImage" value="Show Image"
-                        onclick="showPopUp('popUp0', 'genoImage', 0)">
+                        onclick="btnClick0 = true; var link = changeLinkGenogram('khcNo', continuationID); if (link !== undefined) { window.open(link, '_blank'); }">
                 </div>
 
                 <!--Genogram popups-->
@@ -1016,20 +1012,22 @@
                 <span class="step"></span>
                 <span class="step"></span>
             </div>
-            <div class="loadingSpinner" id="loadingSpinnerBottom" style="display: none;">
-                <div class="loadingAnimation">
-                    <div></div>
-                </div>
-            </div>
         </div>
 
         <div id="content">
             <pre id="content" style="white-space: pre-wrap;"></pre>
         </div>
-
     </div>
 
     <div id="patientNameHidden" name="patientName" style="display: none;"></div>
+
+    <div class="loadingSpinner" style="display: none;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
 
     <script src="source.js"></script>
     <script type="text/javascript" src="gsheets.js"></script>

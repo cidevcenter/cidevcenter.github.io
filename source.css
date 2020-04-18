@@ -4,6 +4,33 @@ body
     font-family: sans-serif;
 }
 
+section
+{
+    margin: auto;
+    background-color: white;
+    width: 50%;
+    font-size: 20px;
+    height: auto;
+}
+
+h1
+{
+    text-align: center;
+}
+
+h2
+{
+    text-align: center;
+    margin: 15px 10px;
+}
+
+h3
+{
+    clear: left;
+    margin-left: 10px;
+}
+
+/*Header Styles*/
 #topnav
 {
     background-color: rgb(0, 153, 0);
@@ -49,6 +76,7 @@ body
     background-color: rgba(0,0,0,0.2);
 }
 
+/*User Interface Styles*/
 #searchbar
 {
     padding-left: 5px;
@@ -128,6 +156,7 @@ body
     transition: 0.2s;
 }
 
+/*Table Styles*/
 #table
 {
     overflow-x: auto;
@@ -136,41 +165,18 @@ body
 #searchTable
 {
     border-collapse: collapse;
-    overflow-x: auto;
+    overflow-x: scroll;
     margin: auto;
     white-space: pre-wrap;
 }
 
-section
-{
-    margin: auto;
-    background-color: white;
-    width: 50%;
-    font-size: 20px;
-    height: auto;
-}
 
-h1
-{
-    text-align: center;
-}
-
-h2
-{
-    text-align: center;
-    margin: 15px 10px;
-}
-
-h3
-{
-    clear: left;
-    margin-left: 10px;
-}
 
 th
 {
     border: 1px solid green;
     background-color: rgb(0, 179, 60);
+    font-size: small;
 }
 
 td
@@ -178,6 +184,7 @@ td
     border: 1px solid green;
     padding: 3px;
     color: black;
+    font-size: small;
 }
 
 tr:nth-child(even)
@@ -401,25 +408,23 @@ input[type=text]:focus
 }
 
 .goBackBtn{
-    text-align: center;
-    text-decoration: none;
-    clear: both;
-    display: block;
+    position: absolute;
+    left: calc(100px + 3%);
+    color: rgb(230, 255, 230);
+    font-size: 16px;
+    background-color: rgba(0,0,0,0.1);
+    border: 2px solid darkgreen;
     border-radius: 10px;
-    padding: 0.5em;
-    font-size: 17px;
-    width: 18%;
-    height: auto;
-    background-color: green;
-    color: white;
+    padding: 8px;
+    top: 0;
+    text-decoration: none;
 }
 
 .goBackBtn:hover{
-    background-color: darkgreen;
-    transition: 0.2s;
+    background-color: rgba(0,0,0,0.2);
 }
 
-input[type=button] {
+input[type=button], .navBtn {
     background-color: #4CAF50;
     color: #ffffff;
     border: none;
@@ -427,9 +432,10 @@ input[type=button] {
     padding: 10px 20px;
     font-size: 17px;
     margin:10px;
+    text-decoration: none;
 }
 
-input:hover[type=button] {
+input:hover[type=button], .navBtn:hover {
     background-color: rgb(40, 136, 43);
 }
 
@@ -514,7 +520,7 @@ option:hover
 .container {
     display: block;
     position: relative;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
     padding-right: 25px;
     cursor: pointer;
     user-select: none;
@@ -682,10 +688,27 @@ option:hover
 
 .popUpContent {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 2% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 90%;
+}
+
+.iframe-container
+{
+    overflow: hidden;
+    padding-top: 56.25%;
+    position: relative;
+}
+
+.iframe-container iframe
+{
+    border: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 .close {
@@ -737,7 +760,7 @@ option:hover
     position: absolute;
     width: 40px;
     height: 40px;
-    border: 15px solid #5be16d;
+    border: 15px solid #249e34;
     border-top-color: transparent;
     border-radius: 50%;
 }
@@ -747,6 +770,24 @@ option:hover
     animation: loadingAnimation 1s linear infinite;
     top: 40px;
     left: 40px
+}
+
+.loadingBackground
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+}
+
+.defaultLoad
+{
+    position: fixed;
+    top: calc(50% - 40px);
+    left: calc(50% - 40px);
 }
   
 .loadingSpinner 
@@ -886,10 +927,10 @@ option:hover
         font-size: 15px;
     }
 
-    input[type=button]
+    input[type=button], .navBtn
     {
-        padding: 20px;
-        font-size: 24px;
+        padding: 15px;
+        font-size: 20px;
     }
 
     textarea
@@ -949,5 +990,33 @@ option:hover
     #lungBtn, #lowerBodyBtn, #fullBodyBtn
     {
         margin-left: 10px;
+    }
+}
+
+@media print {
+    html, body {
+        height: auto;
+    }
+
+    html, body, #searchTable, .tab {
+        page-break-before: avoid;
+        page-break-after: avoid;
+    }
+
+    #mainbox {
+        border: 1px solid white;
+        margin-top: 50px;
+    }
+
+    #scrollButtonsDiv, #topnav, #pageText, #buttonsTable {
+        display: none;
+    }
+
+    section, h1 {
+        display: none;
+    }
+
+    * {
+        line-height: 1 !important;
     }
 }

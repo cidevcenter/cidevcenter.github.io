@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Patients List/Return Equipment</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="formID" style="display: none;">patientsListReturnEquipment</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+        <button onclick="window.history.back()" id="backLink" class="goBackBtn">Go Back</button>
+    </div>
+    <section>
+        <h1>List/Return Equipments For This Patient</h1>
+    </section>
+    
+    
+    <div id="mainbox" style="width: 95%;">
+        
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
+
+        <div id="error" style="display: none;">
+            <h2>No results found.</h1>
+        </div>
+        
+        <div class="tab">
+            <div id="table">
+                <table id="searchTable">
+                </table>
+            </div>
+            <div id="pageText">
+            </div>
+            <div id="buttonsTable">
+            </div>
+            <div id="rowCount" style="white-space: pre-wrap; display: none;">
+            </div>
+        </div>
+
+        <div class="tab">
+            <div id="dateReturned" class="inputBox">
+                <label>Date Returned</label><br><br>
+                <input type="text" name="dateReturned" placeholder="MM/DD/YYYY">
+            </div>
+        </div>
+
+        <div id="buttons" style="display: none;">
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <input type="button" value="Delete" onclick="deleteRecord(1494913214, toArray())">
+                    <input type="button" id="prevBtn" class="navBtn" value="Prev" onclick="nextPrev(-1)">
+                    <input type="button" id="nextBtn" class="navBtn" value="Next" onclick="nextPrev(1)">
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+            
+        </div>
+
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <div class="loadingSpinner" style="display: none;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="patientNameHidden" name="patientName" style="display: none;"></div>
+
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script type="text/javascript" src="reports.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload() ">
+    </script>
+
+    <script>
+        var paused = false;
+        var sheets, query = [], query2 = [], fields = [], extraSearch, andOr, extraSheets, oriHeader, externalHeader;
+        var conditionCount;
+        //Search for the variables on the URL
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            sheets = urlParams.get('sheets');
+            var searchField = urlParams.get('searchField');
+            var condition = urlParams.get('condition');
+            var value = urlParams.get('value');
+            var mode = urlParams.get('mode');
+            andOr = urlParams.get('andOr');
+            extraSheets = urlParams.get('extraSheets');
+            oriHeader = urlParams.get('oriHeader');
+            externalHeader = urlParams.get('externalHeader').split(',');
+
+            extraSearch = {
+                oriHeader: oriHeader,
+                externalHeader: externalHeader
+            }
+
+            query = [{
+                searchField: searchField,
+                condition: condition,
+                value: value,
+                mode: mode
+            }]
+
+            if(urlParams.has('searchField2') || urlParams.has('condition2') || urlParams.has('value2') || urlParams.has('mode2')) {
+                query2 = {
+                    searchField: urlParams.get('searchField2'),
+                    condition: urlParams.get('condition2'),
+                    value: urlParams.get('value2'),
+                    mode: urlParams.get('mode2')
+                }
+                query.push(query2);
+                conditionCount = 2;
+            } else {
+                conditionCount = 1;
+            }
+
+            var i = 0, array = [];
+            for(const [key, data] of urlParams.entries()) {
+                console.log(`${key} = ${data}`)
+                i++;
+
+                if(conditionCount == 1) {
+                    if (i > 9) {
+                        fields.push(data);
+                    }
+                } else if (conditionCount == 2) {
+                    if (i > 13) {
+                        fields.push(data);
+                    }
+                }
+                
+            }
+            console.log(fields);
+            //document.getElementById("patientNameSearch").innerHTML = myParam;
+            //document.getElementById("patientNameHidden").innerHTML = myParam2;
+        });
+
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        generateReport(sheets, query, fields, andOr, extraSearch, extraSheets);
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
+    </script>
+</body>
+
+</html>

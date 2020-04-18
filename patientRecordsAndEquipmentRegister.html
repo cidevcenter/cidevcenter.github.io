@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Main Menu</title>
+    <title>Patient Records and Equipment Register</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" href="source.css">
@@ -11,27 +11,22 @@
 </head>
 
 <body>
-    <div id="formID" style="display: none;">mainMenu</div>
+    <div id="formID" style="display: none;">patientRecordsAndEquipmentRegister</div>
     <!--Add buttons to initiate auth sequence and sign out-->
     <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
         <button id="authorize_button" style="display: none">Authorize</button>
         <button id="signout_button" style="display: none">Sign Out</button>
     </div>
-    <section><h1>Main Menu</h1></section>
+    <section><h1>Patient Records and Equipment Register</h1></section>
     <div id="mainbox">
 	    <div id="warning" style="display: none;">
             <p>Please authorize before accessing.</p>
         </div>
-        <div id="links" style="margin-top: 0; display: none;">
-            <a href="referralform.html" class="linkBoxSel">Referral Form</a><br>
-            <a href="medicalAssessment.html" class="linkBoxSel">Medical & Nursing Assessment Form</a><br>
-            <a href="patientContinuationSheet.html" class="linkBoxSel">Patient Continuation Sheet Form</a><br>
-            <a href="search.html" class="linkBoxSel" >Search for Patient Records (Extra Notes, Medications Given, Medication Equipments Loaned, Home Visit Records, End of Life Issues)</a><br>
-            <a href="referralRecord.html" class="linkBoxSel">Display/Modify/Delete Referral Form Records</a><br>
-            <a href="medicalAssessmentRecord.html" class="linkBoxSel">Display/Modify/Delete Medical & Nursing Assessment Records</a><br>
-            <a href="patientContinuationRecord.html" class="linkBoxSel">Display/Modify/Delete Patient Continuation Records</a><br>
-            <a href="patientRecordsAndEquipmentRegister.html" class="linkBoxSel">Patient Records and Equipment Register</a><br>
-            <a href="https://docs.google.com/spreadsheets/d/166N0W-UDffO7Rkj20JGBGN7jo1d82ljHmMUGM364Aio/edit#gid=0" target="_blank"  class="linkBoxSel">Google Sheets</a>
+        <div id="links" style="margin-top: 0; display:none;">
+            <a href="patientsRecords.html" class="linkBoxSel">Update Patient Records</a><br>
+            <a href="equipmentRegister.html" class="linkBoxSel">Update Equipment Register</a><br>
+            <a href="https://docs.google.com/spreadsheets/d/1MuJcM_shq9Hfj00nraXLvE2MV4610Zx7mlpJrsX_BAU/edit#gid=432403031" target="_blank"  class="linkBoxSel">Google Sheets</a>
             <div id="content">
                 <pre id="content" style="white-space: pre-wrap;"></pre>
             </div>

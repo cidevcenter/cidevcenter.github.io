@@ -34,11 +34,6 @@
                         <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
                     </div>
                 </div>
-                <div class="loadingSpinner">
-                    <div class="loadingAnimation">
-                        <div></div>
-                    </div>
-                </div>
                 <div id="table">
                     <table id="searchTable">
                     </table>
@@ -64,16 +59,18 @@
                 </div>
             </div>
 
-            <div class="loadingSpinner" id="loadingSpinnerBottom" style="display: none;">
-                <div class="loadingAnimation">
-                    <div></div>
-                </div>
-            </div>
-
             <div id="content">
                 <pre id="content" style="white-space: pre-wrap;"></pre>
             </div>
         </form>
+    </div>
+
+    <div class="loadingSpinner" style="display: none;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
     </div>
 
     <div style="display: none;" name="patientName" id="patientNameHidden">   

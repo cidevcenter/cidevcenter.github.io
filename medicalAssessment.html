@@ -234,7 +234,7 @@
                 <div id="genoGram" class="inputBox">
                     <label>Genogram</label><br><br>
                     <input type="button" id="genoImage" value="Show Image"
-                        onclick="showPopUp('popUp0', 'genoImage', 0)">
+                        onclick="btnClick0 = true; var link = changeLinkGenogram('khcNo', continuationID); if (link !== undefined) { window.open(link, '_blank'); }">
                 </div>
 
                 <!--Genogram popups-->
@@ -975,13 +975,17 @@
             <span class="step"></span>
             <span class="step"></span>
         </div>
-        <div class="loadingSpinner" style="display: none;">
-            <div class="loadingAnimation">
-                <div></div>
-            </div>
-        </div>
+        
         <div id="content">
             <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
         </div>
     </div>
 

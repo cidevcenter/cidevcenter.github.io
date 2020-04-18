@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Equipment Register</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body onload="hideLoadIcon()">
+    <div id="formID" style="display: none;">equipmentRegister</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+    <section><h1>Kasih Hospice Equipment Register</h1></section>
+    <div id="mainbox">
+        <a href="patientRecordsAndEquipmentRegister.html" id="backLink" class="goBackBtn">Go Back</a><br>
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
+                
+        <div id="itemCodeReg" class="inputBox">
+            <label>Go to Item Code</label><br><br>
+            <select id="itemCodeSelect" class="selectSmaller" onchange="changeItemCodeInLink()">
+            
+            </select><br><br>
+            <a href="equipmentRecord.html?sheets=Equipment Register&searchField=Item Code&condition===&value=AC002&mode=&andOr=&extraSheets=Equipment List&oriHeader=Equipment Code&externalHeader=Equipment Name&field1=Item Code&field2=Equipment Code&field3=Equipment Name&field4=Date&field5=Available&field6=Donated by Purchased from&field7=Address Invoice No&field8=Type&field9=Brand&field10=Machine name&field11=Company&field12=Remarks&field13=Taken By" class="linkBoxSel changeItemCode">Equipment Record</a><br>
+            <a href="borrowersRecord.html?sheets=Borrowers Record&searchField=Item Code&condition===&value=AC002&mode=&andOr=&extraSheets=Patients&oriHeader=KHC&externalHeader=Name&field1=Item Code&field2=KHC&field3=Name&field4=Date Borrowed&field5=Date Returned" class="linkBoxSel changeItemCode">Borrower's Record</a><br>
+            <a href="equipmentReportMenu.html" class="linkBoxSel">Equipment Report Menu</a>       
+        </div> 
+      
+        <div id="content">
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === "complete") {
+
+                var repeat = setInterval(function () {
+                    if (checkSheetLoaded()) {
+                        generateSelectList("Equipment Register", "itemCodeSelect", 0);
+                        clearInterval(repeat);
+                    }
+                }, 200)
+            }
+        });
+
+        </script>
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>

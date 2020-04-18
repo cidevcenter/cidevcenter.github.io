@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Patients</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+</head>
+
+<body>
+    <div id="formID" style="display: none;">patientsSearch</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+        <a href="patientsRecords.html" id="backLink" class="goBackBtn">Go Back</a><br>
+    </div>
+    <section><h1>Search for Patients</h1></section>
+    <div id="mainbox">
+        <div id="dataFilter" class="inputBox" style="min-height: 0;">
+            <label class="containerCheckMark">By Name
+                <input type="radio" name="searchBy" id="searchByName" value="Name" checked>
+                <span class="checkMark"></span>
+            </label>
+
+            <label class="containerCheckMark">By Address
+                <input type="radio" name="searchBy" id="searchByAddress" value="Address">
+                <span class="checkMark"></span>
+            </label>
+        </div>
+
+        <div id="searchField" class="inputBox">
+            <label>Search Field</label><br><br>
+            <input type="text" name="searchField" id="searchFieldInput" onchange="changeSearchLink()">
+        </div>
+
+        <a href="generatePatientsDatabaseReport.html?sheets=Patients&searchField=&condition=contains&value=&mode=&andOr=and&extraSheets=&oriHeader=&externalHeader=&field1=KHC&field2=Name&field3=Category&field4=Date Referred&field5=Ethnic Group&field6=NRIC&field7=Date of Birth&field8=Sex&field9=Age&f10=Area&f11=Address&f12=Contact No&f13=Referred From&f14=Hospital&f15=Referred NGO&f16=Type Disease&f17=Cancer&f16=Diagnosis&f17=Nurse&f18=Volunteer In Charge&f19=Date 1st Visit&f20=Discharged&f21=Date RIP&f22=How Discharged&f23=Date Discharged&f24=Place RIP&f25=Duration Of Care&f26=Home Doctor Visits&f27=Home Nurse Visits&f28=Home Volunteer Visits&f29=Hospital Doctor Visits&f30=Hospital Nurse Visits&f31=Hospital Volunteer Visits&f32=Remarks" class="linkBoxSel changeLink">Search</a><br>
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>

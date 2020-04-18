@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Borrower</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="source.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+</head>
+
+<body>
+    <div id="formID" style="display: none;">addBorrower</div>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div id="topnav">
+        <a href="index.html" class="revBtn">Main Menu</a>
+        <button id="authorize_button" style="display: none">Authorize</button>
+        <button id="signout_button" style="display: none">Sign Out</button>
+    </div>
+    <section><h1>Borrower's Record</h1></section>
+    <div id="mainbox">
+        <a href="equipmentRegister.html" id="backLink" class="goBackBtn">Go Back</a><br>
+        <div id="scrollButtonsDiv">
+            <div id="scrollButtons" class="scrollButtonHide">
+                <a href="#topnav" class="redirectButton"><i class="material-icons">keyboard_arrow_up</i></a>
+                <a href="#content" class="redirectButton"><i class="material-icons">keyboard_arrow_down</i></a>
+            </div>
+            <div id="scrollButtonToggleDiv" class="scrollButtonToggleHide">
+                <button id="scrollButtonToggle" onclick="showScrollButtons()" style="right: 0%;"><i class="material-icons">keyboard_arrow_left</i></button>
+            </div>
+        </div>
+        <form id="submitForm" action="" method="POST">
+            <div class="tab">
+                <div id="borrowedItemCode" class="inputBox">
+                    <label>Item Code</label><br><br>
+                    <input type="text" name="borrowedItemCode">
+                </div>
+        
+                <div id="khc" class="inputBox">
+                    <label>KHC</label><br><br>
+                    <input type="text" name="khc">
+                </div>
+        
+                <div id="dateBorrowed", class="inputBox">
+                    <label>Date Borrowed</label><br><br>
+                    <input type="text" name="dateBorrowed" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="mm/dd/yyyy">
+                </div>
+        
+                <div id="dateReturned", class="inputBox">
+                    <label>Date Returned</label><br><br>
+                    <input type="text" name="dateReturned" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="mm/dd/yyyy">
+                </div>
+            </div>
+            
+            <div id="buttons" style="overflow:auto;">
+                <div style="float:right;">
+                    <input type="button" id="prevBtn" class="navBtn" value="Prev" onclick="nextPrev(-1)">
+                    <input type="button" id="nextBtn" class="navBtn" value="Submit" onclick="nextPrev(1)">
+                </div>
+            </div>
+
+            <div id="content">
+                <pre id="content" style="white-space: pre-wrap;"></pre>
+            </div>
+            
+        </form>
+    </div>
+
+    <div class="loadingSpinner" style="display: block;">
+        <div class="loadingBackground">
+            <div class="loadingAnimation defaultLoad">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="source.js"></script>
+    <script type="text/javascript" src="gsheets.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>
